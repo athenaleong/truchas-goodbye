@@ -1,0 +1,10 @@
+.google-map {
+    width: 90vw;
+    height: 80vh;
+}
+
+.map {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
