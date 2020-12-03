@@ -11,14 +11,18 @@ const createMapOptions = function (map) {
 // green : 5B8E7D
 
 const stylesArray =  [
-                    {featureType: "all", elementType: "labels.text.outline", stylers:[{color: "#5B8E7D"}]},
+                    {featureType: "all", elementType: "labels.text.stroke", stylers:[{color: "#5B8E7D"}]},
                     {featureType: "all", elementType: "labels.text.fill", stylers:[{color: "#f5f1e6"}]},
                     {featureType: "water", elementType: "geometry.fill", stylers:[{color: "#01295f", "weight": 8}]},
                     {featureType: "road.highway", elementType: "geometry.fill", stylers : [{ color : "#e9bc62"}]},
                     {featureType: "road.highway", elementType: "labels.text.stroke", stylers : [{ color : "#00000"}]},
                     {featureType:"road.local", elementType: "geometry", stylers: [{color: "#f5f1e6"}]}]
 
-const Map = ({location, zoomLevel}) => (
+const _onClick = ({lat, lng}) => console.log(lat);
+// ES5 users
+
+
+const Map = ({location, zoomLevel, onClick}) => (
     <div className="map">
         <h2>Truchas Peaks</h2>
         <div className="google-map">
@@ -26,7 +30,8 @@ const Map = ({location, zoomLevel}) => (
                 bootstrapURLKeys = {{'key': 'AIzaSyB3QgxQzYNKaDkSDBTEl3-wCYUFnQ9ilKs'}}
                 defaultCenter={location}
                 defaultZoom={zoomLevel}
-                options={(map) => createMapOptions(map)} >
+                options={(map) => createMapOptions(map)} 
+                onClick={onClick}>
             </GoogleMapReact>
         </div>
     </div>
