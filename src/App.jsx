@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import MapSection from './components/map/map'
+import MapSection from './components/map/map';
 import React, { useState } from 'react';
-import PopUp from './components/popUp/popUp'
+import PopUp from './components/popUp/popUp';
+import Form from './components/form/form';
 
 
 
@@ -17,7 +18,6 @@ function App() {
   
   const [modalShow, setModalShow] = useState(false);
   const [editMode, setEditMode] = useState(false);
-
   function onMapClick() {
     if (editMode) {
       setModalShow(true);
@@ -26,11 +26,10 @@ function App() {
 
   return (
   <div className="App">
-    <button onClick={() => setEditMode(!editMode)}> Toggle Eddit Mode </button>
+    <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
     <MapSection location={location} zoomLevel={16} onClick={onMapClick}/>
     <button onClick={()=> setModalShow(true)}>Pop Up</button>
-
-    <PopUp onHide={() => setModalShow(false)} show={modalShow}> </PopUp>
+    <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form></Form>}> </PopUp>
 
   </div>
   )}

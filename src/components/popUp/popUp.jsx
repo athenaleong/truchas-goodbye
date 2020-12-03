@@ -8,14 +8,15 @@ function PopUp(props) {
     return(
         <Modal {... props} animation={false}>
             <Modal.Header closeButton>
-                <Modal.Title>Add a new memory</Modal.Title>
+                <Modal.Title>Create new </Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                {props.body}
             </Modal.Body>
-            <Modal.Footer>
+            {/* <Modal.Footer>
                 <Button variant="secondary" onClick={props.onHide}> Close </Button>
                 <Button variant="primary" onClick={props.onHide}> Add New Marker </Button>
-            </Modal.Footer>
+            </Modal.Footer> */}
         </Modal>
     );
 }
