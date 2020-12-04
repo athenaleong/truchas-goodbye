@@ -1,13 +1,15 @@
 import './form.css';
 import React from 'react';
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useFormContext } from "react-hook-form";
 import Select from "react-select";
-import {useDropZone} from react-dropzone;
+import Dropzone from '../dropzone/dropzone';
+import ErrorBoundary from '../errorBoundary/errorBoundary'
+
 
 
 function Form(props) {
     const {register, handleSubmit, control} = useForm();
-    const onSubmit = (data) => console.log(JSON.stringify(data));
+    const onSubmit = (data) => alert(JSON.stringify(data));
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -34,13 +36,12 @@ function Form(props) {
 
             <Controller
                 name="images"
-                control={{control}}
-                render={(onChange, value) => {
-                    <Drop
-                }}
+                control={control}
+                render={(onChange, handleSubmit) => 
+                    <Dropzone onChange={onChange} />}
             />
 
-            <input type="submit"/>
+            <input type="submit" />
         </form>
     );
 }
