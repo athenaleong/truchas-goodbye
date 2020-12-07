@@ -8,7 +8,7 @@ import ErrorBoundary from '../errorBoundary/errorBoundary'
 
 
 function Form(props) {
-    const {register, handleSubmit, control} = useForm();
+    const {register, handleSubmit, control, setValue} = useForm();
     const onSubmit = (data) => alert(JSON.stringify(data));
 
     return (
@@ -37,8 +37,9 @@ function Form(props) {
             <Controller
                 name="images"
                 control={control}
-                render={(onChange, handleSubmit) => 
-                    <Dropzone onChange={onChange} />}
+                render={(onChange) => 
+                    <Dropzone onChange={onChange} register={register} setValue={setValue}/>}
+                defaultValue={"meow"}
             />
 
             <input type="submit" />
