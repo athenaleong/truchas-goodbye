@@ -2,14 +2,26 @@ import './form.css';
 import React from 'react';
 import { Controller, useForm, useFormContext } from "react-hook-form";
 import Select from "react-select";
-import Dropzone from '../dropzone/dropzone';
 import ErrorBoundary from '../errorBoundary/errorBoundary'
-
+import Dropzone from '../dropzone/drop'
+import client from '../../mongo'
 
 
 function Form(props) {
+
     const {register, handleSubmit, control, setValue} = useForm();
-    const onSubmit = (data) => alert(JSON.stringify(data));
+    const onSubmit = (data) => {
+        // alert(JSON.stringify(data))
+        images = data['img'];
+        alert(images)
+        db.connect(err => {
+            const imageDb = client.db("truchas").collection("image");
+            console.log("connected to db");
+            client.close();
+        })
+    };
+
+
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -37,9 +49,10 @@ function Form(props) {
             <Controller
                 name="images"
                 control={control}
-                render={(onChange) => 
-                    <Dropzone onChange={onChange} register={register} setValue={setValue}/>}
-                defaultValue={"meow"}
+                render={(onChange) =>
+                    <Dropzone onChange={onChange} register={register} setValue={setValue}></Dropzone>
+                }
+            
             />
 
             <input type="submit" />
