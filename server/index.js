@@ -47,4 +47,6 @@ app.get('/', function (req, res) {
 
 app.listen(port);
 console.log("Listening on port: " + port);
+console.log(__dirname);
+
 

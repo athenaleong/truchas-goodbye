@@ -31,7 +31,8 @@
     "eject": "react-scripts eject",
     "server": "nodemon server/server.js",
     "echo": "echo hello world",
-    "git": "git add . && git commit -m"
+    "git": "git add . && git commit -m",
+    "heroku" : "git push heroku main"
   },
   "eslintConfig": {
     "extends": [
@@ -50,5 +51,7 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:5555"
+
 }
