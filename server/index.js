@@ -12,13 +12,6 @@ const port = process.env.PORT || 5555;
 const {MongoClient, Grid} = require('mongodb');
 const urlParser = bodyParser.urlencoded({extended: true});
 
-
-app.use(express.static(path.join(__dirname, '..', 'build')));
-
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
 app.get('/ping', function (req, res) {
   return res.send('pong');
 });
@@ -43,10 +36,14 @@ app.post('/uploadImage', urlParser, async function(req, res) {
     client.close();
   })
   res.send('done')
-
-
-
 })
+
+
+app.use(express.static(path.join(__dirname, '..', 'build')));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+});
 
 app.listen(port);
 console.log("Listening on port: " + port);
