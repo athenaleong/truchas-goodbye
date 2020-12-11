@@ -4,21 +4,21 @@ import { Controller, useForm, useFormContext } from "react-hook-form";
 import Select from "react-select";
 import ErrorBoundary from '../errorBoundary/errorBoundary'
 import Dropzone from '../dropzone/drop'
-import client from '../../mongo'
+import connectDb from '../../mongo'
 
 
-function Form(props) {
+ function Form(props) {
 
     const {register, handleSubmit, control, setValue} = useForm();
-    const onSubmit = (data) => {
-        // alert(JSON.stringify(data))
-        images = data['img'];
-        alert(images)
-        db.connect(err => {
-            const imageDb = client.db("truchas").collection("image");
-            console.log("connected to db");
-            client.close();
-        })
+    const onSubmit = async (data) => {
+        alert(JSON.stringify(data))
+
+        // const client = await connectDb();
+        
+        const images = data['img'];
+        console.log('check');
+        console.log(images)
+        
     };
 
 

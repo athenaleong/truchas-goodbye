@@ -7,8 +7,10 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.0",
+    "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
     "express": "^4.17.1",
+    "fetch": "^1.1.0",
     "google-map-react": "^2.1.9",
     "mongodb": "^3.6.3",
     "nodemon": "^2.0.6",
@@ -28,7 +30,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "nodemon server/server.js",
-    "echo": "echo hello world"
+    "echo": "echo hello world",
+    "git": "git add . && git commit -m"
   },
   "eslintConfig": {
     "extends": [

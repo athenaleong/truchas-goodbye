@@ -29,7 +29,7 @@ function Dropzone(props) {
     }, [])
 
     useEffect(() => {
-        setValue("images", url);
+        setValue("images", url); //TOEDIT
         console.log("set value");
     }, [url])
 
