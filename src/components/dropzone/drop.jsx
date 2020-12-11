@@ -7,20 +7,33 @@ import "./drop.css";
 function Dropzone(props) {
     const {onChange, register, setValue} = props
     const [files, setFiles] = React.useState([]);
-    const [url, setURL] = React.useState([]);
-    const onDrop = React.useCallback(acceptedFiles => {
-        const imgURL = acceptedFiles.map(x => {
-                        console.log(x);
-                        let url = URL.createObjectURL(x);
-                        console.log(url);
-                        return url}
-                        );
-        console.log(imgURL);
-        setURL(prev => [...prev, ...imgURL]); //Able to retrieve previous state
+    const [buffer, setBuffer] = React.useState([]);
+    const onDrop = React.useCallback(async function(acceptedFiles) {
+        // const imgURL = acceptedFiles.map(async function(x) {
+        //                 console.log('here');
+        //                 console.log(x);
+        //                 // let url = URL.createObjectURL(x);
+        //                 // let buffer = await url.arrayBuffer();
+        //                 const reader = new FileReader();
+        //                 let buffer = await reader.readAsArrayBuffer(x);
+        //                 console.log(reader.result);
+        //                 return reader.result}
+        //                 );
+
+        acceptedFiles.forEach(async function(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const arrayBuffer = reader.result;
+                console.log(arrayBuffer);
+                buffer.push(arrayBuffer); //not sure why setBuffer doesn't work
+                console.log(`buffer : ${buffer}`);
+
+            }
+            reader.readAsArrayBuffer(file);
+        });
+
         setFiles(prev => [...prev, ...acceptedFiles]); //Able to retrieve previous state
-
-
-        console.log("file accepted")
+        console.log("file accepted");
     }, []);
     const { getRootProps, getInputProps } = useDropzone({onDrop, multiple:true, accept: 'image/*'});
 
@@ -29,9 +42,9 @@ function Dropzone(props) {
     }, [])
 
     useEffect(() => {
-        setValue("images", url); //TOEDIT
+        setValue("images", buffer); 
         console.log("set value");
-    }, [url])
+    }, [buffer])
 
     const fileList = files.map(file => (
     <li key={file.path}>

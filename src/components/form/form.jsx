@@ -4,24 +4,29 @@ import { Controller, useForm, useFormContext } from "react-hook-form";
 import Select from "react-select";
 import ErrorBoundary from '../errorBoundary/errorBoundary'
 import Dropzone from '../dropzone/drop'
-import connectDb from '../../mongo'
+const axios = require('axios');
 
 
  function Form(props) {
 
     const {register, handleSubmit, control, setValue} = useForm();
     const onSubmit = async (data) => {
-        alert(JSON.stringify(data))
+        const json = JSON.stringify(data);
+        console.log(json)
+        // const requestOptions = {
+        //     method: 'POST',
+        //     mode: 'no-cors',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: json
+        // }
+        // const response = await fetch('http://localhost:5555/submitPointer', requestOptions);
+        // console.log(response);
+        
+        axios.post('http://localhost:5555/submitPointer', json).then((res) => {console.log(res)});
 
-        // const client = await connectDb();
-        
-        const images = data['img'];
-        console.log('check');
-        console.log(images)
-        
     };
-
-
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
