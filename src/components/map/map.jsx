@@ -1,6 +1,7 @@
 import GoogleMapReact from 'google-map-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './map.css';
+import useSupercluster from "use-supercluster";
 
 const createMapOptions = function (map) {
     return {
@@ -19,10 +20,25 @@ const stylesArray =  [
                     {featureType:"road.local", elementType: "geometry", stylers: [{color: "#f5f1e6"}]}]
 
 
-const Map = ({location, zoomLevel, onClick, mapRef}) => {
+const Map = ({location, zoomLevel, onClick, mapRef, geoJSON}) => {
+    geoJSON = geoJSON == undefined ? [] : geoJSON
 
     const [bounds, setBounds] = useState(null);
     const [zoom, setZoom] = useState(zoomLevel);
+
+    console.log(`geoJSON: ${geoJSON}`);
+
+    //Pointer clustering
+
+    useEffect(() => {
+        const {cluster, supercluster} = useSupercluster({
+        geoJSON,
+        bounds,
+        zoom,
+        options: { radius: 75, maxZoom: 20 }
+        })
+    }, [geoJSON]);
+
 
     return (
     <div className="map">

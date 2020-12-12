@@ -22,9 +22,11 @@ const { timingSafeEqual } = require('crypto');
 const { type } = require('os');
 const urlParser = bodyParser.urlencoded({extended: true});
 const jsonParser = bodyParser.json();
+const qs = require('qs');
 var tagCollection;
 //TODO: cors set up
 app.use(cors(corsOptions));
+
 
 
 
