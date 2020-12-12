@@ -5,27 +5,44 @@ import Select from "react-select";
 import ErrorBoundary from '../errorBoundary/errorBoundary'
 import Dropzone from '../dropzone/drop'
 const axios = require('axios');
-
+var FormData = require('form-data');
 
  function Form(props) {
 
     const {register, handleSubmit, control, setValue} = useForm();
     const onSubmit = async (data) => {
-        const json = JSON.stringify(data);
-        console.log(json)
-        // const requestOptions = {
-        //     method: 'POST',
-        //     mode: 'no-cors',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: json
-        // }
-        // const response = await fetch('http://localhost:5555/submitPointer', requestOptions);
-        // console.log(response);
-        
-        axios.post('http://localhost:5555/submitPointer', json).then((res) => {console.log(res)});
 
+        const images = data.images;
+        let imgId = [];
+        if (images.length != 0) {
+            let formData = new FormData();
+            images.forEach((img) => {
+                formData.append('img', img);
+            })
+
+
+            let config = {
+                method: 'post',
+                url: 'http://localhost:5555/uploadImage',
+                data : formData
+            }
+
+            // TODO: change for production
+            let res = await axios(config);
+            imgId = res.data.id;  
+        } 
+
+        delete data['images'];
+        data = {...data, imgId: imgId};
+
+        console.log(JSON.stringify(data));
+        
+        let res = await axios.post('http://localhost:5555/uploadPointer', data, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        console.log(res);
     };
 
     return (
