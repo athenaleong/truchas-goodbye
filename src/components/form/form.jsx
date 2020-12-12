@@ -33,7 +33,7 @@ var FormData = require('form-data');
         } 
 
         delete data['images'];
-        data = {...data, imgId: imgId, lat: lat, lng: lng};
+        data = {...data, imgId: imgId, lat: lat, lng: lng, category:"Point"};
 
         console.log(JSON.stringify(data));
         

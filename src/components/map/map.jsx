@@ -1,5 +1,5 @@
-import React from 'react';
 import GoogleMapReact from 'google-map-react';
+import { useState } from 'react';
 import './map.css';
 
 const createMapOptions = function (map) {
@@ -18,11 +18,13 @@ const stylesArray =  [
                     {featureType: "road.highway", elementType: "labels.text.stroke", stylers : [{ color : "#00000"}]},
                     {featureType:"road.local", elementType: "geometry", stylers: [{color: "#f5f1e6"}]}]
 
-const _onClick = ({lat, lng}) => console.log(lat);
-// ES5 users
 
+const Map = ({location, zoomLevel, onClick, mapRef}) => {
 
-const Map = ({location, zoomLevel, onClick}) => (
+    const [bounds, setBounds] = useState(null);
+    const [zoom, setZoom] = useState(zoomLevel);
+
+    return (
     <div className="map">
         <h2>Truchas Peaks</h2>
         <div className="google-map">
@@ -31,11 +33,27 @@ const Map = ({location, zoomLevel, onClick}) => (
                 defaultCenter={location}
                 defaultZoom={zoomLevel}
                 options={(map) => createMapOptions(map)} 
-                onClick={onClick}>
+                onClick={onClick}
+                onChange={({zoom, bounds}) => {
+                    setZoom(zoom);
+                    setBounds([
+                        bounds.nw.lng,  
+                        bounds.se.lat,
+                        bounds.se.lng,
+                        bounds.nw.lat,
+                    ])
+                }}
+                yesIWantToUseGoogleMapApiInternals
+                onGoogleApiLoaded={({ map }) => {
+                    mapRef.current = map;
+                }}
+            >
+            {/* Markers Here  */}
+
             </GoogleMapReact>
         </div>
-    </div>
-);
+    </div> 
+    )};
 
 
 
