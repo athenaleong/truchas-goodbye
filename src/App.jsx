@@ -16,10 +16,15 @@ function App() {
   
   const [modalShow, setModalShow] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  function onMapClick() {
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
+
+  function onMapClick(obj) {
     if (editMode) {
       setModalShow(true);
     }
+    setLat(obj.lat);
+    setLng(obj.lng);
   }
 
   return (
@@ -28,7 +33,7 @@ function App() {
     <MapSection location={location} zoomLevel={16} onClick={onMapClick}/>
     <button onClick={()=> setModalShow(true)}>Pop Up</button>
     <ErrorBoundary>
-    <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form></Form>}> </PopUp>
+    <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng}></Form>}> </PopUp>
     </ErrorBoundary>
   </div>
   )}

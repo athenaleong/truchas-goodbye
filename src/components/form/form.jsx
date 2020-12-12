@@ -8,7 +8,7 @@ const axios = require('axios');
 var FormData = require('form-data');
 
  function Form(props) {
-
+    const {lat, lng} = props
     const {register, handleSubmit, control, setValue} = useForm();
     const onSubmit = async (data) => {
 
@@ -33,7 +33,7 @@ var FormData = require('form-data');
         } 
 
         delete data['images'];
-        data = {...data, imgId: imgId};
+        data = {...data, imgId: imgId, lat: lat, lng: lng};
 
         console.log(JSON.stringify(data));
         

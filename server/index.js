@@ -20,6 +20,7 @@ const corsOptions = {
 const {MongoClient} = require('mongodb');
 const urlParser = bodyParser.urlencoded({extended: true});
 const jsonParser = bodyParser.json();
+var tagCollection; 
 
 //TODO: cors set up
 app.use(cors(corsOptions));
@@ -38,6 +39,15 @@ const storage = new GridFsStorage({ url: url,
                                   });
 const upload = multer({ storage });
 
+
+MongoClient.connect(url)
+.then(client => {
+  const db = client.db('truchas');
+  tagCollection = db.collection('tag');
+  //app.locals.collection = collection;
+})
+
+
 app.get('/ping', function (req, res) {
   return res.send('pong');
 });
@@ -51,16 +61,19 @@ app.post('/uploadImage', upload.any(), async function(req, res) {
   catch (error) {
     res.status(500).json({error: error.toString()});
   }
-    
-
     //TODO: return success message 
     
 });
 
-app.post('/uploadPointer', async function(req, res) {
-  console.log(req);
-  console.log(req.body);
-  res.end();
+app.post('/uploadPointer', jsonParser, async function(req, res) {
+  try {
+    tagCollection.insertOne(req.body);
+    res.send();
+  }
+  catch (error) {
+    console.log(error)
+    res.status(500).json({error: error.toString()});
+  }
 })
 
 //same origin 
