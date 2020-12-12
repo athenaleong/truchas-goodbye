@@ -97,7 +97,7 @@ app.post('/getGeoJSON', urlParser, async function(req, res){
       console.log(geoJSONTag);
        geoJSONTag.push({
         type: "Feature",
-        properties: { cluster: false, id: tag.id}, 
+        properties: { cluster: false, id: tag._id}, 
         geometry: {
           type: tag.category,
           coordinates: [

@@ -15,6 +15,27 @@ const location = {
 
 
 function App() {
+  // componentDidMount() {
+  //   let data = qs.stringify({
+  //     'query': pointQuery
+  //    });
+  //   let config = {
+  //      method: 'post',
+  //      url: 'http://localhost:5555/getGeoJSON', //TOEDIT
+  //      headers: { 
+  //        'Content-Type': 'application/x-www-form-urlencoded'
+  //      },
+  //      data : data
+  //    };
+     
+  //    axios(config)
+  //    .then(function (response) {
+  //      let geoJSON= response.data;
+  //      setGeoJSON(geoJSON); console.log(`data display: ${geoJSON}`); 
+  //    })
+  // };
+
+
   //Map
   const [modalShow, setModalShow] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -25,7 +46,10 @@ function App() {
   const [feature, setFeature] = useState([]); //TODO: Expand to walks/path tracing
   const [pointQuery, setPointQuery] = useState({});
   const [geoJSON, setGeoJSON] = useState([]); //GEOJSONJson Display 
+
   const mapRef = useRef();
+
+  
 
   function onMapClick(obj) {
     if (editMode) {
@@ -34,6 +58,7 @@ function App() {
     setLat(obj.lat);
     setLng(obj.lng);
   }
+
 
   useEffect(() => {
     let data = qs.stringify({
@@ -53,7 +78,7 @@ function App() {
        let geoJSON= response.data;
        setGeoJSON(geoJSON); console.log(`data display: ${geoJSON}`); 
      })
-  }, [])
+  }, [pointQuery])
 
 
 

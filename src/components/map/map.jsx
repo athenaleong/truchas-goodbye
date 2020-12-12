@@ -10,6 +10,7 @@ const createMapOptions = function (map) {
     }
 }
 // green : 5B8E7D
+const Marker = ({ children }) => children;
 
 const stylesArray =  [
                     {featureType: "all", elementType: "labels.text.stroke", stylers:[{color: "#5B8E7D"}]},
@@ -21,23 +22,21 @@ const stylesArray =  [
 
 
 const Map = ({location, zoomLevel, onClick, mapRef, geoJSON}) => {
-    geoJSON = geoJSON == undefined ? [] : geoJSON
+
 
     const [bounds, setBounds] = useState(null);
     const [zoom, setZoom] = useState(zoomLevel);
 
-    console.log(`geoJSON: ${geoJSON}`);
+    console.log(`geoJSON: ${geoJSON.length}`);
 
-    //Pointer clustering
 
-    useEffect(() => {
-        const {cluster, supercluster} = useSupercluster({
-        geoJSON,
-        bounds,
-        zoom,
+    const {clusters, supercluster} = useSupercluster({
+        points : geoJSON,
+        bounds : bounds,
+        zoom: zoom,
         options: { radius: 75, maxZoom: 20 }
-        })
-    }, [geoJSON]);
+    });
+
 
 
     return (
@@ -65,6 +64,52 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON}) => {
                 }}
             >
             {/* Markers Here  */}
+            {clusters.map(cluster => {
+                const [longitude, latitude] = cluster.geometry.coordinates;
+                const {cluster : isCluster, point_count : pointCount} = cluster.properties;
+
+                if (isCluster) {
+                    return (
+                        <Marker
+                            key={`cluster-${cluster.id}`}
+                            lat={latitude}
+                            lng={longitude}
+                        >
+                            <div
+                                className="cluster-marker"
+                                style={{
+                                    width: `${10 + (pointCount / geoJSON.length) * 20}px`,
+                                    height: `${10 + (pointCount / geoJSON.length) * 20}px`
+                                }}
+                                onClick={() => {
+                                    const expansionZoom = Math.min(
+                                    supercluster.getClusterExpansionZoom(cluster.id),
+                                    20
+                                    );
+                                    mapRef.current.setZoom(expansionZoom);
+                                    mapRef.current.panTo({ lat: latitude, lng: longitude });
+                                }}
+                            >
+                            {pointCount}
+                            </div>
+                        </Marker>
+                    );
+                }
+                else {
+                    return (
+                        <Marker
+                            key={`point-${cluster.properties.id}`}
+                            lat={latitude}
+                            lng={longitude}
+                            >
+                            Hello
+                            {/* <button className="crime-marker">
+                                <img src="/custody.svg" alt="crime doesn't pay" />
+                            </button> */}
+                        </Marker>
+                    )
+                }
+            })}
 
             </GoogleMapReact>
         </div>
