@@ -51,20 +51,20 @@ var FormData = require('form-data');
     
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="form">
             <input name="title" ref={register({required: true, maxLength:10})} />
             <textarea name="description" ref={register({required: true, maxLength:30})} />
-
-            <input name="icon" type="radio" value="1" ref={register({required: true, max:1})}/>
-            <input name="icon" type="radio" value="2" ref={register({required: true, max:1})} />
-            <input name="icon" type="radio" value="3" ref={register({required: true, max:1})} />
-            <input name="icon" type="radio" value="4" ref={register({required: true, max:1})} />
-
+            <div>
+                <input name="icon" type="radio" value="1" ref={register({required: true, max:1})}/>
+                <input name="icon" type="radio" value="2" ref={register({required: true, max:1})} />
+                <input name="icon" type="radio" value="3" ref={register({required: true, max:1})} />
+                <input name="icon" type="radio" value="4" ref={register({required: true, max:1})} />
+            </div>
             <Controller
                 name="people"
                 as={Select}
                 isMulti
-                options={allUser}
+                options={[{value:'all', label:'all users'}, ...allUser]}
                 control={control}
                 rules={{required:true}}
                 defaultValue={null}

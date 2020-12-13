@@ -69,7 +69,7 @@ function App() {
   return (
   <div className="App">
     <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
-    <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON}/> <button onClick={()=> setModalShow(true)}>Pop Up</button>
+    <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON}/> 
     <ErrorBoundary>
     <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser}></Form>}> </PopUp>
     </ErrorBoundary>
