@@ -2,6 +2,7 @@ import GoogleMapReact from 'google-map-react';
 import { useState, useEffect } from 'react';
 import './map.css';
 import useSupercluster from "use-supercluster";
+import axios from 'axios'
 
 const createMapOptions = function (map) {
     return {
@@ -37,7 +38,9 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON}) => {
         options: { radius: 75, maxZoom: 20 }
     });
 
-
+    const markerOnClick = async (id) => {
+        const json = await axios.get(`http://localhost:5555/getTag?id=${id}`)
+    };
 
     return (
     <div className="map">
@@ -102,7 +105,13 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON}) => {
                             lat={latitude}
                             lng={longitude}
                             >
+                            <div>
+                                {/* onClick{() => {
+                                    
+                                }} */}
+                            </div>
                             Hello
+                            {/* <img src="https://www.flaticon.com/svg/static/icons/svg/1397/1397898.svg"/> */}
                             {/* <button className="crime-marker">
                                 <img src="/custody.svg" alt="crime doesn't pay" />
                             </button> */}
@@ -110,7 +119,6 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON}) => {
                     )
                 }
             })}
-
             </GoogleMapReact>
         </div>
     </div> 

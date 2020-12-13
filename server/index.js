@@ -7,7 +7,6 @@ const cors = require('cors');
 const multer  = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require("gridfs-stream");
-const mongoose = require("mongoose");
 
 const app = express();
 const port = process.env.PORT || 5555;
@@ -17,7 +16,7 @@ const corsOptions = {
 }
 
 //DB setup
-const {MongoClient} = require('mongodb');
+const {MongoClient, ObjectID} = require('mongodb');
 const { timingSafeEqual } = require('crypto');
 const { type } = require('os');
 const urlParser = bodyParser.urlencoded({extended: true});
@@ -45,7 +44,7 @@ MongoClient.connect(url)
 .then(client => {
   console.log('connected to db');
   const db = client.db('truchas');
-   tagCollection = db.collection('tag'); 
+   tagCollection = db.collection('tag');  
    userCollection = db.collection('user');  
 
    app.locals.collection = tagCollection;
@@ -62,13 +61,11 @@ app.post('/uploadImage', upload.any(), async function(req, res) {
   try {
       var files = req.files;
       var id = files.map((file) => file.id);
-      res.send({id: id});
+      res.send            ({id: id});
   } 
   catch (error) {
     res.status(500).json({error: error.toString()});
   }
-    
-
     //TODO: return success message 
     
 });
@@ -118,6 +115,13 @@ app.get('/getUser', async function (req, res) {
   })
   res.send(userData);
 });
+
+app.get('/getTag', async function (req, res) {
+    let id = req.query.id;
+    tagCollection.findOne({"_id" : new ObjectID(id)}).then(tag => {
+      res.send(tag);
+    })
+})
 
 
 //same origin 

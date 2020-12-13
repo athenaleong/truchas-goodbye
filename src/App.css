@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: row;
 }
 
 .App-logo {
@@ -36,3 +38,14 @@
     transform: rotate(360deg);
   }
 }
+
+.Main {
+  display: flex;
+  flex-direction: column;
+}
+
+.SideBar {
+  background-color: #61dafb;
+}
+
+

@@ -39,7 +39,7 @@
     "eject": "react-scripts eject",
     "server": "nodemon server/server.js",
     "echo": "echo hello world",
-    "git": "git add . && git commit -m",
+    "git": "git add . && git commit -m && git push",
     "heroku": "git push heroku main"
   },
   "eslintConfig": {
