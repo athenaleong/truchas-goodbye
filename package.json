@@ -22,6 +22,25 @@
     "react-scripts": "^4.0.1",
     "styled-components": "^5.2.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1",
+    "@emotion/styled": "^11.0.0",
+    "axios": "^0.21.0",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.5.3",
+    "cors": "^2.8.5",
+    "fetch": "^1.1.0",
+    "google-map-react": "^2.1.9",
+    "gridfs-stream": "^1.1.1",
+    "mongoose": "^5.11.7",
+    "multer": "^1.4.2",
+    "multer-gridfs-storage": "^4.2.0",
+    "qs": "^6.9.4",
+    "react-bootstrap": "^1.4.0",
+    "react-dropzone": "^11.0.1",
+    "react-dropzone-uploader": "^2.11.0",
+    "react-hook-form": "^6.12.2",
+    "react-select": "^3.1.1",
+    "supercluster": "^7.1.0",
+    "use-supercluster": "^0.2.9",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -29,8 +48,10 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "server": "nodemon server/api-server.js",
-    "echo": "echo hello world"
+    "server": "nodemon server/index.js",
+    "echo": "echo hello world",
+    "git": "git add . && git commit -m",
+    "heroku": "git push heroku main"
   },
   "eslintConfig": {
     "extends": [
@@ -50,5 +71,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "proxy": "http://localhost:5555"
 }
