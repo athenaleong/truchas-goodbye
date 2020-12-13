@@ -17,7 +17,7 @@ const corsOptions = {
 }
 
 //DB setup
-const {MongoClient} = require('mongodb');
+const {MongoClient, ObjectID} = require('mongodb');
 const { timingSafeEqual } = require('crypto');
 const { type } = require('os');
 const urlParser = bodyParser.urlencoded({extended: true});
@@ -119,6 +119,12 @@ app.get('/getUser', async function (req, res) {
   res.send(userData);
 });
 
+app.get('/getTag', async function (req, res) {
+  let id = req.query.id;
+  tagCollection.findOne({"_id" : new ObjectID(id)}).then(tag => {
+    res.send(tag);
+  })
+})
 
 //same origin 
 app.use(express.json());

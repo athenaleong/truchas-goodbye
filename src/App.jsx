@@ -5,8 +5,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import PopUp from './components/popUp/popUp';
 import Form from './components/form/form';
 import ErrorBoundary from './components/errorBoundary/errorBoundary';
+import Drawer from './components/drawer/drawer';
 import axios from 'axios';
 import qs from 'qs';
+import { Button } from 'react-bootstrap';
+
 
 const location = {
   lat: 36.048180,
@@ -29,6 +32,11 @@ function App() {
   const mapRef = useRef();
 
   const [allUser, setAllUser] = useState([]); //TODO: move this to form.jsx. state hook wasn't working. not sure why
+
+  //Drawer 
+  const [drawerShow, setDrawerShow] = useState(false);
+  const [selectedTagId, setSelectedTagId] = useState(null);
+  const [drawerContent, setDrawerContent] = useState('to delete');
 
   function onMapClick(obj) {
     if (editMode) {
@@ -66,13 +74,21 @@ function App() {
       setAllUser(res.data);})
   }, [])
 
+  useEffect(() => {
+    axios.get(`http://localhost:5555/getTag?id=${selectedTagId}`).then(res => {
+      console.log(`res: ${JSON.stringify(res.data)}`);
+      setDrawerContent(JSON.stringify(res.data));
+    })
+  }, [selectedTagId])
+
   return (
-  <div className="App">
-    <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
-    <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON}/> 
-    <ErrorBoundary>
-    <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser}></Form>}> </PopUp>
-    </ErrorBoundary>
+  <div className='App'>
+    <div className={drawerShow? 'Main compress' : 'Main'}>
+      <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
+      <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}/> 
+      <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser}></Form>}> </PopUp>
+    </div>
+    <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerContent={drawerContent}></Drawer>
   </div>
   )}
 

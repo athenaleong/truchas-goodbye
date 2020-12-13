@@ -2,6 +2,7 @@ import GoogleMapReact from 'google-map-react';
 import { useState, useEffect } from 'react';
 import './map.css';
 import useSupercluster from "use-supercluster";
+import axios from 'axios';
 
 const createMapOptions = function (map) {
     return {
@@ -21,7 +22,7 @@ const stylesArray =  [
                     {featureType:"road.local", elementType: "geometry", stylers: [{color: "#f5f1e6"}]}]
 
 
-const Map = ({location, zoomLevel, onClick, mapRef, geoJSON}) => {
+const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, setDrawerShow}) => {
 
 
     const [bounds, setBounds] = useState(null);
@@ -102,10 +103,12 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON}) => {
                             lat={latitude}
                             lng={longitude}
                             >
-                            Hello
-                            {/* <button className="crime-marker">
-                                <img src="/custody.svg" alt="crime doesn't pay" />
-                            </button> */}
+                            <div onClick={() => {
+                                setDrawerShow(true);
+                                setSelectedTagId(cluster.properties.id);
+                            }}>
+                                Hello
+                            </div>
                         </Marker>
                     )
                 }

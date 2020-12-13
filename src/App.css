@@ -1,5 +1,20 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.Main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  transition: width 0.4s ease; 
+  /* coordinate with drawer.side-drawer */
+  height: 100%;
+}
+
+.Main.compress{
+  width: 60%;
 }
 
 .App-logo {
@@ -35,4 +50,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+button {
+  width: fit-content;
 }
