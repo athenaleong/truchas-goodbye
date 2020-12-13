@@ -28,8 +28,6 @@ var tagCollection;
 app.use(cors(corsOptions));
 
 
-
-
 //Multer-gridfs Setup
 const url = "mongodb+srv://chris:fF1kjLnOaC769euR@cluster0.2lusr.mongodb.net/truchas?retryWrites=true&w=majority";
 
@@ -47,7 +45,9 @@ MongoClient.connect(url)
 .then(client => {
   console.log('connected to db');
   const db = client.db('truchas');
-   tagCollection = db.collection('tag');  
+   tagCollection = db.collection('tag'); 
+   userCollection = db.collection('user');  
+
    app.locals.collection = tagCollection;
   })
 
@@ -109,6 +109,16 @@ app.post('/getGeoJSON', urlParser, async function(req, res){
   })
   res.send(geoJSONTag);
 } )
+
+app.get('/getUser', async function (req, res) {
+  let user = userCollection.find({});
+  let userData = []
+  await user.forEach(u => {
+    userData.push({label: u.name, value: u._id});
+  })
+  res.send(userData);
+});
+
 
 //same origin 
 app.use(express.json());

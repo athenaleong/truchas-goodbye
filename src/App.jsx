@@ -15,27 +15,6 @@ const location = {
 
 
 function App() {
-  // componentDidMount() {
-  //   let data = qs.stringify({
-  //     'query': pointQuery
-  //    });
-  //   let config = {
-  //      method: 'post',
-  //      url: 'http://localhost:5555/getGeoJSON', //TOEDIT
-  //      headers: { 
-  //        'Content-Type': 'application/x-www-form-urlencoded'
-  //      },
-  //      data : data
-  //    };
-     
-  //    axios(config)
-  //    .then(function (response) {
-  //      let geoJSON= response.data;
-  //      setGeoJSON(geoJSON); console.log(`data display: ${geoJSON}`); 
-  //    })
-  // };
-
-
   //Map
   const [modalShow, setModalShow] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -49,7 +28,7 @@ function App() {
 
   const mapRef = useRef();
 
-  
+  const [allUser, setAllUser] = useState([]); //TODO: move this to form.jsx. state hook wasn't working. not sure why
 
   function onMapClick(obj) {
     if (editMode) {
@@ -78,16 +57,21 @@ function App() {
        let geoJSON= response.data;
        setGeoJSON(geoJSON); console.log(`data display: ${geoJSON}`); 
      })
-  }, [pointQuery])
+  }, [pointQuery, modalShow])
 
 
+  useEffect(() => {
+    axios.get('http://localhost:5555/getUser').then(res => {
+      console.log(`res: ${JSON.stringify(res.data)}`);
+      setAllUser(res.data);})
+  }, [])
 
   return (
   <div className="App">
     <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
     <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON}/> <button onClick={()=> setModalShow(true)}>Pop Up</button>
     <ErrorBoundary>
-    <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng}></Form>}> </PopUp>
+    <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser}></Form>}> </PopUp>
     </ErrorBoundary>
   </div>
   )}

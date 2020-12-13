@@ -1,5 +1,5 @@
 import './form.css';
-import React from 'react';
+import React, {useEffect , useState} from 'react';
 import { Controller, useForm, useFormContext } from "react-hook-form";
 import Select from "react-select";
 import ErrorBoundary from '../errorBoundary/errorBoundary'
@@ -8,8 +8,10 @@ const axios = require('axios');
 var FormData = require('form-data');
 
  function Form(props) {
-    const {lat, lng} = props
-    const {register, handleSubmit, control, setValue} = useForm();
+    const {lat, lng, setModalShow, allUser} = props;
+
+    const {register, handleSubmit, control, setValue}  = useForm();
+
     const onSubmit = async (data) => {
 
         const images = data.images;
@@ -42,8 +44,11 @@ var FormData = require('form-data');
                 'Content-Type': 'application/json'
             }
         })
-        console.log(res);
+
+        console.log(res.data);
+        setModalShow(false);
     };
+    
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -59,10 +64,7 @@ var FormData = require('form-data');
                 name="people"
                 as={Select}
                 isMulti
-                options={[
-                    { value: "chocolate", label: "Chocolate" },
-                    { value: "strawberry", label: "Strawberry" },
-                    { value: "vanilla", label: "Vanilla" }]}
+                options={allUser}
                 control={control}
                 rules={{required:true}}
                 defaultValue={null}
@@ -84,37 +86,3 @@ var FormData = require('form-data');
 
 export default Form
 
-
-// import React from 'react';
-// import { useForm } from 'react-hook-form';
-
-// export default function App() {
-//   const { register, handleSubmit, errors } = useForm();
-//   const onSubmit = data => console.log(data);
-//   console.log(errors);
-  
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)}>
-//       <input type="text" placeholder="Title" name="Title" ref={register({required: true})} />
-//       <select name="icon" ref={register({ required: true })}>
-//         <option value="1">1</option>
-//         <option value="2">2</option>
-//         <option value="3">3</option>
-//         <option value="4">4</option>
-//         <option value="5">5</option>
-//       </select>
-//       <input type="text" placeholder="Description" name="Description" ref={register({required: true, maxLength: 30, pattern: /^\S+@\S+$/i})} />
-//       <select name="people" ref={register}>
-//         <option value="a">a</option>
-//         <option value="b">b</option>
-//         <option value="c">c</option>
-//         <option value="d">d</option>
-//         <option value="e">e</option>
-//         <option value="f">f</option>
-//         <option value="g">g</option>
-//       </select>
-
-//       <input type="submit" />
-//     </form>
-//   );
-// }
