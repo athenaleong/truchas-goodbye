@@ -77,9 +77,9 @@ app.post('/uploadImage', upload.any(), async function(req, res) {
 app.post('/uploadPointer', jsonParser, async function(req, res) {
   try {
     let json = req.body;
-    console.log(json)
-    app.locals.collection.insertOne(json);
-    res.send();
+    app.locals.collection.insertOne(json, (err, result) => {
+      res.send(result.insertedId);
+    })
   }
   catch (error) {
     console.log(error)

@@ -8,7 +8,7 @@ const axios = require('axios');
 var FormData = require('form-data');
 
  function Form(props) {
-    const {lat, lng, setModalShow, allUser} = props;
+    const {lat, lng, setModalShow, allUser, setSelectedTagId, setDrawerShow} = props;
 
     const {register, handleSubmit, control, setValue}  = useForm();
 
@@ -45,8 +45,12 @@ var FormData = require('form-data');
             }
         })
 
-        console.log(res.data);
         setModalShow(false);
+        setSelectedTagId(res.data);
+        setDrawerShow(true);
+
+
+
     };
     
 
