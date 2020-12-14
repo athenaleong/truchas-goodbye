@@ -2,14 +2,16 @@
     position: fixed;
     width: 40%;
     transform: translateX(90%);
-    transition: transform 0.4s ease;
+    transition: transform 0.4s ease-in-out;
     top: 0;
     right: 0;
     /* background-color: grey; */
     border-left: 2px solid grey;
     height: 100%;
+    display:flex;
 }
 
 .side-drawer.open {
     transform: translateX(0);
 }
+

@@ -36,7 +36,7 @@ function App() {
   //Drawer 
   const [drawerShow, setDrawerShow] = useState(false);
   const [selectedTagId, setSelectedTagId] = useState(null);
-  const [drawerContent, setDrawerContent] = useState('to delete');
+  const [drawerJSON, setDrawerJSON] = useState('');
 
   function onMapClick(obj) {
     if (editMode) {
@@ -77,7 +77,7 @@ function App() {
   useEffect(() => {
     axios.get(`http://localhost:5555/getTag?id=${selectedTagId}`).then(res => {
       console.log(`res: ${JSON.stringify(res.data)}`);
-      setDrawerContent(JSON.stringify(res.data));
+      setDrawerJSON(res.data);
     })
   }, [selectedTagId])
 
@@ -88,7 +88,7 @@ function App() {
       <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}/> 
       <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser}></Form>}> </PopUp>
     </div>
-    <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerContent={drawerContent}></Drawer>
+    <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON}></Drawer>
   </div>
   )}
 
