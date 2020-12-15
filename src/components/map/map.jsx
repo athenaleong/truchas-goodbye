@@ -107,7 +107,7 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, s
                                 setDrawerShow(true);
                                 setSelectedTagId(cluster.properties.id);
                             }}>
-                                Hello
+                                🦄
                             </div>
                         </Marker>
                     )
