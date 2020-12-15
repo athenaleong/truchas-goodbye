@@ -2,6 +2,7 @@ import GoogleMapReact from "google-map-react";
 import { useState, useEffect } from "react";
 import "./map.css";
 import useSupercluster from "use-supercluster";
+import axios from 'axios'
 
 const createMapOptions = function (map) {
   return {

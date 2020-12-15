@@ -21,6 +21,10 @@ function App() {
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
 
+  //Side Bar
+  const [sideBarShow, setSideBarShow] = useState(true);
+  const [sideBarContent, setSideBarContent] = useState("some text");
+
   //Display Feature
   const [feature, setFeature] = useState([]); //TODO: Expand to walks/path tracing
   const [pointQuery, setPointQuery] = useState({});
@@ -66,33 +70,21 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+  <div className="App">
+    <div className="Main">
       <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
-      <MapSection
-        location={location}
-        zoomLevel={16}
-        onClick={onMapClick}
-        mapRef={mapRef}
-        geoJSON={geoJSON}
-      />
+      <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON}/> 
       <ErrorBoundary>
-        <PopUp
-          onHide={() => setModalShow(false)}
-          show={modalShow}
-          body={
-            <Form
-              lat={lat}
-              lng={lng}
-              setModalShow={setModalShow}
-              allUser={allUser}
-            ></Form>
-          }
-        >
-          {" "}
-        </PopUp>
+      <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser}></Form>}> </PopUp>
       </ErrorBoundary>
     </div>
-  );
-}
+
+    {sideBarShow && 
+      <div className="SideBar"> 
+        {sideBarContent}
+      </div>
+    }
+  </div>
+  )}
 
 export default App;
