@@ -30,7 +30,4 @@ yarn-error.log*
 .env 
 
 .eslintcache
-/.eslintcache
-*eslintcache
-eslintcache
 .eslintcache*
