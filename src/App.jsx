@@ -86,13 +86,18 @@ function App() {
   return (
   <div className='App'>
     <div className={drawerShow? 'Main compress' : 'Main'}>
-      <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
-      <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}/> 
-      <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}></Form>}> </PopUp>
+      <div className="Tools">
+        <div className="TempSearchBar"></div>
+        <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
+      </div>
+
+        <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}/> 
+
     </div>
     <aside>
     <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON}></Drawer>
     </aside>
+    <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}></Form>}> </PopUp>
   </div>
   )}
 

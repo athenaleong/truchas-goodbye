@@ -8,6 +8,9 @@ const createMapOptions = function (map) {
   return {
     mapTypeId: map.MapTypeId.HYBRID,
     styles: stylesArray,
+    scaleControl: false,
+    zoomControl: false,
+    fullscreenControl: false
   };
 };
 // green : 5B8E7D
@@ -41,8 +44,7 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, s
 
 
     return (
-    <div className="map">
-        <h2>Truchas Peaks</h2>
+    // <div className="map">
         <div className="google-map">
             <GoogleMapReact
                 bootstrapURLKeys = {{'key': 'AIzaSyB3QgxQzYNKaDkSDBTEl3-wCYUFnQ9ilKs'}}
@@ -116,7 +118,7 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, s
 
             </GoogleMapReact>
         </div>
-    </div> 
+    /* </div>  */
     )};
 
 

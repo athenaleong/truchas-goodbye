@@ -2,19 +2,27 @@
   text-align: center;
   display: flex;
   flex-direction: row;
+  background-color: #EEEEEE;
+  min-height: 100vh;
 }
 
 .Main {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  /* width: calc(100% - 40% x 0.10); */
+  width: 96%;
   transition: width 0.4s ease-in-out; 
   /* coordinate with drawer.side-drawer */
   height: 100%;
+  align-items: center;
+  height: 100%;
+  padding-left: 72px;
+  padding-right: 72px;
 }
 
 .Main.compress{
   width: 60%;
+  
 }
 
 .App-logo {
@@ -52,6 +60,32 @@
   }
 }
 
+.TempSearchBar {
+  width: 75%;
+  max-width: 700px;
+  height: 60px;
+  background: #F2F2F2;
+  box-shadow: 10px 10px 60px #CECECE, -20px -20px 60px #FFFFFF;
+  border-radius: 15px;
+
+}
+
+.Tools {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+
+}
+
+
+.Map {
+  padding-left: 72px;
+  padding-right: 72px;
+  width: 100%;
+}
+
 button {
   width: fit-content;
 }
+
