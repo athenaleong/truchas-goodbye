@@ -1,20 +1,7 @@
-.App {
+/* .App {
   text-align: center;
   display: flex;
   flex-direction: row;
-}
-
-.Main {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  transition: width 0.4s ease-in-out; 
-  /* coordinate with drawer.side-drawer */
-  height: 100%;
-}
-
-.Main.compress{
-  width: 60%;
 }
 
 .App-logo {
@@ -52,6 +39,13 @@
   }
 }
 
-button {
-  width: fit-content;
+.Main {
+  display: flex;
+  flex-direction: column;
 }
+
+.SideBar {
+  background-color: #61dafb;
+} 
+
+ */

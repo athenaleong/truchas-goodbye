@@ -37,6 +37,7 @@ var FormData = require('form-data');
         delete data['images'];
         data = {...data, imgId: imgId, lat: lat, lng: lng, category:"Point"};
 
+
         console.log(JSON.stringify(data));
         
         let res = await axios.post('http://localhost:5555/uploadPointer', data, {
@@ -68,7 +69,7 @@ var FormData = require('form-data');
                 name="people"
                 as={Select}
                 isMulti
-                options={[{value:'all', label:'all users'}, ...allUser]}
+                options={[{value:'all', label:'all users'}, ...allUser]} //TODO: implement select all 
                 control={control}
                 rules={{required:true}}
                 defaultValue={null}
