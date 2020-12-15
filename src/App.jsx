@@ -1,13 +1,15 @@
-import logo from "./logo.svg";
-import "./App.css";
-import MapSection from "./components/map/map";
-import React, { useEffect, useRef, useState } from "react";
-import PopUp from "./components/popUp/popUp";
-import Form from "./components/form/form";
-import ErrorBoundary from "./components/errorBoundary/errorBoundary";
-import axios from "axios";
-import qs from "qs";
-import styled from "@emotion/styled";
+import logo from './logo.svg';
+import './App.css';
+import MapSection from './components/map/map';
+import React, { useEffect, useRef, useState } from 'react';
+import PopUp from './components/popUp/popUp';
+import Form from './components/form/form';
+import ErrorBoundary from './components/errorBoundary/errorBoundary';
+import Drawer from './components/drawer/drawer';
+import axios from 'axios';
+import qs from 'qs';
+import { Button } from 'react-bootstrap';
+
 
 const location = {
   lat: 36.04818,
@@ -33,6 +35,11 @@ function App() {
   const mapRef = useRef();
 
   const [allUser, setAllUser] = useState([]); //TODO: move this to form.jsx. state hook wasn't working. not sure why
+
+  //Drawer 
+  const [drawerShow, setDrawerShow] = useState(false);
+  const [selectedTagId, setSelectedTagId] = useState(null);
+  const [drawerJSON, setDrawerJSON] = useState('');
 
   function onMapClick(obj) {
     if (editMode) {
@@ -69,21 +76,23 @@ function App() {
     });
   }, []);
 
-  return (
-  <div className="App">
-    <div className="Main">
-      <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
-      <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON}/> 
-      <ErrorBoundary>
-      <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser}></Form>}> </PopUp>
-      </ErrorBoundary>
-    </div>
+  useEffect(() => {
+    axios.get(`http://localhost:5555/getTag?id=${selectedTagId}`).then(res => {
+      console.log(`res: ${JSON.stringify(res.data)}`);
+      setDrawerJSON(res.data);
+    })
+  }, [selectedTagId])
 
-    {sideBarShow && 
-      <div className="SideBar"> 
-        {sideBarContent}
-      </div>
-    }
+  return (
+  <div className='App'>
+    <div className={drawerShow? 'Main compress' : 'Main'}>
+      <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
+      <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}/> 
+      <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}></Form>}> </PopUp>
+    </div>
+    <aside>
+    <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON}></Drawer>
+    </aside>
   </div>
   )}
 

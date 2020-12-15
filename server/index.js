@@ -45,7 +45,8 @@ MongoClient.connect(url)
   const db = client.db('truchas');
    tagCollection = db.collection('tag');  
    userCollection = db.collection('user');  
-
+   imageChunkCollection = db.collection('image.chunks')
+   imageFileCollection = db.collection('image.files')
    app.locals.collection = tagCollection;
   })
 
@@ -72,12 +73,9 @@ app.post("/uploadImage", upload.any(), async function (req, res) {
 app.post("/uploadPointer", jsonParser, async function (req, res) {
   try {
     let json = req.body;
-    console.log(json);
-    app.locals.collection.insertOne(json);
-    res.send();
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: error.toString() });
+    app.locals.collection.insertOne(json, (err, result) => {
+      res.send(result.insertedId);
+    })
   }
 });
 
@@ -113,12 +111,39 @@ app.get("/getUser", async function (req, res) {
 });
 
 app.get('/getTag', async function (req, res) {
-    let id = req.query.id;
-    tagCollection.findOne({"_id" : new ObjectID(id)}).then(tag => {
-      res.send(tag);
-    })
+  let id = req.query.id;
+  tagCollection.findOne({"_id" : new ObjectID(id)}).then(tag => {
+    res.send(tag);
+  })
 })
 
+app.get('/getImage', async function (req, res) {
+  //TODO: error handling
+  let idArray = req.query.id;
+  idArray = Array.isArray(idArray) ? idArray : [idArray];
+
+  const getUrl = (id) => async function() {
+    const filePromise = imageFileCollection.findOne({'_id': new ObjectID(id)})
+    const chunkPromise = imageChunkCollection.find({'files_id': new ObjectID(id)}).sort({n:1}).toArray();
+
+    return Promise.all([filePromise, chunkPromise]).then((values) => {
+
+      let file = values[0];
+      let chunks = values[1];
+
+      let fileData = [];
+      chunks.forEach(c => {
+          fileData.push(c.data.toString('base64'))
+        })
+      let dataUrl = 'data:' + file.contentType + ';base64,' + fileData.join(''); 
+      
+      return dataUrl;
+    })
+  }
+
+  Promise.all(idArray.map(id => getUrl(id)())).then(values => {res.send(values)});
+
+})
 
 //same origin 
 app.use(express.json());
