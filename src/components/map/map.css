@@ -1,6 +1,6 @@
 /* .map {
     padding-left: 72px;
-    padding-right: 72px;
+    padding-right: 7px;
     width: 100%;
 
 } */
@@ -16,7 +16,7 @@
 
 .cluster-marker {
   color: #fff;
-  background: #1978c8;
+  background: #CECECE;
   border-radius: 50%;
   padding: 10px;
   display: flex;

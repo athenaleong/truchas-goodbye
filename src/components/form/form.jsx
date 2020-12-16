@@ -1,9 +1,10 @@
-import './form.css';
 import React, {useEffect , useState} from 'react';
 import { Controller, useForm, useFormContext } from "react-hook-form";
 import Select from "react-select";
 import ErrorBoundary from '../errorBoundary/errorBoundary'
-import Dropzone from '../dropzone/drop'
+import Dropzone from '../dropzone/drop';
+import { MarkerForm } from './style';
+
 const axios = require('axios');
 var FormData = require('form-data');
 
@@ -53,10 +54,10 @@ var FormData = require('form-data');
 
 
     };
-    
+
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="form">
+        <MarkerForm onSubmit={handleSubmit(onSubmit)}>
             <input name="title" ref={register({required: true, maxLength:10})} />
             <textarea name="description" ref={register({required: true, maxLength:30})} />
             <div>
@@ -85,7 +86,7 @@ var FormData = require('form-data');
             />
 
             <input type="submit" />
-        </form>
+        </MarkerForm>
     );
 }
 

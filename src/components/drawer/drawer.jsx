@@ -4,13 +4,13 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { Image } from 'react-bootstrap';
 import './drawer.css';
+import {SideDrawer} from './style'
 
 function Drawer(props) {
     const {drawerShow, setDrawerShow, drawerJSON} = props
     const [imageId, setImageId] = useState([]);
     const [imgURL, setImageURL] = useState([]);
-    let drawerClass = drawerShow ? 'side-drawer open': 'side-drawer';
-    var drawerContent; 
+    let drawerClass = drawerShow ? 'open': null;
 
     useEffect(async () => {
 
@@ -37,9 +37,8 @@ function Drawer(props) {
     ));
 
 
-
     return (
-        <div className={drawerClass} onClick={() => setDrawerShow(!drawerShow)}>
+        <SideDrawer className={drawerClass} onClick={() => setDrawerShow(!drawerShow)}>
             {/* <button>Toggle</button>/ */}
             {/* <h1>Slidinggg</h1> */}
             {/* <p>{JSON.stringify(drawerJSON)}</p> */}
@@ -52,7 +51,7 @@ function Drawer(props) {
                 </ul>
             }
 
-        </div>
+        </SideDrawer>
         
     )
 }

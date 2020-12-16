@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useDropzone } from "react-dropzone";
-
-import "./drop.css";
+import {DropContainer} from './style';
 
 function Dropzone(props) {
     const {onChange, register, setValue} = props
@@ -54,7 +53,7 @@ function Dropzone(props) {
 
 
     return (
-    <section className="container">
+    <DropContainer>
         <div {...getRootProps({ className: "dropzone" })}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
@@ -62,7 +61,7 @@ function Dropzone(props) {
         <aside>
         <ul>{fileList}</ul>
         </aside>
-    </section>
+    </DropContainer>
     );
     }
 

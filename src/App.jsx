@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
 import MapSection from './components/map/map';
 import React, { useEffect, useRef, useState } from 'react';
 import PopUp from './components/popUp/popUp';
@@ -9,6 +9,7 @@ import Drawer from './components/drawer/drawer';
 import axios from 'axios';
 import qs from 'qs';
 import { Button } from 'react-bootstrap';
+import {AppStyled, Main, TempSearchBar, Tools, Map} from './style';
 
 
 const location = {
@@ -84,21 +85,20 @@ function App() {
   }, [selectedTagId])
 
   return (
-  <div className='App'>
-    <div className={drawerShow? 'Main compress' : 'Main'}>
-      <div className="Tools">
-        <div className="TempSearchBar"></div>
+  <AppStyled>
+    <Main className={drawerShow? 'compress' : null}>
+      <Tools>
+        <TempSearchBar></TempSearchBar>
         <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
-      </div>
-
+      </Tools>
         <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}/> 
 
-    </div>
+    </Main>
     <aside>
     <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON}></Drawer>
     </aside>
     <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}></Form>}> </PopUp>
-  </div>
+  </AppStyled>
   )}
 
 export default App;

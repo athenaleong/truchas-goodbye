@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import "./map.css";
 import useSupercluster from "use-supercluster";
 import axios from 'axios';
+import {GoogleMap, ClusterMarker, SingleMarker} from './style';
+
 
 const createMapOptions = function (map) {
   return {
@@ -45,7 +47,7 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, s
 
     return (
     // <div className="map">
-        <div className="google-map">
+        <GoogleMap>
             <GoogleMapReact
                 bootstrapURLKeys = {{'key': 'AIzaSyB3QgxQzYNKaDkSDBTEl3-wCYUFnQ9ilKs'}}
                 defaultCenter={location}
@@ -78,8 +80,7 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, s
                             lat={latitude}
                             lng={longitude}
                         >
-                            <div
-                                className="cluster-marker"
+                            <ClusterMarker
                                 style={{
                                     width: `${10 + (pointCount / geoJSON.length) * 20}px`,
                                     height: `${10 + (pointCount / geoJSON.length) * 20}px`
@@ -94,7 +95,7 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, s
                                 }}
                             >
                             {pointCount}
-                            </div>
+                            </ClusterMarker>
                         </Marker>
                     );
                 }
@@ -105,19 +106,19 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, s
                             lat={latitude}
                             lng={longitude}
                             >
-                            <div onClick={() => {
+                            <SingleMarker onClick={() => {
                                 setDrawerShow(true);
                                 setSelectedTagId(cluster.properties.id);
                             }}>
                                 🦄
-                            </div>
+                            </SingleMarker>
                         </Marker>
                     )
                 }
             })}
 
             </GoogleMapReact>
-        </div>
+        </GoogleMap>
     /* </div>  */
     )};
 
