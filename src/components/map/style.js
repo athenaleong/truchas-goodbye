@@ -11,7 +11,7 @@ export const GoogleMap = styled.div`
 
 export const ClusterMarker = styled.div `
     color: #fff;
-    background-color: #1978c8;
+    background-color: #3D664B;
     border-radius: 50%;
     padding: 10px;
     display: flex;
@@ -25,10 +25,10 @@ export const SingleMarker = styled.div`
     align-items: center;
     width: fit-content;
     height: fit-content;
-    padding: 4px;
+    padding: 5px;
     border-radius: 50%;
     background-color: White;
-    transition: ease 0.2s;
+    transition: ease-in 0.15s;
 
 
     &.selected {
@@ -36,10 +36,8 @@ export const SingleMarker = styled.div`
     }
 
     &:hover {
-        // width: 40px;
-        // height:40px
-        transform: scale(1.3);
-        transition: ease 0.1s;
+        transform: scale(1.4);
+        transition: ease-out 0.15s;
 
     }
 `;

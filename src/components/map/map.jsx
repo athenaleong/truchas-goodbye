@@ -22,10 +22,15 @@ const Marker = ({ children }) => children;
 const stylesArray =  [
                     {featureType: "all", elementType: "labels.text.stroke", stylers:[{color: "#5B8E7D"}]},
                     {featureType: "all", elementType: "labels.text.fill", stylers:[{color: "#f5f1e6"}]},
-                    {featureType: "water", elementType: "geometry.fill", stylers:[{color: "#01295f", "weight": 8}]},
-                    {featureType: "road.highway", elementType: "geometry.fill", stylers : [{ color : "#e9bc62"}]},
-                    {featureType: "road.highway", elementType: "labels.text.stroke", stylers : [{ color : "#00000"}]},
-                    {featureType:"road.local", elementType: "geometry", stylers: [{color: "#f5f1e6"}]}]
+
+                
+                ]
+
+                // {featureType: "water", elementType: "geometry.fill", stylers:[{color: "#01295f", "weight": 8}]},
+                //     {featureType: "road.highway", elementType: "geometry.fill", stylers : [{ color : "#e9bc62"}]},
+                //     {featureType: "road.highway", elementType: "geometry.stroke", stylers : [{ color : "#e9bc62"}]},
+                //     {featureType: "road.highway", elementType: "labels.text.stroke", stylers : [{ color : "#00000"}]},
+                //     {featureType:"road.local", elementType: "geometry", stylers: [{color: "#f5f1e6"}]}
 
 
 const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, setDrawerShow, selectedTagId}) => {
