@@ -10,12 +10,15 @@ import axios from 'axios';
 import qs from 'qs';
 import { Button } from 'react-bootstrap';
 import {AppStyled, Main, TempSearchBar, Tools, Map} from './style';
+import MapBox from './components/mapBox/mapBox';
 
 
 const location = {
   lat: 36.04818,
   lng: -105.81129,
 };
+
+const mapBoxLocation = [36.04818, -105.81129];
 
 function App() {
   //Map
@@ -85,20 +88,20 @@ function App() {
   }, [selectedTagId])
 
   return (
-  <AppStyled>
-    <Main className={drawerShow? 'compress' : null}>
-      <Tools>
-        <TempSearchBar></TempSearchBar>
-        <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
-      </Tools>
-        <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/> 
-
-    </Main>
-    <aside>
-    <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON}></Drawer>
-    </aside>
-    <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}></Form>}> </PopUp>
-  </AppStyled>
+    <AppStyled>
+      <Main className={drawerShow? 'compress' : null}>
+        <Tools>
+          <TempSearchBar></TempSearchBar>
+          <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
+        </Tools>
+          {/* <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/>  */}
+          <MapBox location={location} zoomLevel={16} onClick={onMapClick} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId} />
+      </Main>
+      <aside>
+      <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON}></Drawer>
+      </aside>
+      <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}></Form>}> </PopUp>
+    </AppStyled>
   )}
 
 export default App;
