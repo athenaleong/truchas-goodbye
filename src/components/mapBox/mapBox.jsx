@@ -3,8 +3,7 @@ import axios from 'axios';
 import { Emoji } from "emoji-mart";
 import useSupercluster from "use-supercluster";
 import ReactMapGL, { Marker, FlyToInterpolator } from "react-map-gl";
-import "./mapBox.css";
-import {MapBox} from './style';
+import {MapBox, ClusterMarker, SingleMarker} from './style';
 
 const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawerShow, selectedTagId}) => {
     
@@ -50,7 +49,7 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
             longitude,
             zoom: expansionZoom,
             transitionInterpolator: new FlyToInterpolator({
-              speed: 3
+              speed: 2
             }),
             transitionDuration: "auto"
           });
@@ -58,6 +57,7 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
 
     return (
         <MapBox>
+            <h1>{selectedTagId}</h1>
             <ReactMapGL
                 {...viewport}
                 width="100%"
@@ -68,8 +68,13 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
                 }}
                 mapStyle={url}
                 ref={mapRef}
+                onClick={onClick}
+                setTimeout={() => {
+                    console.log('meow');
+                }, 1000}
             >
-                {clusters.map(cluster => {
+            {console.log(`geoJSON: ${geoJSON.length}`)}
+            {clusters.map(cluster => {
                 const [longitude, latitude] = cluster.geometry.coordinates;
                 const {cluster: isCluster, point_count: pointCount} = cluster.properties;
 
@@ -80,7 +85,7 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
                     latitude={latitude}
                     longitude={longitude}
                     >
-                    <div
+                    <ClusterMarker
                         className="cluster-marker"
                         style={{
                         width: `${10 + (pointCount / geoJSON.length) * 20}px`,
@@ -89,21 +94,33 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
                         onClick={() => clusterOnClick(latitude, longitude, cluster)}
                     >
                         {pointCount}
-                    </div>
+                    </ClusterMarker>
                     </Marker>
                 );
                 }
-
-                return (
-                <Marker
-                    key={`crime-${cluster.properties.id}`}
-                    latitude={latitude}
-                    longitude={longitude}
-                >
-                    <h2>🎉</h2>
-                </Marker>
-                );
+                else {
+                    console.log(`hold on ${selectedTagId == cluster.properties.id? "selected" : null}`)
+                    return (
+                    <Marker
+                        key={`crime-${cluster.properties.id}`}
+                        latitude={latitude}
+                        longitude={longitude}
+                    >
+                        <SingleMarker 
+                            className={(selectedTagId == cluster.properties.id)? "selected" : null}
+                            onClick={() => {
+                                setDrawerShow(true);
+                                setSelectedTagId(cluster.properties.id);
+                            }}
+                        >
+                            <Emoji emoji={cluster.properties.emoji} size={18}></Emoji>
+                            <h3>{ (selectedTagId == cluster.properties.id) ? "selected" : null}</h3>
+                        </SingleMarker>
+                    </Marker>
+                    );
+                }
             })}
+        
             </ReactMapGL>
         </MapBox>
     )
