@@ -4,6 +4,7 @@ import Select from "react-select";
 import ErrorBoundary from '../errorBoundary/errorBoundary'
 import Dropzone from '../dropzone/drop';
 import { MarkerForm } from './style';
+import EmojiPicker from '../emojiPicker/emojiPicker';
 
 const axios = require('axios');
 var FormData = require('form-data');
@@ -12,6 +13,7 @@ var FormData = require('form-data');
     const {lat, lng, setModalShow, allUser, setSelectedTagId, setDrawerShow} = props;
 
     const {register, handleSubmit, control, setValue}  = useForm();
+    const {pickerShow, setPickerShow} = useState(false);
 
     const onSubmit = async (data) => {
 
@@ -50,9 +52,6 @@ var FormData = require('form-data');
         setModalShow(false);
         setSelectedTagId(res.data);
         setDrawerShow(true);
-
-
-
     };
 
 
@@ -60,6 +59,11 @@ var FormData = require('form-data');
         <MarkerForm onSubmit={handleSubmit(onSubmit)}>
             <input name="title" ref={register({required: true, maxLength:10})} />
             <textarea name="description" ref={register({required: true, maxLength:30})} />
+            <Controller
+                name="emoji"
+                control={control}
+                render={() => <EmojiPicker register={register} setValue={setValue}></EmojiPicker>}
+            />
             <div>
                 <input name="icon" type="radio" value="1" ref={register({required: true, max:1})}/>
                 <input name="icon" type="radio" value="2" ref={register({required: true, max:1})} />
@@ -75,6 +79,7 @@ var FormData = require('form-data');
                 rules={{required:true}}
                 defaultValue={null}
             />
+
 
             <Controller
                 name="images"

@@ -4,6 +4,7 @@ import "./map.css";
 import useSupercluster from "use-supercluster";
 import axios from 'axios';
 import {GoogleMap, ClusterMarker, SingleMarker} from './style';
+import { Emoji } from "emoji-mart";
 
 
 const createMapOptions = function (map) {
@@ -21,17 +22,23 @@ const Marker = ({ children }) => children;
 const stylesArray =  [
                     {featureType: "all", elementType: "labels.text.stroke", stylers:[{color: "#5B8E7D"}]},
                     {featureType: "all", elementType: "labels.text.fill", stylers:[{color: "#f5f1e6"}]},
-                    {featureType: "water", elementType: "geometry.fill", stylers:[{color: "#01295f", "weight": 8}]},
-                    {featureType: "road.highway", elementType: "geometry.fill", stylers : [{ color : "#e9bc62"}]},
-                    {featureType: "road.highway", elementType: "labels.text.stroke", stylers : [{ color : "#00000"}]},
-                    {featureType:"road.local", elementType: "geometry", stylers: [{color: "#f5f1e6"}]}]
+
+                
+                ]
+
+                // {featureType: "water", elementType: "geometry.fill", stylers:[{color: "#01295f", "weight": 8}]},
+                //     {featureType: "road.highway", elementType: "geometry.fill", stylers : [{ color : "#e9bc62"}]},
+                //     {featureType: "road.highway", elementType: "geometry.stroke", stylers : [{ color : "#e9bc62"}]},
+                //     {featureType: "road.highway", elementType: "labels.text.stroke", stylers : [{ color : "#00000"}]},
+                //     {featureType:"road.local", elementType: "geometry", stylers: [{color: "#f5f1e6"}]}
 
 
-const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, setDrawerShow}) => {
+const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, setDrawerShow, selectedTagId}) => {
 
 
     const [bounds, setBounds] = useState(null);
     const [zoom, setZoom] = useState(zoomLevel);
+    const [emojiSize, setEmojiSize] = useState(17);
 
     console.log(`geoJSON: ${geoJSON.length}`);
 
@@ -100,17 +107,22 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, s
                     );
                 }
                 else {
+                    console.log(`hold on ${selectedTagId == cluster.properties.id? "selected" : null}`)
                     return (
                         <Marker
                             key={`point-${cluster.properties.id}`}
                             lat={latitude}
                             lng={longitude}
                             >
-                            <SingleMarker onClick={() => {
-                                setDrawerShow(true);
-                                setSelectedTagId(cluster.properties.id);
-                            }}>
-                                🦄
+                            <SingleMarker 
+                                className={(selectedTagId == cluster.properties.id)? "selected" : null}
+                                onClick={() => {
+                                    setDrawerShow(true);
+                                    setSelectedTagId(cluster.properties.id);
+                                }}
+
+                            >
+                                <Emoji emoji={cluster.properties.emoji} size={17}></Emoji>
                             </SingleMarker>
                         </Marker>
                     )
