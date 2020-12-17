@@ -1,19 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import { Picker } from "emoji-mart";
+import { Emoji, Picker } from "emoji-mart";
 import {EmojiButton} from './style';
 import "emoji-mart/css/emoji-mart.css";
 
 function EmojiPicker(props) {
 
-    const [pickerShow, setPickerShow] = useState(false);
-    const [selectedEmoji, setSelectedEmoji] = useState(null);
+    const {setValue, register} = props;
 
+    const [pickerShow, setPickerShow] = useState(false);
+    const [selectedEmoji, setSelectedEmoji] = useState('pushpin');
 
     const onSelect = ((emoji) => {
-        console.log(emoji.unified);
-        setSelectedEmoji(emoji.unified);
-        setPickerShow(false);
-        console.log(`pickerrr ${pickerShow}`)
+        try {
+            console.log(emoji)
+            setSelectedEmoji(emoji.id);
+            setPickerShow(false);            
+        }
+        catch (error) {
+            console.log(`error: ${error}`)
+        }
 
     })
 
@@ -22,13 +27,22 @@ function EmojiPicker(props) {
         setPickerShow(true);
     })
 
+    useEffect(() => {
+        register({name: 'emoji'});
+    }, [])
+
+    useEffect(() => {
+        setValue("emoji", selectedEmoji);
+    }, [selectedEmoji])
+
+
     //to do pass most popular emoji as recent
     return (
         <div>
             <EmojiButton onClick={onClick}> 
-                {selectedEmoji && String.fromCodePoint('0x' + selectedEmoji)}
+                {selectedEmoji && <Emoji emoji={selectedEmoji}size={16}/>}
             </EmojiButton>
-            {pickerShow && <Picker set="apple" onSelect={onSelect} showPreview={false}/> }
+            {pickerShow && <Picker set="apple" onSelect={onSelect} showPreview={false} showSkinTones={false} emoji="" /> }
         </div>
 
 

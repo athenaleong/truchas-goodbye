@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Emoji } from "emoji-mart";
 
 export const GoogleMap = styled.div`
     width: 100%;
@@ -18,12 +19,37 @@ export const ClusterMarker = styled.div `
     align-items: center;
 `;
 
-export const SingleMarker = styled.div`
+export const SingleMarker = styled.div` 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    padding: 4px;
+    border-radius: 50%;
+    background-color: White;
+    transition: ease 0.2s;
 
-    &:hover {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
+
+    &.selected {
         background-color: Tomato;
     }
+
+    &:hover {
+        // width: 40px;
+        // height:40px
+        transform: scale(1.3);
+        transition: ease 0.1s;
+
+    }
 `;
+
+// export const EmojiStyled = styled.Emoji.attrs(props => ({
+
+
+
+// }))`
+
+
+
+// `

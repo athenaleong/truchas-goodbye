@@ -52,9 +52,6 @@ var FormData = require('form-data');
         setModalShow(false);
         setSelectedTagId(res.data);
         setDrawerShow(true);
-
-
-
     };
 
 
@@ -62,7 +59,11 @@ var FormData = require('form-data');
         <MarkerForm onSubmit={handleSubmit(onSubmit)}>
             <input name="title" ref={register({required: true, maxLength:10})} />
             <textarea name="description" ref={register({required: true, maxLength:30})} />
-            <EmojiPicker></EmojiPicker>
+            <Controller
+                name="emoji"
+                control={control}
+                render={() => <EmojiPicker register={register} setValue={setValue}></EmojiPicker>}
+            />
             <div>
                 <input name="icon" type="radio" value="1" ref={register({required: true, max:1})}/>
                 <input name="icon" type="radio" value="2" ref={register({required: true, max:1})} />
@@ -78,6 +79,7 @@ var FormData = require('form-data');
                 rules={{required:true}}
                 defaultValue={null}
             />
+
 
             <Controller
                 name="images"

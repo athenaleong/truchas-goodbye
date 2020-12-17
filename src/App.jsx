@@ -91,7 +91,7 @@ function App() {
         <TempSearchBar></TempSearchBar>
         <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
       </Tools>
-        <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}/> 
+        <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/> 
 
     </Main>
     <aside>

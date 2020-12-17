@@ -76,6 +76,8 @@ app.post("/uploadPointer", jsonParser, async function (req, res) {
     app.locals.collection.insertOne(json, (err, result) => {
       res.send(result.insertedId);
     })
+  } catch (error) {
+    res.status(505).json({error: error.toString()})
   }
 });
 
@@ -87,10 +89,11 @@ app.post("/getGeoJSON", urlParser, async function (req, res) {
   let geoJSONTag = [];
   await tags.forEach((tag) => {
     if (tag.category == "Point") {
-      console.log(geoJSONTag);
+      // console.log(geoJSONTag);
+      console.log(tag.emoji)
       geoJSONTag.push({
         type: "Feature",
-        properties: { cluster: false, id: tag._id },
+        properties: { cluster: false, id: tag._id, emoji: tag.emoji},
         geometry: {
           type: tag.category,
           coordinates: [parseFloat(tag.lng), parseFloat(tag.lat)],
@@ -98,6 +101,7 @@ app.post("/getGeoJSON", urlParser, async function (req, res) {
       });
     }
   });
+  console.log(geoJSONTag)
   res.send(geoJSONTag);
 });
 
