@@ -6,24 +6,35 @@ export const AppStyled = styled.div`
     flex-direction: row;
     background-color: #EEEEEE;
     min-height: 100vh;
+    padding-top: 6vh;
+    padding-bottom: 6vh;
+
 `;
 
-export const Main = styled.div`
+export const LeftBox = styled.div`
     display: flex;
     flex-direction: column;
     /* width: calc(100% - 40% x 0.10); */
-    width: 96%;
+    width: 100%;
     transition: width 0.4s ease-in-out; 
     /* coordinate with drawer.side-drawer */
     min-height: 100%;
     padding-left: 72px;
     padding-right: 72px;
-    justify-content: space-evenly;
+    justify-content: space-between;
 
     &.compress {
-        width: 60%;
+    padding-right: 36px;
+    width: 50%;
 
     }
+`;
+
+export const RightBox = styled.div`
+    padding-left: 72px;
+    padding-right: 72px;
+    min-height: 100%;
+
 `;
 
 export const TempSearchBar = styled.div`
@@ -45,3 +56,5 @@ export const Tools = styled.div`
     max-height: 64px;
 
 `;
+
+

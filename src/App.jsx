@@ -9,7 +9,7 @@ import Drawer from './components/drawer/drawer';
 import axios from 'axios';
 import qs from 'qs';
 import { Button } from 'react-bootstrap';
-import {AppStyled, Main, TempSearchBar, Tools, Map} from './style';
+import {AppStyled, LeftBox, RightBox, TempSearchBar, Tools, } from './style';
 import MapBox from './components/mapBox/mapBox';
 import SignInButton from './components/googleAuth/googleAuth';
 
@@ -75,7 +75,7 @@ function App() {
   }, [pointQuery, modalShow]);
 
   useEffect(() => {
-    axios.get("http://localhost:5555/getUser").then((res) => {
+    axios.get("http://localhost:5555/getAllUser").then((res) => {
       console.log(`res: ${JSON.stringify(res.data)}`);
       setAllUser(res.data);
     });
@@ -90,18 +90,18 @@ function App() {
 
   return (
     <AppStyled>
-      <Main className={drawerShow? 'compress' : null}>
-        <Tools>
-          <TempSearchBar></TempSearchBar>
-          <SignInButton></SignInButton>
-          <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
-        </Tools>
-          {/* <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/>  */}
-          <MapBox location={location} zoomLevel={16} onClick={onMapClick} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId} />
-      </Main>
-      <aside>
-      <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON}></Drawer>
-      </aside>
+          <LeftBox className={drawerShow? 'compress' : null}>
+            <Tools>
+              <TempSearchBar></TempSearchBar>
+              <SignInButton></SignInButton>
+              <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
+            </Tools>
+              {/* <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/>  */}
+              <MapBox location={location} zoomLevel={16} onClick={onMapClick} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId} />
+          </LeftBox>
+          {/* <RightBox> */}
+            <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON}></Drawer>
+          {/* </RightBox> */}
       <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}></Form>}> </PopUp>
     </AppStyled>
   )}

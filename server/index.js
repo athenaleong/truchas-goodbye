@@ -86,6 +86,11 @@ app.get("/ping", function (req, res) {
   return res.send("pong");
 });
 
+app.get("/getUser", function(req, res) {
+  userCollection.findOne({'_id': new ObjectID(req.query.id)}).then((result) => res.send(result));
+
+  
+})
 // Use Multer and GridFS to upload images into Db
 app.post("/uploadImage", upload.any(), async function (req, res) {
   console.log("upload Image");
@@ -136,7 +141,7 @@ app.post("/getGeoJSON", urlParser, async function (req, res) {
   res.send(geoJSONTag);
 });
 
-app.get("/getUser", async function (req, res) {
+app.get("/getAllUser", async function (req, res) {
   let user = userCollection.find({});
   let userData = [];
   await user.forEach((u) => {
