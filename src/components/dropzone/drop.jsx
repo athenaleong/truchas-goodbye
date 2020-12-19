@@ -12,11 +12,6 @@ function Dropzone(props) {
         acceptedFiles.forEach(async function(file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                // const arrayBuffer = reader.result;
-                // const Uint8 = new Uint8Array(arrayBuffer)
-                // console.log(Uint8);
-                // buffer.push(Uint8); //not sure why setBuffer doesn't work
-                // console.log(`buffer : ${buffer}`);
                 console.log(`file type ${typeof file}`);
                 const base64 = reader.result;
                 buffer.push(base64);

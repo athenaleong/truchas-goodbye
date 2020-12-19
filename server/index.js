@@ -7,9 +7,20 @@ const cors = require("cors");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
+// const session = require('express-session');
+
+//For caching and file persistance. NOTEL: add in .gitignore 
+// const sessionFileStore = require('session-file-store');
+// const persist = require('node-persist');
+
+// Set up OAuth 2.0 authentication through the passport.js library.
+// const passport = require('passport');
+// const auth = require('./auth');
+// auth(passport);
 
 const app = express();
 const port = 5555;
+const config = require('./config'); 
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -49,6 +60,26 @@ MongoClient.connect(url)
    imageFileCollection = db.collection('image.files')
    app.locals.collection = tagCollection;
   })
+
+//Sessions set up
+// const fileStore = sessionFileStore(session);
+  
+  // Set up a session middleware to handle user sessions.
+// NOTE: A secret is used to sign the cookie. This is just used for this sample
+// app and should be changed.
+// const sessionMiddleware = session({
+//   resave: true,
+//   saveUninitialized: true,
+//   store: new fileStore({}),
+//   secret: 'photo frame sample',
+// });
+
+// Enable user session handling.
+// app.use(sessionMiddleware);
+
+// Set up passport and session handling.
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 app.get("/ping", function (req, res) {
@@ -146,6 +177,29 @@ app.get('/getImage', async function (req, res) {
   }
 
   Promise.all(idArray.map(id => getUrl(id)())).then(values => {res.send(values)});
+
+})
+
+// For temporary data loading from google photos, need edit for development 
+app.get('/getAlbumContent', async function (req, res) {
+  console.log(`TOKEN: ${req.query.token}`)
+  const token = req.query.token;
+  const data = {
+    'albumId': config.albumId,
+    'pageSize': 1
+  }
+  axios.post('https://photoslibrary.googleapis.com/v1/mediaItems:search', data,
+    {
+      headers: {
+        'Content-type': 'Application/json',
+        'Authorization' : `Bearer ${token}`
+      },
+    }
+  ).then((response) => {
+    console.log('hey')
+    console.log(response.data)
+    res.send(response.data);
+  }).catch((error) => {console.log(error); res.send(error)});
 
 })
 

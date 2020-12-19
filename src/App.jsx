@@ -11,6 +11,7 @@ import qs from 'qs';
 import { Button } from 'react-bootstrap';
 import {AppStyled, Main, TempSearchBar, Tools, Map} from './style';
 import MapBox from './components/mapBox/mapBox';
+import SignInButton from './components/googleAuth/googleAuth';
 
 
 const location = {
@@ -49,8 +50,8 @@ function App() {
     if (editMode) {
       setModalShow(true);
     }
-    setLat(obj.lat);
-    setLng(obj.lng);
+    setLat(obj.lngLat[1]);
+    setLng(obj.lngLat[0]);
   }
 
   useEffect(() => {
@@ -92,6 +93,7 @@ function App() {
       <Main className={drawerShow? 'compress' : null}>
         <Tools>
           <TempSearchBar></TempSearchBar>
+          <SignInButton></SignInButton>
           <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
         </Tools>
           {/* <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/>  */}

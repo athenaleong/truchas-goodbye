@@ -31,3 +31,7 @@ yarn-error.log*
 
 .eslintcache
 .eslintcache*
+
+#oAuth
+/server/config.js
+/src/config.js

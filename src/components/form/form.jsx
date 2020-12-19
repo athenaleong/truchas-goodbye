@@ -57,18 +57,18 @@ var FormData = require('form-data');
 
     return (
         <MarkerForm onSubmit={handleSubmit(onSubmit)}>
-            <input name="title" ref={register({required: true, maxLength:10})} />
-            <textarea name="description" ref={register({required: true, maxLength:30})} />
+            <input name="title" ref={register} />
+            <textarea name="description" ref={register} />
             <Controller
                 name="emoji"
                 control={control}
                 render={() => <EmojiPicker register={register} setValue={setValue}></EmojiPicker>}
             />
             <div>
-                <input name="icon" type="radio" value="1" ref={register({required: true, max:1})}/>
-                <input name="icon" type="radio" value="2" ref={register({required: true, max:1})} />
-                <input name="icon" type="radio" value="3" ref={register({required: true, max:1})} />
-                <input name="icon" type="radio" value="4" ref={register({required: true, max:1})} />
+                <input name="icon" type="radio" value="1" ref={register({ max:1})}/>
+                <input name="icon" type="radio" value="2" ref={register({ max:1})} />
+                <input name="icon" type="radio" value="3" ref={register({ max:1})} />
+                <input name="icon" type="radio" value="4" ref={register({ max:1})} />
             </div>
             <Controller
                 name="people"
@@ -76,7 +76,6 @@ var FormData = require('form-data');
                 isMulti
                 options={[{value:'all', label:'all users'}, ...allUser]} //TODO: implement select all 
                 control={control}
-                rules={{required:true}}
                 defaultValue={null}
             />
 

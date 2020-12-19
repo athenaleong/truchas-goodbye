@@ -18,7 +18,6 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
         zoom: zoomLevel
     })
 
-
     const mapRef = useRef();
 
     const bounds = mapRef.current
@@ -26,16 +25,15 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
         .getMap()
         .getBounds()
         .toArray()
-        .flat()
+        .flat() 
     : null;
-
+    
     const { clusters, supercluster} = useSupercluster({
         points : geoJSON,
         bounds : bounds,
         zoom: viewport.zoom,
-        // options: { radius: 75, maxZoom: 20 }
+        options: { radius: 75, maxZoom: 20 }
       });
-
 
     const clusterOnClick = ((latitude, longitude, cluster) => {
         const expansionZoom = Math.min(
@@ -56,8 +54,8 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
     })
 
     return (
+        <div>
         <MapBox>
-            <h1>{selectedTagId}</h1>
             <ReactMapGL
                 {...viewport}
                 width="100%"
@@ -69,11 +67,11 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
                 mapStyle={url}
                 ref={mapRef}
                 onClick={onClick}
-                setTimeout={() => {
-                    console.log('meow');
-                }, 1000}
+                
             >
             {console.log(`geoJSON: ${geoJSON.length}`)}
+            {console.log(`cluster: ${clusters.length}`)}
+
             {clusters.map(cluster => {
                 const [longitude, latitude] = cluster.geometry.coordinates;
                 const {cluster: isCluster, point_count: pointCount} = cluster.properties;
@@ -99,10 +97,10 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
                 );
                 }
                 else {
-                    console.log(`hold on ${selectedTagId == cluster.properties.id? "selected" : null}`)
+                    console.log(`${cluster.properties.emoji} ${selectedTagId == cluster.properties.id? "selected" : null}`)
                     return (
                     <Marker
-                        key={`crime-${cluster.properties.id}`}
+                        key={`point-${cluster.properties.id}`}
                         latitude={latitude}
                         longitude={longitude}
                     >
@@ -114,7 +112,7 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
                             }}
                         >
                             <Emoji emoji={cluster.properties.emoji} size={18}></Emoji>
-                            <h3>{ (selectedTagId == cluster.properties.id) ? "selected" : null}</h3>
+                            {/* <h3>{ (selectedTagId == cluster.properties.id) ? "selected" : null}</h3> */}
                         </SingleMarker>
                     </Marker>
                     );
@@ -123,6 +121,16 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
         
             </ReactMapGL>
         </MapBox>
+        {/* <SingleMarker 
+                            className={(selectedTagId == "5fdb1bab6cff65025719f097")? "selected" : null}
+                            onClick={() => {
+                            }}
+                        >
+                            hello
+        </SingleMarker> */}
+        </div>
+
+
     )
 };
 
