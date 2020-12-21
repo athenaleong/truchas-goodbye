@@ -6,18 +6,20 @@ import './drawer.css';
 import {SideDrawer, Title, Description,Image} from './style';
 import UserBubble from '../userBubble/userBubble';
 import ImgCarousel from '../imageCarousel/imageCarousel';
+import {UserPopUp} from '../popUp/popUp';
 
 function Drawer(props) {
     const {drawerShow, setDrawerShow, drawerJSON} = props
     const [imageId, setImageId] = useState([]);
     const [imgURL, setImgURL] = useState([]);
-    const [userURL, setUserURL] = useState([])
+    const [userInfo, setUserInfo] = useState([])
+    const [showUserPopUp, setShowUserPopUp] = useState(false);
     let drawerClass = drawerShow ? 'open': null;
 
     useEffect(async () => {
 
         setImgURL([]);
-        setUserURL([]);
+        setUserInfo([]);
 
         //TODO: implement caching
 
@@ -37,8 +39,8 @@ function Drawer(props) {
         } 
         if (drawerJSON.people) {
             Promise.all(drawerJSON.people.map((p) => getUser(p.value))).then((values) => {
-                let people = values.map(v => v.data['imageUrl']);
-                setUserURL(people);
+                let people = values.map(v => v.data);
+                setUserInfo(people);
             })
         } 
     }, [drawerJSON])
@@ -53,18 +55,20 @@ function Drawer(props) {
     }
 
     return (
+        <div>
         <SideDrawer className={drawerClass} >
-            {/* onClick={() => { setDrawerShow(!drawerShow);}} */}
-            <div>
-                <Title>{drawerJSON.title}</Title>
-                {/* {imgList} */}
-                <UserBubble userURL={userURL}></UserBubble>
-                <ImgCarousel imgURL={imgURL}></ImgCarousel>
-                <Description>{drawerJSON.description}</Description>
-            </div>
+
+            <Title>{drawerJSON.title}</Title>
+            {/* {imgList} */}
+            <UserBubble userInfo={userInfo} setShowUserPopUp={setShowUserPopUp}></UserBubble>
+            <ImgCarousel imgURL={imgURL}></ImgCarousel>
+            <Description>{drawerJSON.description}</Description>
+
 
         </SideDrawer>
         
+        <UserPopUp userInfo={userInfo} show={showUserPopUp} onHide={() => setShowUserPopUp(false)}></UserPopUp>
+        </div>
     )
     // onClick={(e)=> e.stopPropagation()}
 }

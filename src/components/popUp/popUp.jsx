@@ -1,8 +1,9 @@
 import React from 'react';
 import './popUp.css';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Bubble} from '../userBubble/style';
+import {UserModalBody, User, UserModal} from './style';
 
 function PopUp(props) {
     return(
@@ -13,12 +14,38 @@ function PopUp(props) {
             <Modal.Body>
                 {props.body}
             </Modal.Body>
-            {/* <Modal.Footer>
-                <Button variant="secondary" onClick={props.onHide}> Close </Button>
-                <Button variant="primary" onClick={props.onHide}> Add New Marker </Button>
-            </Modal.Footer> */}
         </Modal>
     );
 }
 
-export default PopUp;
+function UserPopUp(props) {
+    const {userInfo} = props;
+
+    const userList = userInfo.map((user) => {
+        return(
+
+            <User>
+                <Bubble key={user['_id']} src={user['imageUrl']}/>
+                <p>{user['name']}</p>
+            </User>
+
+        )
+    })
+
+    console.log(`userList : ${userInfo}`)
+
+    return(
+        <UserModal {... props} animation={false} scrollable={true}>
+            <Modal.Header closeButton>
+                {/* <Modal.Title>Create new </Modal.Title> */}
+            </Modal.Header>
+            <UserModalBody>
+                <ul>
+                    {userList}
+                </ul>
+            </UserModalBody>
+        </UserModal>
+    );
+}
+
+export {PopUp, UserPopUp};

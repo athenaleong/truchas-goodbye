@@ -2,12 +2,9 @@ import styled from 'styled-components';
 
 export const ImageBox = styled.div`
     border-radius:32px;
-    // margin-left: 48px;
-    // margin-right:48px;
     height: calc((50vw - 108px - 96px) / 4 * 3);
     display: flex;
     justify-content: center;
-
 `;
 
 export const Image = styled.img`
@@ -20,6 +17,8 @@ export const CarouselBox = styled.div`
     background: none;
     padding-left: 48px;
     padding-right:48px;
+    margin-bottom: 4vh;
+
 
     .carousel .slide {
         background:none;

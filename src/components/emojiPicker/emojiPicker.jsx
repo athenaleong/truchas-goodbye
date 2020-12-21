@@ -12,7 +12,6 @@ function EmojiPicker(props) {
 
     const onSelect = ((emoji) => {
         try {
-            console.log(emoji)
             setSelectedEmoji(emoji.id);
             setPickerShow(false);            
         }
@@ -23,7 +22,6 @@ function EmojiPicker(props) {
     })
 
     const onClick = (() => {
-        console.log('what');
         setPickerShow(true);
     })
 

@@ -39,9 +39,6 @@ var FormData = require('form-data');
 
         delete data['images'];
         data = {...data, imgId: imgId, lat: lat, lng: lng, category:"Point"};
-
-
-        console.log(JSON.stringify(data));
         
         let res = await axios.post('http://localhost:5555/uploadPointer', data, {
             headers: {

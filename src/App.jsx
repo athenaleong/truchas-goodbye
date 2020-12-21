@@ -2,7 +2,7 @@ import logo from './logo.svg';
 // import './App.css';
 import MapSection from './components/map/map';
 import React, { useEffect, useRef, useState } from 'react';
-import PopUp from './components/popUp/popUp';
+import {PopUp} from './components/popUp/popUp';
 import Form from './components/form/form';
 import ErrorBoundary from './components/errorBoundary/errorBoundary';
 import Drawer from './components/drawer/drawer';
@@ -76,14 +76,12 @@ function App() {
 
   useEffect(() => {
     axios.get("http://localhost:5555/getAllUser").then((res) => {
-      console.log(`res: ${JSON.stringify(res.data)}`);
       setAllUser(res.data);
     });
   }, []);
 
   useEffect(() => {
     axios.get(`http://localhost:5555/getTag?id=${selectedTagId}`).then(res => {
-      console.log(`res: ${JSON.stringify(res.data)}`);
       setDrawerJSON(res.data);
     })
   }, [selectedTagId])

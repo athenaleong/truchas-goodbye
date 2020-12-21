@@ -18,6 +18,10 @@ export const SideDrawer = styled.div`
     margin-top: 6vh;
     margin-bottom: 6vh;
     height: 88vh;
+    // justify-content: space-evenly;
+    // align-items: space-evenly;
+    padding-top: 4vh;
+
     
     &.open {
         transform: translateX(0);
@@ -29,6 +33,9 @@ export const Title = styled.h1`
     font-size: 32px;
     line-height: 42px;
     letter-spacing: -0.01em;
+    // margin-top: 5vh;
+    margin-bottom: 3vh;
+    vertical-align: middle;
 
 `;
 

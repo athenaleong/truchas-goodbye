@@ -40,7 +40,6 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, s
     const [zoom, setZoom] = useState(zoomLevel);
     const [emojiSize, setEmojiSize] = useState(17);
 
-    console.log(`geoJSON: ${geoJSON.length}`);
 
 
     const {clusters, supercluster} = useSupercluster({
@@ -107,7 +106,6 @@ const Map = ({location, zoomLevel, onClick, mapRef, geoJSON, setSelectedTagId, s
                     );
                 }
                 else {
-                    console.log(`hold on ${selectedTagId == cluster.properties.id? "selected" : null}`)
                     return (
                         <Marker
                             key={`point-${cluster.properties.id}`}
