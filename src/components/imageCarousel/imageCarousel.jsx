@@ -24,7 +24,7 @@ function ImgCarousel(props) {
     return (
         <CarouselBox>
             {images.length > 0 &&
-                <Carousel infiniteLoop={true} interval={3000} autoPlay={true} showThumbs={false} showStatus={false} onClick={(e) => e.stopPropagation()}>
+                <Carousel infiniteLoop={true} interval={5000} autoPlay={true} showThumbs={false} showStatus={false} onClick={(e) => e.stopPropagation()}>
                     {images}
                 </Carousel>
             }

@@ -39,15 +39,24 @@ export const Title = styled.h1`
 
 `;
 
-export const Description = styled.p`
+export const DescriptionText = styled.p`
     font-family: Open Sans;
     font-size: 18px;
     line-height: 25px;
-
 `;
 
+export const Description = styled.p`
+    padding-left: 48px;
+    padding-right:48px;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+`;
 
-
+export const Icon = styled.img`
+    width: 24px;
+    height: 24px;
+`;
 
 
 export const Image = styled.img`
