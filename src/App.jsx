@@ -93,7 +93,7 @@ function App() {
           <LeftBox className={drawerShow? 'compress' : null}>
             <Tools>
               <TempSearchBar></TempSearchBar>
-              <SignInButton></SignInButton>
+              {/* <SignInButton></SignInButton> */}
               <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
             </Tools>
               {/* <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/>  */}

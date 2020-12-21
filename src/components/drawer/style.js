@@ -39,18 +39,9 @@ export const Description = styled.p`
 
 `;
 
-export const People = styled.div`
-    display:flex;
-    flex-direction: row;
-`;
 
-export const PeopleBubble = styled.img`
-    width:50px;
-    height:50px;
-    border-radius:50%;
-    margin-left: 12px;
 
-`;
+
 
 export const Image = styled.img`
     border-radius: 32px;
