@@ -9,7 +9,7 @@ function PopUp(props) {
     return(
         <Modal {... props} animation={false}>
             <Modal.Header closeButton>
-                <Modal.Title>Create new </Modal.Title>
+                <Modal.Title>Add New Marker </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {props.body}

@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import './drawer.css';
-import {SideDrawer, Title, Description, DescriptionText, Icon ,Image} from './style';
+import {SideDrawer, Title, Description, DescriptionText, Icon ,Image, EditIcon, EditBox, TestDiv} from './style';
 import UserBubble from '../userBubble/userBubble';
 import ImgCarousel from '../imageCarousel/imageCarousel';
 import {UserPopUp} from '../popUp/popUp';
@@ -61,16 +61,21 @@ function Drawer(props) {
             <Title>{drawerJSON.title}</Title>
             {/* {imgList} */}
             <UserBubble userInfo={userInfo} setShowUserPopUp={setShowUserPopUp}></UserBubble>
-            <ImgCarousel imgURL={imgURL}></ImgCarousel>
+            <TestDiv>
+                <ImgCarousel imgURL={imgURL}></ImgCarousel>
 
-            {drawerJSON.description &&
-                <Description>
-                    <Icon key={'book'} src={'https://i.ibb.co/pQSbYpF/book.png'}/>
-                    <DescriptionText>
-                        {drawerJSON.description}
-                    </DescriptionText>
-                </Description>
-            }
+                {drawerJSON.description &&
+                    <Description>
+                        <Icon key={'book'} src={'https://i.ibb.co/pQSbYpF/book.png'}/>
+                        <DescriptionText>
+                            {drawerJSON.description}
+                        </DescriptionText>
+                    </Description>
+                }
+            </TestDiv>
+            <EditBox>
+                <EditIcon key={'edit'} src={"https://i.ibb.co/BPmYSND/edit.png"} /> 
+            </EditBox>
 
         </SideDrawer>
         

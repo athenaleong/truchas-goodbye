@@ -15,8 +15,6 @@ export const Image = styled.img`
 
 export const CarouselBox = styled.div`
     background: none;
-    padding-left: 48px;
-    padding-right:48px;
     margin-bottom: 4vh;
 
 

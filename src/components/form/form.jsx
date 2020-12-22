@@ -3,7 +3,7 @@ import { Controller, useForm, useFormContext } from "react-hook-form";
 import Select from "react-select";
 import ErrorBoundary from '../errorBoundary/errorBoundary'
 import Dropzone from '../dropzone/drop';
-import { MarkerForm } from './style';
+import { MarkerForm, TitleInput, DescriptionInput, EmojiInput} from './style';
 import EmojiPicker from '../emojiPicker/emojiPicker';
 
 const axios = require('axios');
@@ -51,32 +51,27 @@ var FormData = require('form-data');
         setDrawerShow(true);
     };
 
+    const divStyle = {
+        display: 'flex',
+        flexDirection: 'row',
+        width: 100 + '%'
+    };
+
 
     return (
         <MarkerForm onSubmit={handleSubmit(onSubmit)}>
-            <input name="title" ref={register} />
-            <textarea name="description" ref={register} />
+            <div style={divStyle}>
             <Controller
                 name="emoji"
                 control={control}
                 render={() => <EmojiPicker register={register} setValue={setValue}></EmojiPicker>}
             />
-            <div>
-                <input name="icon" type="radio" value="1" ref={register({ max:1})}/>
-                <input name="icon" type="radio" value="2" ref={register({ max:1})} />
-                <input name="icon" type="radio" value="3" ref={register({ max:1})} />
-                <input name="icon" type="radio" value="4" ref={register({ max:1})} />
+            <TitleInput name="title" ref={register} />
             </div>
-            <Controller
-                name="people"
-                as={Select}
-                isMulti
-                options={[{value:'all', label:'all users'}, ...allUser]} //TODO: implement select all 
-                control={control}
-                defaultValue={null}
-            />
-
-
+            <DescriptionInput name="description" ref={register} />
+            
+            
+            
             <Controller
                 name="images"
                 control={control}
@@ -93,3 +88,7 @@ var FormData = require('form-data');
 
 export default Form
 
+
+
+{/* 
+            /> */}

@@ -22,7 +22,6 @@ export const SideDrawer = styled.div`
     // align-items: space-evenly;
     padding-top: 4vh;
 
-    
     &.open {
         transform: translateX(0);
     }
@@ -39,9 +38,9 @@ export const Title = styled.h1`
 
 `;
 
-export const Description = styled.p`
-    padding-left: 18%;
-    padding-right:18%;
+export const Description = styled.div`
+    padding-left: 12%;
+    padding-right:12%;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -56,7 +55,8 @@ export const DescriptionText = styled.p`
     padding-left: 8%;
     // /* Cool Grey 2 */
     color: #606F7B;
-    overflow: hidden;
+    // max-height: calc(70vh - min(4vw, 45px) - 80px - calc((50vw - 108px - 96px) / 4 * 3));
+    overflow: scroll;
 `;
 
 
@@ -70,4 +70,33 @@ export const Icon = styled.img`
 
 export const Image = styled.img`
     border-radius: 32px;
-`
+`;
+
+export const EditBox = styled.div`
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 5%
+    position: fixed;
+    bottom: 0;
+    padding-bottom: 4vh;
+    padding-right: 4vh;
+
+
+`;
+export const EditIcon = styled(Icon)`
+    background-color: white;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    padding: 6px;
+    margin-top: auto;
+`;
+
+export const TestDiv = styled.div`
+    max-height: calc(74vh - min(4vw, 45px) - 80px);    
+    overflow: scroll;
+    margin-left: 48px;
+    margin-right: 48px;
+
+`;

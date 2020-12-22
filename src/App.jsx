@@ -48,7 +48,9 @@ function App() {
   const [drawerJSON, setDrawerJSON] = useState('');
 
   function onMapClick(obj) {
+    console.log('MAP CLICK')
     if (editMode) {
+      console.log('EDIT MODE ON')
       setModalShow(true);
     }
     setLat(obj.lngLat[1]);
@@ -93,7 +95,7 @@ function App() {
             <Tools>
               <TempSearchBar></TempSearchBar>
               {/* <SignInButton></SignInButton> */}
-              <ToggleEditButton onClick={() => setEditMode(!editMode)}></ToggleEditButton>
+              <ToggleEditButton onClick={() => {setEditMode(!editMode);}} editMode={editMode}></ToggleEditButton>
             </Tools>
               {/* <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/>  */}
               <MapBox location={location} zoomLevel={16} onClick={onMapClick} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId} />

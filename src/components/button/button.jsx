@@ -1,11 +1,12 @@
 import React from 'react';
+import {ToggleButton} from './style'
 
 function ToggleEditButton(props) {
-    const {onClick} = props.onClick;
+    const {onClick, editMode} = props;
     return (
-        <button onClick={onClick}> 
+        <ToggleButton onClick={onClick} className={editMode? 'edit' : null}> 
             Edit
-        </button>
+        </ToggleButton>
     )
 }
 
