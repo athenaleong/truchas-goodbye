@@ -15,13 +15,14 @@ export const Bubble = styled.img`
     border-radius:50%;
     margin-left: 0.833vw;
     overflow: hidden;
-`;
-
-export const MoreBubble = styled(Bubble)`
 
     &:hover {
         transform: scale(0.9);
         transition: ease-out 0.15s;
     }
+
+`;
+
+export const MoreBubble = styled(Bubble)`
 
 `;

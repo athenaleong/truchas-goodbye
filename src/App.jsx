@@ -12,6 +12,7 @@ import { Button } from 'react-bootstrap';
 import {AppStyled, LeftBox, RightBox, TempSearchBar, Tools, } from './style';
 import MapBox from './components/mapBox/mapBox';
 import SignInButton from './components/googleAuth/googleAuth';
+import {ToggleEditButton} from './components/button/button'
 
 
 const location = {
@@ -92,7 +93,7 @@ function App() {
             <Tools>
               <TempSearchBar></TempSearchBar>
               {/* <SignInButton></SignInButton> */}
-              <button onClick={() => setEditMode(!editMode)}> Toggle Edit Mode </button>
+              <ToggleEditButton onClick={() => setEditMode(!editMode)}></ToggleEditButton>
             </Tools>
               {/* <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/>  */}
               <MapBox location={location} zoomLevel={16} onClick={onMapClick} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId} />

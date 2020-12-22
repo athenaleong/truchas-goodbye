@@ -39,23 +39,32 @@ export const Title = styled.h1`
 
 `;
 
-export const DescriptionText = styled.p`
-    font-family: Open Sans;
-    font-size: 18px;
-    line-height: 25px;
-`;
-
 export const Description = styled.p`
-    padding-left: 48px;
-    padding-right:48px;
+    padding-left: 18%;
+    padding-right:18%;
     display: flex;
     flex-direction: row;
-    justify-content:center;
+    justify-content: space-evenly;
 `;
+
+export const DescriptionText = styled.p`
+    font-family: Open Sans;
+    font-size: 16px;
+    line-height: 25px;
+    width: 100%;
+    align-text: start;
+    padding-left: 8%;
+    // /* Cool Grey 2 */
+    color: #606F7B;
+    overflow: hidden;
+`;
+
+
 
 export const Icon = styled.img`
     width: 24px;
     height: 24px;
+    margin-top: 10px
 `;
 
 
