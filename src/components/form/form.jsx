@@ -12,7 +12,7 @@ var FormData = require('form-data');
  function Form(props) {
     const {lat, lng, setModalShow, allUser, setSelectedTagId, setDrawerShow} = props;
 
-    const {register, handleSubmit, control, setValue, formState}  = useForm({reValidateMode: 'onChange'});
+    const {register, handleSubmit, control, setValue, formState}  = useForm({mode: 'onChange', reValidateMode: 'onChange'});
 
     const onSubmit = async (data) => {
 

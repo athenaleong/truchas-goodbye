@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDropzone } from "react-dropzone";
 import {DropContainer, DropInner, UploadedMedia, MediaBox, MediaRow, AlbumBox, UploadText, IconStyled, IconBubble} from './style';
@@ -7,8 +7,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 function Dropzone(props) {
     const {onChange, register, setValue} = props
-    const [files, setFiles] = React.useState([]);
-    const [buffer, setBuffer] = React.useState([]);
+    const [files, setFiles] = useState([]);
+    const [buffer, setBuffer] = useState([]);
     const onDrop = React.useCallback(async function(acceptedFiles) {
 
         acceptedFiles.forEach(async function(file) {
@@ -16,8 +16,9 @@ function Dropzone(props) {
             reader.onload = function(e) {
                 console.log(`file type ${typeof file}`);
                 const base64 = reader.result;
-                buffer.push(base64);
-                files.push(file);
+
+                setBuffer(prev => [...prev, base64]);
+                setFiles(prev => [...prev, files]);
                 // console.log(`buffer: ${buffer}`);
 
             }
@@ -47,15 +48,14 @@ function Dropzone(props) {
 
     const removeMedia = (index) => {
         console.log(`remove ${index}`)
-        files.splice(index, 1);
-        buffer.splice(index, 1);
+        setFiles(prev => [...prev.slice(0,index), ...prev.slice(index+1)]);
+        setBuffer(prev => [...prev.slice(0,index), ...prev.slice(index+1)]);
     }
 
     const bufferList = buffer.map((b, index) => (
         <MediaBox>
             <IconBubble>
-                <IconStyled icon={faTimes} onClick={() => {files.splice(index, 1);
-                                                                buffer.splice(index, 1);}}/>
+                <IconStyled icon={faTimes} onClick={() => removeMedia(index)}/>
             </IconBubble>
             <UploadedMedia key={b} src={b}/>
         </MediaBox>

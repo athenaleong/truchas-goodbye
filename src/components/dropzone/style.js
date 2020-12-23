@@ -83,7 +83,7 @@ export const IconBubble = styled.div`
     height: fit-content;
 
     &:hover {
-        color: red;
+        color: #990000;
     }
 
 `;
