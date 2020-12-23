@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { Emoji, Picker } from "emoji-mart";
-import {EmojiButton} from './style';
+import {EmojiButton, PickerStyled, TestDiv, EmojiStyled} from './style';
 import "emoji-mart/css/emoji-mart.css";
+// import { TestDiv } from '../drawer/style';
+
 
 function EmojiPicker(props) {
 
@@ -22,11 +24,11 @@ function EmojiPicker(props) {
     })
 
     const onClick = (() => {
-        setPickerShow(true);
+        setPickerShow(!pickerShow);
     })
 
     useEffect(() => {
-        register({name: 'emoji'});
+        register({name: 'emoji', required: true});
     }, [])
 
     useEffect(() => {
@@ -38,9 +40,12 @@ function EmojiPicker(props) {
     return (
         <div>
             <EmojiButton onClick={onClick}> 
-                {selectedEmoji && <Emoji emoji={selectedEmoji}size={16}/>}
+                {selectedEmoji && <EmojiStyled emoji={selectedEmoji}size={28}/>}
             </EmojiButton>
-            {pickerShow && <Picker set="apple" onSelect={onSelect} showPreview={false} showSkinTones={false} emoji="" /> }
+            <TestDiv>
+            {pickerShow && 
+                <PickerStyled set="apple" onSelect={onSelect} showPreview={false} showSkinTones={false} emoji="" /> }
+            </TestDiv>
         </div>
 
 

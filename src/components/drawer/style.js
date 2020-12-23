@@ -27,7 +27,7 @@ export const SideDrawer = styled.div`
     }
 `;
 
-export const Title = styled.h1`
+export const Title = styled.p`
     font-family: 'Sarabun', sans-serif;
     font-size: 32px;
     line-height: 42px;
@@ -98,5 +98,4 @@ export const TestDiv = styled.div`
     overflow: scroll;
     margin-left: 48px;
     margin-right: 48px;
-
 `;

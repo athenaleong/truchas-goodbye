@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useDropzone } from "react-dropzone";
-import {DropContainer} from './style';
+import {DropContainer, DropInner, UploadedMedia, MediaBox, MediaRow, AlbumBox, UploadText, IconStyled, IconBubble} from './style';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 function Dropzone(props) {
     const {onChange, register, setValue} = props
@@ -39,23 +41,50 @@ function Dropzone(props) {
         console.log("set value");
     }, [files])
 
-    const fileList = files.map(file => (
-    <li key={file.path}>
-        {file.path} - {file.size} bytes
-    </li>
+    useEffect(() => {
+        console.log('rerender');
+    }, [buffer])
+
+    const removeMedia = (index) => {
+        console.log(`remove ${index}`)
+        files.splice(index, 1);
+        buffer.splice(index, 1);
+    }
+
+    const bufferList = buffer.map((b, index) => (
+        <MediaBox>
+            <IconBubble>
+                <IconStyled icon={faTimes} onClick={() => {files.splice(index, 1);
+                                                                buffer.splice(index, 1);}}/>
+            </IconBubble>
+            <UploadedMedia key={b} src={b}/>
+        </MediaBox>
     ));
 
+    function media() {
+        var toReturn = [];
+        for (var i = 0, j = bufferList.length; i < j ; i += 3) {
+            toReturn.push(
+                <MediaRow>
+                    {bufferList.slice(i, i+3)}
+                </MediaRow>
+            )
+        }
+        return toReturn;
 
+    }
 
     return (
-    <DropContainer>
-        <div {...getRootProps({ className: "dropzone" })}>
+    <DropContainer> 
+        <DropInner {...getRootProps({ className: "dropzone" })}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
-        </div>
-        <aside>
-        <ul>{fileList}</ul>
-        </aside>
+        <UploadText>Upload Media</UploadText>
+        </DropInner>
+        {buffer.length != 0 &&
+        <AlbumBox>
+            {media()}
+        </AlbumBox>
+        }
     </DropContainer>
     );
     }

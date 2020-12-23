@@ -3,7 +3,7 @@ import { Controller, useForm, useFormContext } from "react-hook-form";
 import Select from "react-select";
 import ErrorBoundary from '../errorBoundary/errorBoundary'
 import Dropzone from '../dropzone/drop';
-import { MarkerForm, TitleInput, DescriptionInput, EmojiInput} from './style';
+import { MarkerForm, TitleInput, DescriptionInput, SelectStyled, FormText, FirstDiv, Input} from './style';
 import EmojiPicker from '../emojiPicker/emojiPicker';
 
 const axios = require('axios');
@@ -12,8 +12,7 @@ var FormData = require('form-data');
  function Form(props) {
     const {lat, lng, setModalShow, allUser, setSelectedTagId, setDrawerShow} = props;
 
-    const {register, handleSubmit, control, setValue}  = useForm();
-    const {pickerShow, setPickerShow} = useState(false);
+    const {register, handleSubmit, control, setValue, formState}  = useForm({reValidateMode: 'onChange'});
 
     const onSubmit = async (data) => {
 
@@ -60,17 +59,27 @@ var FormData = require('form-data');
 
     return (
         <MarkerForm onSubmit={handleSubmit(onSubmit)}>
-            <div style={divStyle}>
+            <FirstDiv>
+                <Controller
+                    name="emoji"
+                    control={control}
+                    render={() => <EmojiPicker register={register} setValue={setValue}></EmojiPicker>}
+                />
+                <TitleInput name="title" placeholder="Title" ref={register({required : true})} />
+            </FirstDiv>
+
+            <DescriptionInput name="description" placeholder="Description" minRows={4} ref={register} />
             <Controller
-                name="emoji"
+                name="people"
+                as={SelectStyled}
+                isMulti
+                options={[{value:'all', label:'all users'}, ...allUser]} //TODO: implement select all 
                 control={control}
-                render={() => <EmojiPicker register={register} setValue={setValue}></EmojiPicker>}
+                defaultValue={null}
+                classNamePrefix={'Select'}
             />
-            <TitleInput name="title" ref={register} />
-            </div>
-            <DescriptionInput name="description" ref={register} />
-            
-            
+
+            <FormText>Album</FormText>
             
             <Controller
                 name="images"
@@ -81,7 +90,7 @@ var FormData = require('form-data');
             
             />
 
-            <input type="submit" />
+            <Input type="submit" className={formState.isValid? 'submit' : null} />
         </MarkerForm>
     );
 }

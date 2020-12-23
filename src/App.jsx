@@ -13,6 +13,7 @@ import {AppStyled, LeftBox, RightBox, TempSearchBar, Tools, } from './style';
 import MapBox from './components/mapBox/mapBox';
 import SignInButton from './components/googleAuth/googleAuth';
 import {ToggleEditButton} from './components/button/button'
+import EmojiPicker from './components/emojiPicker/emojiPicker';
 
 
 const location = {
