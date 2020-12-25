@@ -25,7 +25,6 @@ export const DropInner = styled.div`
 `;
 
 export const UploadText = styled.p`
-    display: table-cell;
     vertical-align: middle;
     font-size: 16px;
     color: #396A65; 
@@ -34,6 +33,7 @@ export const UploadText = styled.p`
     width: 100%;
     height: 100%;
     margin-bottom: 0;
+    margin-top:8px;
 `;
 
 export const UploadedMedia = styled.img`

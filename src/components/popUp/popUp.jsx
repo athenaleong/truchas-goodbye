@@ -3,14 +3,14 @@ import './popUp.css';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Bubble} from '../userBubble/style';
-import {UserModalBody, User, UserModal} from './style';
+import {UserModalBody, User, UserModal, UserModalTitle, UserModalHeader} from './style';
 
 function PopUp(props) {
     return(
         <Modal {... props} animation={false}>
-            <Modal.Header closeButton>
-                <Modal.Title>Add New Marker </Modal.Title>
-            </Modal.Header>
+            <UserModalHeader closeButton>
+                <UserModalTitle>Add New Marker </UserModalTitle>
+            </UserModalHeader>
             <Modal.Body>
                 {props.body}
             </Modal.Body>
@@ -31,8 +31,6 @@ function UserPopUp(props) {
 
         )
     })
-
-    console.log(`userList : ${userInfo}`)
 
     return(
         <UserModal {... props} animation={false} scrollable={true}>

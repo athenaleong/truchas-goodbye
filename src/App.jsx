@@ -49,9 +49,7 @@ function App() {
   const [drawerJSON, setDrawerJSON] = useState('');
 
   function onMapClick(obj) {
-    console.log('MAP CLICK')
     if (editMode) {
-      console.log('EDIT MODE ON')
       setModalShow(true);
     }
     setLat(obj.lngLat[1]);
@@ -74,7 +72,7 @@ function App() {
     axios(config).then(function (response) {
       let geoJSON = response.data;
       setGeoJSON(geoJSON);
-      console.log(`data display: ${geoJSON}`);
+      // console.log(`data display: ${geoJSON}`);
     });
   }, [pointQuery, modalShow]);
 

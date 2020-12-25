@@ -18,8 +18,8 @@ export const SideDrawer = styled.div`
     margin-top: 6vh;
     margin-bottom: 6vh;
     height: 88vh;
-    // justify-content: space-evenly;
-    // align-items: space-evenly;
+    justify-content: space-evenly;
+    align-items: space-evenly;
     padding-top: 4vh;
 
     &.open {
@@ -32,7 +32,10 @@ export const Title = styled.p`
     font-size: 32px;
     line-height: 42px;
     letter-spacing: -0.01em;
+    text-align: center;
     // margin-top: 5vh;
+    width: 100%
+
     margin-bottom: 3vh;
     vertical-align: middle;
 

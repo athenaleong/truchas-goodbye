@@ -69,8 +69,6 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
                 onClick={onClick}
                 
             >
-            {console.log(`geoJSON: ${geoJSON.length}`)}
-            {console.log(`cluster: ${clusters.length}`)}
 
             {clusters.map(cluster => {
                 const [longitude, latitude] = cluster.geometry.coordinates;
@@ -97,7 +95,7 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
                 );
                 }
                 else {
-                    console.log(`${cluster.properties.emoji} ${selectedTagId == cluster.properties.id? "selected" : null}`)
+                    // console.log(`${cluster.properties.emoji} ${selectedTagId == cluster.properties.id? "selected" : null}`)
                     return (
                     <Marker
                         key={`point-${cluster.properties.id}`}

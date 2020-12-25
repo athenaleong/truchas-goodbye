@@ -23,6 +23,7 @@ var FormData = require('form-data');
             images.forEach((img) => {
                 formData.append('img', img);
             })
+            console.log(`formData ${formData}`)
 
 
             let config = {
@@ -77,10 +78,7 @@ var FormData = require('form-data');
                 control={control}
                 defaultValue={null}
                 classNamePrefix={'Select'}
-            />
-
-            <FormText>Album</FormText>
-            
+            />            
             <Controller
                 name="images"
                 control={control}

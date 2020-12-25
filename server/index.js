@@ -40,7 +40,7 @@ app.use(cors(corsOptions));
 
 //Multer-gridfs Setup
 const url =
-  "mongodb+srv://chris:fF1kjLnOaC769euR@cluster0.2lusr.mongodb.net/truchas?retryWrites=true&w=majority";
+  "mongodb+srv://chris:SGbxGijIACwFWoxD@cluster0.2lusr.mongodb.net/truchas?retryWrites=true&w=majority";
 
 const storage = new GridFsStorage({
   url: url,
@@ -94,10 +94,12 @@ app.get("/getUser", function(req, res) {
 // Use Multer and GridFS to upload images into Db
 app.post("/uploadImage", upload.any(), async function (req, res) {
   console.log("upload Image");
+  console.log(req.files)
   try {
       var files = req.files;
       var id = files.map((file) => file.id);
-      res.send            ({id: id});
+      console.log(`return id ${id}`);
+      res.send({id: id});
   } 
   catch (error) {
     res.status(500).json({error: error.toString()});
@@ -125,8 +127,6 @@ app.post("/getGeoJSON", urlParser, async function (req, res) {
   let geoJSONTag = [];
   await tags.forEach((tag) => {
     if (tag.category == "Point") {
-      // console.log(geoJSONTag);
-      console.log(tag.emoji)
       geoJSONTag.push({
         type: "Feature",
         properties: { cluster: false, id: tag._id, emoji: tag.emoji},
@@ -137,7 +137,6 @@ app.post("/getGeoJSON", urlParser, async function (req, res) {
       });
     }
   });
-  console.log(geoJSONTag)
   res.send(geoJSONTag);
 });
 
@@ -201,7 +200,6 @@ app.get('/getAlbumContent', async function (req, res) {
       },
     }
   ).then((response) => {
-    console.log('hey')
     console.log(response.data)
     res.send(response.data);
   }).catch((error) => {console.log(error); res.send(error)});

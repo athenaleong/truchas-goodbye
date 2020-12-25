@@ -18,7 +18,7 @@ function Dropzone(props) {
                 const base64 = reader.result;
 
                 setBuffer(prev => [...prev, base64]);
-                setFiles(prev => [...prev, files]);
+                setFiles(prev => [...prev, file]);
                 // console.log(`buffer: ${buffer}`);
 
             }
@@ -41,10 +41,6 @@ function Dropzone(props) {
         setValue("images", files); 
         console.log("set value");
     }, [files])
-
-    useEffect(() => {
-        console.log('rerender');
-    }, [buffer])
 
     const removeMedia = (index) => {
         console.log(`remove ${index}`)

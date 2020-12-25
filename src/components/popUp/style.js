@@ -8,6 +8,18 @@ export const UserModal = styled(Modal)`
 export const UserModalBody = styled(Modal.Body)`
 `;
 
+export const UserModalTitle = styled(Modal.Title)`
+    font-size: 24px;
+    font-family: 'Sarabun', sans-serif;
+    width: 100%;
+    align-text: center;
+`;
+
+export const UserModalHeader = styled(Modal.Header)`
+    display: flex;
+    text-align:center;
+`;
+
 export const User = styled.li`
     display: flex;
     flex-direction: row;
