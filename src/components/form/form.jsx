@@ -1,16 +1,18 @@
 import React, {useEffect , useState} from 'react';
 import { Controller, useForm, useFormContext } from "react-hook-form";
-import Select from "react-select";
 import ErrorBoundary from '../errorBoundary/errorBoundary'
 import Dropzone from '../dropzone/drop';
 import { MarkerForm, TitleInput, DescriptionInput, SelectStyled, FormText, FirstDiv, Input} from './style';
 import EmojiPicker from '../emojiPicker/emojiPicker';
+import SelectUser from '../select/select';
 
 const axios = require('axios');
 var FormData = require('form-data');
 
  function Form(props) {
     const {lat, lng, setModalShow, allUser, setSelectedTagId, setDrawerShow} = props;
+
+
 
     const {register, handleSubmit, control, setValue, formState}  = useForm({mode: 'onChange', reValidateMode: 'onChange'});
 
@@ -57,6 +59,10 @@ var FormData = require('form-data');
         width: 100 + '%'
     };
 
+    const handleChange = ([selectedOption]) => {
+        console.log('change happened');
+        console.log(selectedOption);
+    }
 
     return (
         <MarkerForm onSubmit={handleSubmit(onSubmit)}>
@@ -70,15 +76,25 @@ var FormData = require('form-data');
             </FirstDiv>
 
             <DescriptionInput name="description" placeholder="Description" minRows={4} ref={register} />
-            <Controller
+            {/* <Controller
                 name="people"
                 as={SelectStyled}
                 isMulti
                 options={[{value:'all', label:'all users'}, ...allUser]} //TODO: implement select all 
                 control={control}
-                defaultValue={null}
+                onChange={([selected]) => console.log(selected)}
                 classNamePrefix={'Select'}
-            />            
+                defaultValue={allUser.filter(option => option.label == "azlen")}
+            />             */}
+
+            <Controller
+                name="people"
+                control={control}
+                render={() =>
+                    <SelectUser register={register} setValue={setValue} allUser={allUser}></SelectUser>
+                }
+                
+            /> 
             <Controller
                 name="images"
                 control={control}
