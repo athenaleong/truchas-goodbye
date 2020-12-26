@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Select from "react-select";
-const marginBottom = 24 + 'px';
+import {marginBottom} from '../form/style';
 
 export const SelectStyled = styled(Select)`
     margin-bottom: ${marginBottom};

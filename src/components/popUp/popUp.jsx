@@ -6,29 +6,30 @@ import {Bubble} from '../userBubble/style';
 import {UserModalBody, User, UserModal, UserModalTitle, UserModalHeader} from './style';
 
 function PopUp(props) {
+
+    const {editPointerId} = props;
+
     return(
         <Modal {... props} animation={false}>
             <UserModalHeader closeButton>
-                <UserModalTitle>Add New Marker </UserModalTitle>
+                <UserModalTitle> {editPointerId?  "Edit Marker" :"Add New Marker" } </UserModalTitle>
             </UserModalHeader>
             <Modal.Body>
                 {props.body}
             </Modal.Body>
         </Modal>
     );
-}
+}   
 
 function UserPopUp(props) {
     const {userInfo} = props;
 
     const userList = userInfo.map((user) => {
         return(
-
             <User>
                 <Bubble key={user['_id']} src={user['imageUrl']}/>
                 <p>{user['name']}</p>
             </User>
-
         )
     })
 

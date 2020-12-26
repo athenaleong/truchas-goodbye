@@ -4,11 +4,13 @@ import { useDropzone } from "react-dropzone";
 import {DropContainer, DropInner, UploadedMedia, MediaBox, MediaRow, AlbumBox, UploadText, IconStyled, IconBubble} from './style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import axios from "axios";
 
 function Dropzone(props) {
-    const {onChange, register, setValue} = props
-    const [files, setFiles] = useState([]);
-    const [buffer, setBuffer] = useState([]);
+    const {imgId, register, setValue, imgURL} = props
+    const [files, setFiles] = useState(imgId || []);
+    const [buffer, setBuffer] = useState(imgURL || []);
+
     const onDrop = React.useCallback(async function(acceptedFiles) {
 
         acceptedFiles.forEach(async function(file) {
@@ -34,6 +36,15 @@ function Dropzone(props) {
 
     useEffect(() => {
         register({name: 'images'});
+
+        // if (imgId != undefined) {
+        //     imgId.forEach((img) => {
+        //         axios.get(`http://localhost:5555/getImage?id=${img}`).get(res => {
+        //             setBuffer(prev => [...prev, res.data]);
+        //             setFiles(prev => [...prev, []]);
+        //         })
+        //     })
+        // }
     }, [])
 
     useEffect(() => {

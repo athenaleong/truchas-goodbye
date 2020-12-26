@@ -7,10 +7,10 @@ import "emoji-mart/css/emoji-mart.css";
 
 function EmojiPicker(props) {
 
-    const {setValue, register} = props;
+    const {setValue, register, defaultValue} = props;
 
     const [pickerShow, setPickerShow] = useState(false);
-    const [selectedEmoji, setSelectedEmoji] = useState('pushpin');
+    const [selectedEmoji, setSelectedEmoji] = useState(defaultValue || 'pushpin');
 
     const onSelect = ((emoji) => {
         try {

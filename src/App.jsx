@@ -29,6 +29,7 @@ function App() {
   const [editMode, setEditMode] = useState(false);
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
+  const [editPointerId, setEditPointerId] = useState(null);
 
   //Side Bar
   const [sideBarShow, setSideBarShow] = useState(true);
@@ -83,9 +84,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    axios.get(`http://localhost:5555/getTag?id=${selectedTagId}`).then(res => {
-      setDrawerJSON(res.data);
-    })
+    if (selectedTagId) {
+      axios.get(`http://localhost:5555/getTag?id=${selectedTagId}`).then(res => {
+        setDrawerJSON(res.data);
+      })
+    }
   }, [selectedTagId])
 
   return (
@@ -100,9 +103,9 @@ function App() {
               <MapBox location={location} zoomLevel={16} onClick={onMapClick} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId} />
           </LeftBox>
           {/* <RightBox> */}
-            <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON}></Drawer>
+            <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON} setModalShow={setModalShow} setEditPointerId={setEditPointerId}></Drawer>
           {/* </RightBox> */}
-      <PopUp onHide={() => setModalShow(false)} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow}></Form>}> </PopUp>
+      <PopUp onHide={() => {setModalShow(false); setEditPointerId(null);}} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setDrawerShow={setDrawerShow} editPointerId={editPointerId} setEditPointerId={setEditPointerId} setSelectedTagId={setSelectedTagId}></Form>} editPointerId={editPointerId}></PopUp>
     </AppStyled>
   )}
 

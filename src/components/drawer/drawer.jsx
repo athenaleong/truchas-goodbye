@@ -9,12 +9,18 @@ import ImgCarousel from '../imageCarousel/imageCarousel';
 import {UserPopUp} from '../popUp/popUp';
 
 function Drawer(props) {
-    const {drawerShow, setDrawerShow, drawerJSON} = props
+    const {drawerShow, setDrawerShow, drawerJSON, setEditPointerId, setModalShow} = props
     const [imageId, setImageId] = useState([]);
     const [imgURL, setImgURL] = useState([]);
     const [userInfo, setUserInfo] = useState([])
     const [showUserPopUp, setShowUserPopUp] = useState(false);
     let drawerClass = drawerShow ? 'open': null;
+
+    const editOnClick = () => {
+        // setDrawerShow(false);
+        setModalShow(true);
+        setEditPointerId({...drawerJSON, ...{'imgURL' : imgURL}});
+    }
 
     useEffect(async () => {
 
@@ -74,7 +80,7 @@ function Drawer(props) {
                 }
             </TestDiv>
             <EditBox>
-                <EditIcon key={'edit'} src={"https://i.ibb.co/BPmYSND/edit.png"} /> 
+                <EditIcon key={'edit'} src={"https://i.ibb.co/BPmYSND/edit.png"} onClick={()=> editOnClick()}/> 
             </EditBox>
 
         </SideDrawer>

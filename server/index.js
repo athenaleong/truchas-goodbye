@@ -7,16 +7,6 @@ const cors = require("cors");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
-// const session = require('express-session');
-
-//For caching and file persistance. NOTEL: add in .gitignore 
-// const sessionFileStore = require('session-file-store');
-// const persist = require('node-persist');
-
-// Set up OAuth 2.0 authentication through the passport.js library.
-// const passport = require('passport');
-// const auth = require('./auth');
-// auth(passport);
 
 const app = express();
 const port = 5555;
@@ -119,6 +109,23 @@ app.post("/uploadPointer", jsonParser, async function (req, res) {
   }
 });
 
+app.post("/updatePointer", jsonParser, async function (req, res) {
+  try {
+    let json = req.body;
+    let id = json['id'];
+    delete json ['id'];
+    app.locals.collection.updateOne(
+      {_id : new ObjectID(id)},
+      {$set : json},
+      (err, result) => {
+        res.send(result);
+      }
+    )
+  } catch (error) {
+    res.status(505).json({error: error.toString()})
+  }
+});
+
 app.post("/getGeoJSON", urlParser, async function (req, res) {
   //TODO: function to convert query into MongoDB query
   // console.log(`tag collection : ${tagCollection.find({})}`)
@@ -126,7 +133,7 @@ app.post("/getGeoJSON", urlParser, async function (req, res) {
   let tags = tagCollection.find(query);
   let geoJSONTag = [];
   await tags.forEach((tag) => {
-    if (tag.category == "Point") {
+    if (tag.category == "Point") {``
       geoJSONTag.push({
         type: "Feature",
         properties: { cluster: false, id: tag._id, emoji: tag.emoji},
@@ -182,6 +189,26 @@ app.get('/getImage', async function (req, res) {
 
   Promise.all(idArray.map(id => getUrl(id)())).then(values => {res.send(values)});
 
+})
+
+app.post('/deleteImage', jsonParser, async function(req, res) {
+  try {
+    let json = req.body;
+    console.log(`json: ${json}`)
+    let id = json['imgId'];
+    let allPromise = []
+    id.forEach((i) => {
+        let chunkPromise = imageChunkCollection.deleteMany({'files_id' : new ObjectID(i)});
+        let filePromise = imageFileCollection.deleteOne({'_id' : new ObjectID(i)});
+        allPromise.push(chunkPromise, filePromise)
+    })
+
+    Promise.all(allPromise).then(values => {res.send(values)}).catch(err => console.log(err));
+
+  }
+ catch (err) {
+  console.log(err)
+ }
 })
 
 // For temporary data loading from google photos, need edit for development 

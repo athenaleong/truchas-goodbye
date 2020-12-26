@@ -2,8 +2,8 @@ import React, {useEffect , useState} from 'react';
 import {SelectStyled} from './style'
 
 function SelectUser(props) {
-    const {setValue, register, allUser} = props;
-    const [selectOption, setSelectOption] = useState([]);
+    const {setValue, register, allUser, defaultValue} = props;
+    const [selectOption, setSelectOption] = useState(defaultValue);
 
     useEffect(() => {
         register({name: 'people'});

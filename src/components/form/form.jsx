@@ -10,23 +10,32 @@ const axios = require('axios');
 var FormData = require('form-data');
 
  function Form(props) {
-    const {lat, lng, setModalShow, allUser, setSelectedTagId, setDrawerShow} = props;
+    const {lat, lng, setModalShow, allUser, setSelectedTagId, setDrawerShow, editPointerId, setEditPointerId} = props;
 
-
-
+    const {imgURL, imgId, emoji, description, _id, title, people} = editPointerId || {};
+    
     const {register, handleSubmit, control, setValue, formState}  = useForm({mode: 'onChange', reValidateMode: 'onChange'});
+
+    console.log(imgId);
 
     const onSubmit = async (data) => {
 
+
         const images = data.images;
-        let imgId = [];
-        if (images.length != 0) {
+        let newImgId = [];
+        const existingImages = images.filter(img => typeof img == 'string');
+        const newImages = images.filter(img => typeof img != 'string');
+
+        console.log(`exisiting Id : ${existingImages}`);
+        console.log(`new Id : ${newImages}`);
+
+        //5fe74068c99044562da44b3d
+        //5fe74072c99044562da44b40
+        if (newImages.length != 0) {
             let formData = new FormData();
-            images.forEach((img) => {
+            newImages.forEach((img) => {
                 formData.append('img', img);
             })
-            console.log(`formData ${formData}`)
-
 
             let config = {
                 method: 'post',
@@ -36,22 +45,53 @@ var FormData = require('form-data');
 
             // TODO: change for production
             let res = await axios(config);
-            imgId = res.data.id;  
+            newImgId = res.data.id;  
         } 
 
-        delete data['images'];
-        data = {...data, imgId: imgId, lat: lat, lng: lng, category:"Point"};
-        
-        let res = await axios.post('http://localhost:5555/uploadPointer', data, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
 
+        delete data['images'];
+
+        let res;
+        if (_id) {
+            // remove any deleted images
+            const deletedImages = imgId.filter(id => !existingImages.includes(id));
+
+            if (deletedImages.length != 0) {
+                console.log(`deleted images length ${deletedImages.length}`)
+                let json = {'imgId' : deletedImages}
+
+                await axios.post('http://localhost:5555/deleteImage', json, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+            }
+
+            data = {...data, id: _id, imgId: [...existingImages, ...newImgId]};
+
+            res = await axios.post('http://localhost:5555/updatePointer', data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            setSelectedTagId(null);
+            setSelectedTagId(_id);
+        }  
+        else {
+            data = {...data, imgId: newImgId, lat: lat, lng: lng, category:"Point"};
+            res = await axios.post('http://localhost:5555/uploadPointer', data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            setSelectedTagId(res.data);
+        }
         setModalShow(false);
-        setSelectedTagId(res.data);
         setDrawerShow(true);
-    };
+        setEditPointerId(null);
+    }
+    
 
     const divStyle = {
         display: 'flex',
@@ -70,28 +110,18 @@ var FormData = require('form-data');
                 <Controller
                     name="emoji"
                     control={control}
-                    render={() => <EmojiPicker register={register} setValue={setValue}></EmojiPicker>}
+                    render={() => <EmojiPicker register={register} setValue={setValue} defaultValue={emoji}></EmojiPicker>}
                 />
-                <TitleInput name="title" placeholder="Title" ref={register({required : true})} />
+                <TitleInput name="title" placeholder="Title" ref={register({required : true})} defaultValue={title}/>
             </FirstDiv>
 
-            <DescriptionInput name="description" placeholder="Description" minRows={4} ref={register} />
-            {/* <Controller
-                name="people"
-                as={SelectStyled}
-                isMulti
-                options={[{value:'all', label:'all users'}, ...allUser]} //TODO: implement select all 
-                control={control}
-                onChange={([selected]) => console.log(selected)}
-                classNamePrefix={'Select'}
-                defaultValue={allUser.filter(option => option.label == "azlen")}
-            />             */}
+            <DescriptionInput name="description" placeholder="Description" minRows={4} ref={register} defaultValue={description} />
 
             <Controller
                 name="people"
                 control={control}
                 render={() =>
-                    <SelectUser register={register} setValue={setValue} allUser={allUser}></SelectUser>
+                    <SelectUser register={register} setValue={setValue} allUser={allUser} defaultValue={people}></SelectUser>
                 }
                 
             /> 
@@ -99,7 +129,7 @@ var FormData = require('form-data');
                 name="images"
                 control={control}
                 render={(onChange) =>
-                    <Dropzone onChange={onChange} register={register} setValue={setValue}></Dropzone>
+                    <Dropzone onChange={onChange} register={register} setValue={setValue} imgURL={imgURL} imgId={imgId}></Dropzone>
                 }
             
             />
@@ -112,6 +142,3 @@ var FormData = require('form-data');
 export default Form
 
 
-
-{/* 
-            /> */}
