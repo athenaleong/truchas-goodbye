@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import Geocoder from 'react-map-gl-geocoder';
+
 
 export const MapBox = styled.div`
     width: 100%;
@@ -36,5 +38,15 @@ export const SingleMarker = styled.div`
 
     &.selected {
         background-color: Tomato;
+    }
+`;
+
+export const GeocoderStyled = styled(Geocoder)`
+
+    &:hover {
+        background-color: tomato;
+    }
+    > * > .mapboxgl-ctrl-top- {
+        background-color: tomato;
     }
 `;

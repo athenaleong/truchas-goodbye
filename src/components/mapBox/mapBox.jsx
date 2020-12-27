@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef} from "react";
+import { useState, useEffect, useRef, useCallback} from "react";
 import axios from 'axios';
 import { Emoji } from "emoji-mart";
 import useSupercluster from "use-supercluster";
 import ReactMapGL, { Marker, FlyToInterpolator } from "react-map-gl";
-import {MapBox, ClusterMarker, SingleMarker} from './style';
+import {MapBox, ClusterMarker, SingleMarker, GeocoderStyled} from './style';
 
 const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawerShow, selectedTagId}) => {
     
@@ -53,22 +53,50 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
           });
     })
 
+    const onSelected = (viewport, item) => {
+        setViewport(viewport)
+    }
+
+    const handleViewportChange = useCallback(
+        (newViewport) => setViewport(newViewport),
+        []
+      );
+
+    const handleGeocoderViewportChange = useCallback(
+    (newViewport) => {
+        const geocoderDefaultOverrides = { transitionDuration: 1000 };
+
+        return handleViewportChange({
+        ...newViewport,
+        ...geocoderDefaultOverrides
+        });
+    },
+    [handleViewportChange]
+    );
+
     return (
-        <div>
+        <div  onClick={(e) => {e.stopPropagation()}}>
+
+        
         <MapBox onClick={(e) => {e.stopPropagation()}}>
             <ReactMapGL
                 {...viewport}
                 width="100%"
                 height="100%"
                 mapboxApiAccessToken={accessToken}
-                onViewportChange={
-                    viewport => {setViewport({ ...viewport});
-                }}
+                onViewportChange={handleViewportChange}
                 mapStyle={url}
                 ref={mapRef}
-                onClick={onClick}
-                
+                onClick={onClick}     
             >
+                <GeocoderStyled 
+                        mapRef={mapRef}
+                        mapboxApiAccessToken={accessToken}
+                        onViewportChange={handleGeocoderViewportChange}
+                        position="top-left"
+                        style={{background:'tomato'}}
+
+                />
 
             {clusters.map(cluster => {
                 const [longitude, latitude] = cluster.geometry.coordinates;

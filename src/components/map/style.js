@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Emoji } from "emoji-mart";
 
+
 export const GoogleMap = styled.div`
     width: 100%;
     height: 76vh;
@@ -42,12 +43,3 @@ export const SingleMarker = styled.div`
     }
 `;
 
-// export const EmojiStyled = styled.Emoji.attrs(props => ({
-
-
-
-// }))`
-
-
-
-// `
