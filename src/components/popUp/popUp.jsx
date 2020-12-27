@@ -34,7 +34,7 @@ function UserPopUp(props) {
     })
 
     return(
-        <UserModal {... props} animation={false} scrollable={true}>
+        <UserModal {... props} animation={false} scrollable={true} onClick={(e) => e.stopPropagation()}>
             <Modal.Header closeButton>
                 {/* <Modal.Title>Create new </Modal.Title> */}
             </Modal.Header>

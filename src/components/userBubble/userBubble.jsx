@@ -11,7 +11,7 @@ function UserBubble(props) {
     }
     
     return (
-        <UserBox>
+        <UserBox onClick={e => e.stopPropagation()}>
             {userInfo.slice(0, 7).map(p => 
             <Bubble key={p['_id']} src={p['imageUrl']} onClick={onClick}/>
             )}

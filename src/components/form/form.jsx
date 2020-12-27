@@ -19,8 +19,6 @@ var FormData = require('form-data');
     console.log(imgId);
 
     const onSubmit = async (data) => {
-
-
         const images = data.images;
         let newImgId = [];
         const existingImages = images.filter(img => typeof img == 'string');
@@ -29,8 +27,6 @@ var FormData = require('form-data');
         console.log(`exisiting Id : ${existingImages}`);
         console.log(`new Id : ${newImages}`);
 
-        //5fe74068c99044562da44b3d
-        //5fe74072c99044562da44b40
         if (newImages.length != 0) {
             let formData = new FormData();
             newImages.forEach((img) => {
@@ -43,17 +39,14 @@ var FormData = require('form-data');
                 data : formData
             }
 
-            // TODO: change for production
             let res = await axios(config);
             newImgId = res.data.id;  
         } 
-
 
         delete data['images'];
 
         let res;
         if (_id) {
-            // remove any deleted images
             const deletedImages = imgId.filter(id => !existingImages.includes(id));
 
             if (deletedImages.length != 0) {
@@ -122,8 +115,7 @@ var FormData = require('form-data');
                 control={control}
                 render={() =>
                     <SelectUser register={register} setValue={setValue} allUser={allUser} defaultValue={people}></SelectUser>
-                }
-                
+                }   
             /> 
             <Controller
                 name="images"
@@ -131,7 +123,6 @@ var FormData = require('form-data');
                 render={(onChange) =>
                     <Dropzone onChange={onChange} register={register} setValue={setValue} imgURL={imgURL} imgId={imgId}></Dropzone>
                 }
-            
             />
 
             <Input type="submit" className={formState.isValid? 'submit' : null} />

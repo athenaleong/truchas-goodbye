@@ -50,6 +50,9 @@ function App() {
   const [drawerJSON, setDrawerJSON] = useState('');
 
   function onMapClick(obj) {
+    console.log(`obj ${obj} `)
+    // obj.stopPropagation();
+
     if (editMode) {
       setModalShow(true);
     }
@@ -92,12 +95,13 @@ function App() {
   }, [selectedTagId])
 
   return (
-    <AppStyled>
+    // onClick={(e) => e.stopPropagation()}
+    <AppStyled onClick={() => setDrawerShow(!drawerShow)}>
           <LeftBox className={drawerShow? 'compress' : null}>
             <Tools>
-              <TempSearchBar></TempSearchBar>
+              <TempSearchBar onClick={(e) => e.stopPropagation()}></TempSearchBar>
               {/* <SignInButton></SignInButton> */}
-              <ToggleEditButton onClick={() => {setEditMode(!editMode);}} editMode={editMode}></ToggleEditButton>
+              <ToggleEditButton onClick={(e) => {setEditMode(!editMode); e.stopPropagation();}} editMode={editMode}></ToggleEditButton>
             </Tools>
               {/* <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/>  */}
               <MapBox location={location} zoomLevel={16} onClick={onMapClick} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId} />
@@ -105,7 +109,9 @@ function App() {
           {/* <RightBox> */}
             <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON} setModalShow={setModalShow} setEditPointerId={setEditPointerId}></Drawer>
           {/* </RightBox> */}
-      <PopUp onHide={() => {setModalShow(false); setEditPointerId(null);}} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setDrawerShow={setDrawerShow} editPointerId={editPointerId} setEditPointerId={setEditPointerId} setSelectedTagId={setSelectedTagId}></Form>} editPointerId={editPointerId}></PopUp>
+      <div onClick={(e) => e.stopPropagation()}> 
+        <PopUp onHide={() => {setModalShow(false); setEditPointerId(null);}} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setDrawerShow={setDrawerShow} editPointerId={editPointerId} setEditPointerId={setEditPointerId} setSelectedTagId={setSelectedTagId}></Form>} editPointerId={editPointerId}></PopUp>
+      </div>
     </AppStyled>
   )}
 

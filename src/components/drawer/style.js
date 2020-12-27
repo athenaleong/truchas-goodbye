@@ -37,7 +37,7 @@ export const Title = styled.p`
     width: 100%
 
     margin-bottom: 3vh;
-    vertical-align: middle;
+    verticalalign: middle;
 
 `;
 
@@ -84,8 +84,6 @@ export const EditBox = styled.div`
     bottom: 0;
     padding-bottom: 4vh;
     padding-right: 4vh;
-
-
 `;
 export const EditIcon = styled(Icon)`
     background-color: white;
@@ -94,6 +92,11 @@ export const EditIcon = styled(Icon)`
     height: 48px;
     padding: 6px;
     margin-top: auto;
+
+    &:hover {
+        transform: scale(0.9);
+        transition: ease-out 0.15s;
+    }
 `;
 
 export const TestDiv = styled.div`

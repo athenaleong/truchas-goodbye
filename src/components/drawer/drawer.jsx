@@ -2,7 +2,6 @@ import { render } from '@testing-library/react';
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import './drawer.css';
 import {SideDrawer, Title, Description, DescriptionText, Icon ,Image, EditIcon, EditBox, TestDiv} from './style';
 import UserBubble from '../userBubble/userBubble';
 import ImgCarousel from '../imageCarousel/imageCarousel';
@@ -59,36 +58,40 @@ function Drawer(props) {
         return axios.get(`http://localhost:5555/getUser?id=${id}`)
         
     }
+    
+    const stopPropagation = (e) => {
+        e.stopPropagation();
+    }
 
     return (
         <div>
-        <SideDrawer className={drawerClass} >
+            <SideDrawer className={drawerClass}>
+                <Title onClick={stopPropagation}>{drawerJSON.title}</Title>
+                {/* {imgList} */}
+                <UserBubble userInfo={userInfo} setShowUserPopUp={setShowUserPopUp}></UserBubble>
+                <TestDiv onClick={stopPropagation}>
+                    <ImgCarousel imgURL={imgURL}></ImgCarousel>
 
-            <Title>{drawerJSON.title}</Title>
-            {/* {imgList} */}
-            <UserBubble userInfo={userInfo} setShowUserPopUp={setShowUserPopUp}></UserBubble>
-            <TestDiv>
-                <ImgCarousel imgURL={imgURL}></ImgCarousel>
+                    {drawerJSON.description &&
+                        <Description>
+                            <Icon key={'book'} src={'https://i.ibb.co/pQSbYpF/book.png'}/>
+                            <DescriptionText>
+                                {drawerJSON.description}
+                            </DescriptionText>
+                        </Description>
+                    }
+                </TestDiv>
+                <EditBox>
+                    <EditIcon key={'edit'} src={"https://i.ibb.co/BPmYSND/edit.png"} onClick={(e)=> {editOnClick(); e.stopPropagation();}}/> 
+                </EditBox>
 
-                {drawerJSON.description &&
-                    <Description>
-                        <Icon key={'book'} src={'https://i.ibb.co/pQSbYpF/book.png'}/>
-                        <DescriptionText>
-                            {drawerJSON.description}
-                        </DescriptionText>
-                    </Description>
-                }
-            </TestDiv>
-            <EditBox>
-                <EditIcon key={'edit'} src={"https://i.ibb.co/BPmYSND/edit.png"} onClick={()=> editOnClick()}/> 
-            </EditBox>
-
-        </SideDrawer>
-        
-        <UserPopUp userInfo={userInfo} show={showUserPopUp} onHide={() => setShowUserPopUp(false)}></UserPopUp>
+            </SideDrawer>
+            <div onClick={(e) => e.stopPropagation()}> 
+                <UserPopUp userInfo={userInfo} show={showUserPopUp} onHide={() => setShowUserPopUp(false)} onClick={(e) => e.stopPropagation()}></UserPopUp>
+            </div>
         </div>
     )
-    // onClick={(e)=> e.stopPropagation()}
+    // 
 }
 
 export default Drawer

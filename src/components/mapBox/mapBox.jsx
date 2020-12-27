@@ -55,7 +55,7 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
 
     return (
         <div>
-        <MapBox>
+        <MapBox onClick={(e) => {e.stopPropagation()}}>
             <ReactMapGL
                 {...viewport}
                 width="100%"
