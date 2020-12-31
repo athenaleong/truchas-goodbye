@@ -3,7 +3,11 @@ import axios from 'axios';
 import { Emoji } from "emoji-mart";
 import useSupercluster from "use-supercluster";
 import ReactMapGL, { Marker, FlyToInterpolator } from "react-map-gl";
-import {MapBox, ClusterMarker, SingleMarker, GeocoderStyled} from './style';
+import {MapBox, ClusterMarker, SingleMarker, GeocoderStyled, SearchBar} from './style';
+import {ToggleEditButton} from '../button/button'
+import Geocoder from 'react-map-gl-geocoder';
+import DeckGL, { GeoJsonLayer } from "deck.gl";
+
 
 const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawerShow, selectedTagId}) => {
     
@@ -18,7 +22,10 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
         zoom: zoomLevel
     })
 
+    const [searchResultLayer, setSearchResultLayer] = useState(null);
+
     const mapRef = useRef();
+    const geocoderContainerRef = useRef();
 
     const bounds = mapRef.current
     ? mapRef.current
@@ -74,11 +81,25 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
     [handleViewportChange]
     );
 
+    const handleOnResult = event => {
+        setSearchResultLayer(new GeoJsonLayer({
+            id: "search-result",
+            data: event.result.geometry,
+            getFillColor: [255, 0, 0, 128],
+            getRadius: 1000,
+            pointRadiusMinPixels: 10,
+            pointRadiusMaxPixels: 10
+          })
+        );
+      };
+
     return (
         <div  onClick={(e) => {e.stopPropagation()}}>
 
         
         <MapBox onClick={(e) => {e.stopPropagation()}}>
+            <SearchBar ref={geocoderContainerRef} />
+            <div style= {{borderRadius: 32 + 'px', height:100 + '%', width: 100 + '%'}}>
             <ReactMapGL
                 {...viewport}
                 width="100%"
@@ -87,16 +108,18 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
                 onViewportChange={handleViewportChange}
                 mapStyle={url}
                 ref={mapRef}
-                onClick={onClick}     
+                onClick={onClick}    
             >
-                <GeocoderStyled 
-                        mapRef={mapRef}
-                        mapboxApiAccessToken={accessToken}
-                        onViewportChange={handleGeocoderViewportChange}
-                        position="top-left"
-                        style={{background:'tomato'}}
+                {/* <ToggleEditButton></ToggleEditButton> */}
+            <GeocoderStyled
+                mapRef={mapRef}
+                containerRef={geocoderContainerRef}
+                onResult={handleOnResult}
+                onViewportChange={handleGeocoderViewportChange}
+                mapboxApiAccessToken={accessToken}
+            />
 
-                />
+
 
             {clusters.map(cluster => {
                 const [longitude, latitude] = cluster.geometry.coordinates;
@@ -144,8 +167,11 @@ const Map = ({location, zoomLevel, onClick, geoJSON, setSelectedTagId, setDrawer
                     );
                 }
             })}
-        
+            <DeckGL {...viewport} layers={[searchResultLayer]} />
             </ReactMapGL>
+            </div>
+
+
         </MapBox>
         {/* <SingleMarker 
                             className={(selectedTagId == "5fdb1bab6cff65025719f097")? "selected" : null}

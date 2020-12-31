@@ -21,7 +21,7 @@ export const LeftBox = styled.div`
     min-height: 100%;
     padding-left: 72px;
     padding-right: 72px;
-    justify-content: space-between;
+    // justify-content: space-between;
 
     &.compress {
     padding-right: 36px;

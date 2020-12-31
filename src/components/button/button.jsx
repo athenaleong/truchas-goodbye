@@ -4,7 +4,7 @@ import {ToggleButton} from './style'
 function ToggleEditButton(props) {
     const {onClick, editMode} = props;
     return (
-        <ToggleButton onClick={onClick} className={editMode? 'edit' : null}> 
+        <ToggleButton onClick={onClick} className={editMode? 'edit' : null} position='top-right'> 
             Edit
         </ToggleButton>
     )

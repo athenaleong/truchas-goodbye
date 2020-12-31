@@ -98,17 +98,16 @@ function App() {
     // onClick={(e) => e.stopPropagation()}
     <AppStyled onClick={() => setDrawerShow(!drawerShow)}>
           <LeftBox className={drawerShow? 'compress' : null}>
-            <Tools>
-              <TempSearchBar onClick={(e) => e.stopPropagation()}></TempSearchBar>
+            {/* <Tools> */}
+              {/* <TempSearchBar onClick={(e) => e.stopPropagation()}></TempSearchBar> */}
               {/* <SignInButton></SignInButton> */}
-              <ToggleEditButton onClick={(e) => {setEditMode(!editMode); e.stopPropagation();}} editMode={editMode}></ToggleEditButton>
-            </Tools>
+              {/* <ToggleEditButton onClick={(e) => {setEditMode(!editMode); e.stopPropagation();}} editMode={editMode}></ToggleEditButton> */}
+            {/* </Tools> */}
               {/* <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/>  */}
+              {/* <ToggleEditButton onClick={(e) => {setEditMode(!editMode); e.stopPropagation();}} editMode={editMode}></ToggleEditButton> */}
               <MapBox location={location} zoomLevel={16} onClick={onMapClick} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId} />
           </LeftBox>
-          {/* <RightBox> */}
-            <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON} setModalShow={setModalShow} setEditPointerId={setEditPointerId}></Drawer>
-          {/* </RightBox> */}
+          <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON} setModalShow={setModalShow} setEditPointerId={setEditPointerId}></Drawer>
       <div onClick={(e) => e.stopPropagation()}> 
         <PopUp onHide={() => {setModalShow(false); setEditPointerId(null);}} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setDrawerShow={setDrawerShow} editPointerId={editPointerId} setEditPointerId={setEditPointerId} setSelectedTagId={setSelectedTagId}></Form>} editPointerId={editPointerId}></PopUp>
       </div>
