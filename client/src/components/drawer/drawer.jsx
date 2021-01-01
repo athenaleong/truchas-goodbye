@@ -55,7 +55,7 @@ function Drawer(props) {
     ));
     
     const getUser = (id) => {
-        return axios.get(`http://localhost:5555/getUser?id=${id}`)
+        return axios.get(`/getUser?id=${id}`)
         
     }
     
