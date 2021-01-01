@@ -224,5 +224,5 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-console.log("Trying to run on port: " + port);
-app.listen(port);
+console.log("Trying to run on port: " + process.env.PORT || port);
+app.listen(process.env.PORT || port);
