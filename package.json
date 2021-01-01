@@ -66,7 +66,7 @@
     "heroku": "git push heroku main",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "client": "cd client && npm start",
-    "start": "noder server/index.js",
+    "start": "node server/index.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
 
   },
