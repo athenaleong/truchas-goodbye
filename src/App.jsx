@@ -51,7 +51,6 @@ function App() {
 
   function onMapClick(obj) {
     console.log(`obj ${obj} `)
-    // obj.stopPropagation();
 
     if (editMode) {
       setModalShow(true);

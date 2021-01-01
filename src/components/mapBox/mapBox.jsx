@@ -96,15 +96,15 @@ const Map = (props) => {
       };
 
     return (
-        <div  onClick={(e) => {e.stopPropagation()}}>
+        <div>
 
         
-        <MapBox onClick={(e) => {e.stopPropagation()}}>
+        <MapBox>
             <Tools>
-                <SearchBar ref={geocoderContainerRef} />
+                <SearchBar ref={geocoderContainerRef} onClick={(e) => {e.stopPropagation()}}/>
                 <ToggleEditButton onClick={onButtonClick}  editMode={editMode}/>
             </Tools>
-            <div style= {{borderRadius: 32 + 'px', height:78 + 'vh', width: 100 + '%'}}>
+            <div style= {{borderRadius: 32 + 'px', height:78 + 'vh', width: 100 + '%'}} onClick={(e) => {e.stopPropagation()}}>
             <ReactMapGL
                 {...viewport}
                 width="100%"
