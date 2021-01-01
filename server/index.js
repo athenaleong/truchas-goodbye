@@ -10,7 +10,6 @@ const Grid = require("gridfs-stream");
 
 const app = express();
 const port = 5555;
-const config = require('./config'); 
 
 const corsOptions = {
   origin: "http://localhost:3000",
