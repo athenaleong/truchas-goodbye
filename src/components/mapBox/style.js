@@ -80,6 +80,7 @@ export const SearchBar = styled.div`
         background-color: #F2F2F2;
         border-radius: 16px;
         box-shadow : 10px 10px 60px #CECECE, -20px -20px 60px #FFFFFF;
+        // align-items: center;
     }
 
     .suggestions-wrapper {
@@ -96,7 +97,7 @@ export const SearchBar = styled.div`
     .mapboxgl-ctrl-geocoder--input {
         width: 100%;
         background-color: #F2F2F2;
-        padding-left: 16px;
+        padding-left: 8px;
         font-family: Sarabun;
         font-weight: 400;
         color: #3D4852;
@@ -140,20 +141,24 @@ export const SearchBar = styled.div`
     .mapboxgl-ctrl-geocoder--icon-search {
         margin-left: 16px;
         fill: #396A65;
-        height: 100%;
+        width: 8%;
+        height: 48%;
+        display: block; 
+        margin: auto;
+        margin-left: 16px;
     }
 
     .mapboxgl-ctrl-geocoder--pin-right {
-        margin-left: 16px;
-        margin-right: 16px;
         fill: #396A65;
         position: relative;
         display: flex;
         justify-content: center;
         flex-direction: column; 
+        width: 8%;
     }
 
     .mapboxgl-ctrl-geocoder--icon-loading {
+        display: none;
         position: absolute;
     }
 
