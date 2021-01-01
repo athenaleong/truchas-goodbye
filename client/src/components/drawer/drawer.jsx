@@ -35,7 +35,7 @@ function Drawer(props) {
                 // console.log(`AAAAA ${drawerJSON.imgId.length}`)
                 let queryString = drawerJSON.imgId.map((id) => 
                     `id=${id}`).join("&");
-                let getUrl = `http://localhost:5555/getImage?${queryString}`
+                let getUrl = `/getImage?${queryString}`
                 // console.log(`url : ${getUrl}`)
                 axios.get(getUrl).then(res => {
                     setImgURL(res.data);

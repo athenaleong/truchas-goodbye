@@ -65,7 +65,7 @@ function App() {
     });
     let config = {
       method: "post",
-      url: "http://localhost:5555/getGeoJSON", //TOEDIT
+      url: "/getGeoJSON", //TOEDIT
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -80,14 +80,14 @@ function App() {
   }, [pointQuery, modalShow]);
 
   useEffect(() => {
-    axios.get("http://localhost:5555/getAllUser").then((res) => {
+    axios.get("/getAllUser").then((res) => {
       setAllUser(res.data);
     });
   }, []);
 
   useEffect(() => {
     if (selectedTagId) {
-      axios.get(`http://localhost:5555/getTag?id=${selectedTagId}`).then(res => {
+      axios.get(`/getTag?id=${selectedTagId}`).then(res => {
         setDrawerJSON(res.data);
       })
     }

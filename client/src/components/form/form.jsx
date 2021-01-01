@@ -35,7 +35,7 @@ var FormData = require('form-data');
 
             let config = {
                 method: 'post',
-                url: 'http://localhost:5555/uploadImage',
+                url: '/uploadImage',
                 data : formData
             }
 
@@ -53,7 +53,7 @@ var FormData = require('form-data');
                 console.log(`deleted images length ${deletedImages.length}`)
                 let json = {'imgId' : deletedImages}
 
-                await axios.post('http://localhost:5555/deleteImage', json, {
+                await axios.post('/deleteImage', json, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -62,7 +62,7 @@ var FormData = require('form-data');
 
             data = {...data, id: _id, imgId: [...existingImages, ...newImgId]};
 
-            res = await axios.post('http://localhost:5555/updatePointer', data, {
+            res = await axios.post('/updatePointer', data, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -72,7 +72,7 @@ var FormData = require('form-data');
         }  
         else {
             data = {...data, imgId: newImgId, lat: lat, lng: lng, category:"Point"};
-            res = await axios.post('http://localhost:5555/uploadPointer', data, {
+            res = await axios.post('/uploadPointer', data, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

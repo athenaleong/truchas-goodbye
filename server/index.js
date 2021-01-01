@@ -26,7 +26,9 @@ const qs = require("qs");
 var tagCollection;
 var userCollection;
 //TODO: cors set up
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(express.json());
+
 
 //Multer-gridfs Setup
 const url =
@@ -50,26 +52,6 @@ MongoClient.connect(url)
    imageFileCollection = db.collection('image.files')
    app.locals.collection = tagCollection;
   })
-
-//Sessions set up
-// const fileStore = sessionFileStore(session);
-  
-  // Set up a session middleware to handle user sessions.
-// NOTE: A secret is used to sign the cookie. This is just used for this sample
-// app and should be changed.
-// const sessionMiddleware = session({
-//   resave: true,
-//   saveUninitialized: true,
-//   store: new fileStore({}),
-//   secret: 'photo frame sample',
-// });
-
-// Enable user session handling.
-// app.use(sessionMiddleware);
-
-// Set up passport and session handling.
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 
 app.get("/ping", function (req, res) {
@@ -234,12 +216,14 @@ app.get('/getAlbumContent', async function (req, res) {
 })
 
 //same origin 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "..", "build")));
+if (process.env.NODE_ENV === 'production') {
 
-app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "..", "build", "index.html"));
-});
+  app.use(express.static(path.join(__dirname, "client/build")));
+
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
 
 console.log("Trying to run on port: " + port);
 app.listen(port);

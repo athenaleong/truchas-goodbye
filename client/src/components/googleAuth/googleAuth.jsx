@@ -12,7 +12,7 @@ function SignInButton(props) {
 
     const onSignIn = (response) => {
         console.log(response.accessToken);
-        axios.get(`http://localhost:5555/getAlbumContent?token=${response.accessToken}`).then(res => {console.log(res)})
+        axios.get(`/getAlbumContent?token=${response.accessToken}`).then(res => {console.log(res)})
     }
 
 

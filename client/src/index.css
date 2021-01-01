@@ -1,10 +1,10 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .btn-blue {
   @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
-}
+} */
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Sarabun:wght@200;400;500;600&display=swap');
 
