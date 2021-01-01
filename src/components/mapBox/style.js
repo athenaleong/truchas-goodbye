@@ -7,6 +7,11 @@ export const MapBox = styled.div`
     height: 88vh;
     overflow: hidden;
     filter: drop-shadow(20px 20px 60px #CECECE), drop-shadow(-20px -20px 60px #FFFFFF);
+    overflow:visible;
+
+    .mapboxgl-map {
+        border-radius: 32px;
+    }
 `;
 
 export const ClusterMarker = styled.div `
@@ -58,6 +63,9 @@ export const SearchBar = styled.div`
     justify-content: center;
     padding-left: 4px;
     flex-direction: column;
+    width: 75%;
+    max-width: 50vw;
+
 
     &:focus-within{
         .suggestions-wrapper {
@@ -75,12 +83,9 @@ export const SearchBar = styled.div`
         display:flex;
         flex-direction: row;
         height: 6vh;
-        width: 75%;
-        max-width: 50vw;
         background-color: #F2F2F2;
         border-radius: 16px;
         box-shadow : 10px 10px 60px #CECECE, -20px -20px 60px #FFFFFF;
-        // align-items: center;
     }
 
     .suggestions-wrapper {
@@ -89,9 +94,9 @@ export const SearchBar = styled.div`
         background-color: white;
         margin-top: 7vh;
         border-radius: 16px;
-        width: 50vw;
+        max-width: 50%;
+        width: 50%;
         display: none;
-
     }
 
     .mapboxgl-ctrl-geocoder--input {
@@ -123,9 +128,8 @@ export const SearchBar = styled.div`
         padding-top: 8px;
         padding-bottom: 8px;
         padding-left: 20px;
-        
-       
     }
+
     .mapboxgl-ctrl-geocoder--suggestion-title {
         font-weight: 500;
         font-size: 16px;
@@ -172,3 +176,29 @@ export const SearchBar = styled.div`
 // mapboxgl-ctrl-geocoder--button
 
 // mapboxgl-ctrl-geocoder--icon mapboxgl-ctrl-geocoder--icon-loading
+
+export const Tools = styled.div`
+    width: 100%;
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 4vh;
+    height: 6vh;
+
+`;
+
+export const HelperMessage = styled.p `
+
+
+    &.edit {
+        color: white;
+        font-family: Open Sans;
+        background-color: rgba(57, 106, 101, 0.8);
+        display: block;
+        border-radius: 16px;
+        padding: 8px;
+        margin: auto;
+        width: fit-content;
+        margin-top: 12px;
+    }
+`;

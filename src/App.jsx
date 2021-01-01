@@ -105,7 +105,7 @@ function App() {
             {/* </Tools> */}
               {/* <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/>  */}
               {/* <ToggleEditButton onClick={(e) => {setEditMode(!editMode); e.stopPropagation();}} editMode={editMode}></ToggleEditButton> */}
-              <MapBox location={location} zoomLevel={16} onClick={onMapClick} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId} />
+              <MapBox location={location} zoomLevel={16} onClick={onMapClick} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId} onButtonClick={(e) => {setEditMode(!editMode); e.stopPropagation();}} editMode={editMode}/>
           </LeftBox>
           <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON} setModalShow={setModalShow} setEditPointerId={setEditPointerId}></Drawer>
       <div onClick={(e) => e.stopPropagation()}> 
