@@ -7,6 +7,7 @@ const cors = require("cors");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
+const NodeCache = require("node-cache");
 
 const app = express();
 const port = 5555;
@@ -52,12 +53,31 @@ MongoClient.connect(url)
    app.locals.collection = tagCollection;
   })
 
+//Caching 
+const nodeCache = new NodeCache({ stdTTL: 60 * 15 });
+
+const cacheMiddleWare = (req, res, next) => {
+    let key = req.originalUrl;
+    console.log(key);
+    let value = nodeCache.get(key)
+    if (value != undefined) {
+      res.send(value);
+    } else {
+      res.sendResponse = res.send;
+      res.send = (body) => {
+        nodeCache.set(key, body)
+        res.sendResponse(body);
+      }
+      next();
+    }
+}
+
 
 app.get("/ping", function (req, res) {
   return res.send("pong");
 });
 
-app.get("/getUser", function(req, res) {
+app.get("/getUser", cacheMiddleWare, function(req, res) {
   userCollection.findOne({'_id': new ObjectID(req.query.id)}).then((result) => res.send(result));
 
   
@@ -102,6 +122,12 @@ app.post("/updatePointer", jsonParser, async function (req, res) {
         res.send(result);
       }
     )
+
+    //delete corresponding cached key
+    let keyToDelete = [`/getTag?id=${id}`]
+    nodeCache.del(keyToDelete);
+
+
   } catch (error) {
     res.status(505).json({error: error.toString()})
   }
@@ -128,7 +154,7 @@ app.post("/getGeoJSON", urlParser, async function (req, res) {
   res.send(geoJSONTag);
 });
 
-app.get("/getAllUser", async function (req, res) {
+app.get("/getAllUser", cacheMiddleWare, async function (req, res) {
   let user = userCollection.find({});
   let userData = [];
   await user.forEach((u) => {
@@ -137,18 +163,46 @@ app.get("/getAllUser", async function (req, res) {
   res.send(userData);
 });
 
-app.get('/getTag', async function (req, res) {
+app.get('/getTag', cacheMiddleWare, async function (req, res) {
   let id = req.query.id;
   tagCollection.findOne({"_id" : new ObjectID(id)}).then(tag => {
     res.send(tag);
   })
 })
 
-app.get('/getImage', async function (req, res) {
-  //TODO: error handling
-  let idArray = req.query.id;
-  idArray = Array.isArray(idArray) ? idArray : [idArray];
+// app.get('/getImage', cacheMiddleWare, async function (req, res) {
+//   //TODO: error handling
+//   let idArray = req.query.id;
+//   idArray = Array.isArray(idArray) ? idArray : [idArray];
 
+//   const getUrl = (id) => async function() {
+//     const filePromise = imageFileCollection.findOne({'_id': new ObjectID(id)})
+//     const chunkPromise = imageChunkCollection.find({'files_id': new ObjectID(id)}).sort({n:1}).toArray();
+
+//     return Promise.all([filePromise, chunkPromise]).then((values) => {
+
+//       let file = values[0];
+//       let chunks = values[1];
+
+//       let fileData = [];
+//       chunks.forEach(c => {
+//           fileData.push(c.data.toString('base64'))
+//         })
+//       let dataUrl = 'data:' + file.contentType + ';base64,' + fileData.join(''); 
+      
+//       return dataUrl;
+//     })
+//   }
+
+//   Promise.all(idArray.map(id => getUrl(id)())).then(values => {res.send(values)});
+
+// })
+
+
+app.get('/getImage', cacheMiddleWare, async function (req, res) {
+  //TODO: error handling
+  let id = req.query.id;
+  console.log(`GETing image id ${id}`)
   const getUrl = (id) => async function() {
     const filePromise = imageFileCollection.findOne({'_id': new ObjectID(id)})
     const chunkPromise = imageChunkCollection.find({'files_id': new ObjectID(id)}).sort({n:1}).toArray();
@@ -168,10 +222,11 @@ app.get('/getImage', async function (req, res) {
     })
   }
 
-  Promise.all(idArray.map(id => getUrl(id)())).then(values => {res.send(values)});
+  Promise.resolve(getUrl(id)()).then(url => {
+    res.send(url);
+  });
 
 })
-
 app.post('/deleteImage', jsonParser, async function(req, res) {
   try {
     let json = req.body;
@@ -193,7 +248,7 @@ app.post('/deleteImage', jsonParser, async function(req, res) {
 })
 
 // For temporary data loading from google photos, need edit for development 
-app.get('/getAlbumContent', async function (req, res) {
+app.get('/getAlbumContent', cacheMiddleWare, async function (req, res) {
   console.log(`TOKEN: ${req.query.token}`)
   const token = req.query.token;
   const data = {
@@ -224,5 +279,8 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-console.log("Trying to run on port: " + process.env.PORT || port);
-app.listen(process.env.PORT || port);
+// console.log("Trying to run on port: " + process.env.PORT || port);
+// app.listen(process.env.PORT || port);
+
+console.log("Trying to run on port: " + port);
+app.listen(port);

@@ -28,17 +28,33 @@ function Drawer(props) {
 
         //TODO: implement caching
 
+        // if (drawerJSON.imgId != imageId) {
+        //     setImageId(drawerJSON.imgId);
+        //     // let searchParam = new URLSearchParams({'id' : drawerJSON.imgId}).toString();
+        //     if (drawerJSON.imgId != undefined && drawerJSON.imgId.length != 0) {
+        //         // console.log(`AAAAA ${drawerJSON.imgId.length}`)
+        //         let queryString = drawerJSON.imgId.map((id) => 
+        //             `id=${id}`).join("&");
+        //         let getUrl = `/getImage?${queryString}`
+        //         // console.log(`url : ${getUrl}`)
+        //         axios.get(getUrl).then(res => {
+        //             setImgURL(res.data);
+        //         })
+        //     }
+        // } 
+
         if (drawerJSON.imgId != imageId) {
             setImageId(drawerJSON.imgId);
             // let searchParam = new URLSearchParams({'id' : drawerJSON.imgId}).toString();
             if (drawerJSON.imgId != undefined && drawerJSON.imgId.length != 0) {
-                // console.log(`AAAAA ${drawerJSON.imgId.length}`)
-                let queryString = drawerJSON.imgId.map((id) => 
-                    `id=${id}`).join("&");
-                let getUrl = `/getImage?${queryString}`
-                // console.log(`url : ${getUrl}`)
-                axios.get(getUrl).then(res => {
-                    setImgURL(res.data);
+                let PromiseArray = drawerJSON.imgId.map((id) => 
+                    {
+                    let getUrl = `/getImage?id=${id}`
+                    return axios.get(getUrl)
+                })
+                Promise.all(PromiseArray).then(result => {
+                    let url = result.map(r => r.data);
+                    setImgURL(url);
                 })
             }
         } 
@@ -66,7 +82,7 @@ function Drawer(props) {
     return (
         <div>
             <SideDrawer className={drawerClass}>
-                <Title onClick={stopPropagation}>{drawerJSON.title}</Title>
+                <Title onClick={stopPropagation}>{drawerJSON.title} </Title>
                 {/* {imgList} */}
                 <UserBubble userInfo={userInfo} setShowUserPopUp={setShowUserPopUp}></UserBubble>
                 <TestDiv onClick={stopPropagation}>
