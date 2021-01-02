@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ToggleButton =styled.button`
-    background-color: #F2F2F2;
+    color: #F2F2F2;
     box-shadow: 10px 10px 60px #CECECE, -20px -20px 60px #FFFFFF;
     top: 3px;
     right: 3px;
@@ -11,9 +11,19 @@ export const ToggleButton =styled.button`
     width: 4vw;
     display: flex;
     justify-content: center;
+    border-width: 0px;
+    
+    &:focus {
+        outline: 0px;
+    }
+
     &.edit {
         background-color: #396A65;
+        border-width: 0px;
+
     }
+
+
 `;
 
 export const ButtonImg = styled.img`

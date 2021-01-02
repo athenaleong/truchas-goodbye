@@ -31,6 +31,8 @@ export const TitleInput = styled.input`
     height: 100%;
     outline:none;
     padding: 12px;
+    border-width: 0px;
+
 
     &:focus {
         background-color: white;
@@ -45,6 +47,8 @@ export const DescriptionInput = styled(TextareaAutosize)`
     margin-bottom: ${marginBottom};
     outline:none;
     padding: 12px;
+    border-width: 0px;
+
 
     &:focus {
         background-color: white;
@@ -64,10 +68,16 @@ export const Input = styled.input`
     width: 30%;
     height: max(3vw, 36px);
     align-self: flex-end;
+    border-width: 0px;
+
 
     &.submit {
         background-color: #396A65;
         color: white;
+    }
+
+    &:focus {
+        outline: 0px;
     }
 `;
 

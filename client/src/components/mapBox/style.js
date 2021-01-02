@@ -66,7 +66,6 @@ export const SearchBar = styled.div`
     width: 75%;
     max-width: 50vw;
 
-
     &:focus-within{
         .suggestions-wrapper {
             display: block;
@@ -106,6 +105,8 @@ export const SearchBar = styled.div`
         font-family: Sarabun;
         font-weight: 400;
         color: #3D4852;
+        border-width: 0px;
+
 
         :focus{
             outline: none !important; 
@@ -168,6 +169,8 @@ export const SearchBar = styled.div`
 
     .mapboxgl-ctrl-geocoder--button {
         position: absolute;
+        border-width: 0px;
+
     }
 
 
