@@ -58,7 +58,6 @@ const nodeCache = new NodeCache({ stdTTL: 60 * 15 });
 
 const cacheMiddleWare = (req, res, next) => {
     let key = req.originalUrl;
-    console.log(key);
     let value = nodeCache.get(key)
     if (value != undefined) {
       res.send(value);
@@ -277,10 +276,11 @@ if (process.env.NODE_ENV === 'production') {
   app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, ".." , "client/build", "index.html"));
   });
+
+  console.log("Trying to run on port: " + process.env.PORT || port);
+  app.listen(process.env.PORT || port);
 }
-
-// console.log("Trying to run on port: " + process.env.PORT || port);
-// app.listen(process.env.PORT || port);
-
-console.log("Trying to run on port: " + port);
-app.listen(port);
+else {
+  console.log("Trying to run on port: " + port);
+  app.listen(port);
+}
