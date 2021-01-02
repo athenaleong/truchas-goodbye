@@ -113,6 +113,10 @@ export const SearchBar = styled.div`
         } 
     }
 
+    .suggestions {
+        list-style-type: none;
+        padding-inline-start: 4px;
+    }
 
     .suggestions > li  {
 
