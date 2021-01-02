@@ -54,12 +54,14 @@ MongoClient.connect(url)
   })
 
 //Caching 
-const nodeCache = new NodeCache({ stdTTL: 60 * 15 });
+const nodeCache = new NodeCache();
 
 const cacheMiddleWare = (req, res, next) => {
     let key = req.originalUrl;
-    let value = nodeCache.get(key)
+    console.log(key);
+    let value = nodeCache.get(key);
     if (value != undefined) {
+      console.log('got it');
       res.send(value);
     } else {
       res.sendResponse = res.send;

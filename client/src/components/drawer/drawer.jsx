@@ -6,11 +6,15 @@ import {SideDrawer, Title, Description, DescriptionText, Icon ,Image, EditIcon, 
 import UserBubble from '../userBubble/userBubble';
 import ImgCarousel from '../imageCarousel/imageCarousel';
 import {UserPopUp} from '../popUp/popUp';
+import Skeleton from 'react-loading-skeleton'
+import {CarouselSkeleton} from '../imageCarousel/style';
+import {BookLoader} from '../loading/loading';
+
 
 function Drawer(props) {
     const {drawerShow, setDrawerShow, drawerJSON, setEditPointerId, setModalShow} = props
     const [imageId, setImageId] = useState([]);
-    const [imgURL, setImgURL] = useState([]);
+    const [imgURL, setImgURL] = useState(undefined);
     const [userInfo, setUserInfo] = useState([])
     const [showUserPopUp, setShowUserPopUp] = useState(false);
     let drawerClass = drawerShow ? 'open': null;
@@ -18,12 +22,12 @@ function Drawer(props) {
     const editOnClick = () => {
         // setDrawerShow(false);
         setModalShow(true);
-        setEditPointerId({...drawerJSON, ...{'imgURL' : imgURL}});
+        setEditPointerId({...drawerJSON, ...{'imgURL' : imgURL || []}});
     }
 
     useEffect(async () => {
 
-        setImgURL([]);
+        setImgURL(undefined);
         setUserInfo([]);
 
         //TODO: implement caching
@@ -56,7 +60,9 @@ function Drawer(props) {
                     let url = result.map(r => r.data);
                     setImgURL(url);
                 })
-            }
+            } else {
+                setImgURL([]);
+            } 
         } 
         if (drawerJSON.people) {
             Promise.all(drawerJSON.people.map((p) => getUser(p.value))).then((values) => {
@@ -66,9 +72,6 @@ function Drawer(props) {
         } 
     }, [drawerJSON])
 
-    const imgList = imgURL.map(m => (
-        <Image src={m}/>
-    ));
     
     const getUser = (id) => {
         return axios.get(`/getUser?id=${id}`)
@@ -86,7 +89,7 @@ function Drawer(props) {
                 {/* {imgList} */}
                 <UserBubble userInfo={userInfo} setShowUserPopUp={setShowUserPopUp}></UserBubble>
                 <TestDiv onClick={stopPropagation}>
-                    <ImgCarousel imgURL={imgURL}></ImgCarousel>
+                    {<ImgCarousel imgURL={imgURL}></ImgCarousel>}
 
                     {drawerJSON.description &&
                         <Description>
@@ -100,11 +103,11 @@ function Drawer(props) {
                 <EditBox>
                     <EditIcon key={'edit'} src={"https://i.ibb.co/BPmYSND/edit.png"} onClick={(e)=> {editOnClick(); e.stopPropagation();}}/> 
                 </EditBox>
-
             </SideDrawer>
             <div onClick={(e) => e.stopPropagation()}> 
                 <UserPopUp userInfo={userInfo} show={showUserPopUp} onHide={() => setShowUserPopUp(false)} onClick={(e) => e.stopPropagation()}></UserPopUp>
             </div>
+
         </div>
     )
     // 

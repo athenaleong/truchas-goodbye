@@ -1,3 +1,4 @@
+import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
 export const ImageBox = styled.div`
@@ -29,4 +30,9 @@ export const CarouselBox = styled.div`
         object-fit:cover;
 
     }
+`;
+
+export const CarouselSkeleton = styled(Skeleton)`
+    height : calc((50vw - 108px - 96px) / 4 * 3);
+    border-radius: 32px !important;
 `;

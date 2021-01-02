@@ -48,6 +48,8 @@ function App() {
   const [drawerShow, setDrawerShow] = useState(false);
   const [selectedTagId, setSelectedTagId] = useState(null);
   const [drawerJSON, setDrawerJSON] = useState('');
+  
+  const [formState, setFormState] = useState(false);
 
   function onMapClick(obj) {
     console.log(`obj ${obj} `)
@@ -108,7 +110,7 @@ function App() {
           </LeftBox>
           <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON} setModalShow={setModalShow} setEditPointerId={setEditPointerId}></Drawer>
       <div onClick={(e) => e.stopPropagation()}> 
-        <PopUp onHide={() => {setModalShow(false); setEditPointerId(null);}} show={modalShow} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setDrawerShow={setDrawerShow} editPointerId={editPointerId} setEditPointerId={setEditPointerId} setSelectedTagId={setSelectedTagId}></Form>} editPointerId={editPointerId}></PopUp>
+        <PopUp onHide={() => {setModalShow(false); setEditPointerId(null);}} show={modalShow} formState={formState} body={<Form lat={lat} lng={lng} setModalShow={setModalShow} allUser={allUser} setDrawerShow={setDrawerShow} editPointerId={editPointerId} setEditPointerId={setEditPointerId} setSelectedTagId={setSelectedTagId} setFormState={setFormState}></Form>} editPointerId={editPointerId}></PopUp>
       </div>
     </AppStyled>
   )}

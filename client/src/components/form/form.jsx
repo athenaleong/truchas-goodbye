@@ -5,18 +5,23 @@ import Dropzone from '../dropzone/drop';
 import { MarkerForm, TitleInput, DescriptionInput, SelectStyled, FormText, FirstDiv, Input} from './style';
 import EmojiPicker from '../emojiPicker/emojiPicker';
 import SelectUser from '../select/select';
+import {BookLoader} from '../loading/loading';
 
 const axios = require('axios');
 var FormData = require('form-data');
 
  function Form(props) {
-    const {lat, lng, setModalShow, allUser, setSelectedTagId, setDrawerShow, editPointerId, setEditPointerId} = props;
+    const {lat, lng, setModalShow, allUser, setSelectedTagId, setDrawerShow, editPointerId, setEditPointerId, setFormState} = props;
 
     const {imgURL, imgId, emoji, description, _id, title, people} = editPointerId || {};
     
     const {register, handleSubmit, control, setValue, formState}  = useForm({mode: 'onChange', reValidateMode: 'onChange'});
 
     console.log(imgId);
+
+    // useEffect(() => {
+    //     setFormState(formState.isSubmitting);
+    // }, [formState.isSubmitting])
 
     const onSubmit = async (data) => {
         const images = data.images;
@@ -96,38 +101,44 @@ var FormData = require('form-data');
         console.log('change happened');
         console.log(selectedOption);
     }
+    if (!formState.isSubmitting) {
+        return (
+            <MarkerForm onSubmit={handleSubmit(onSubmit)}>
+                <FirstDiv>
+                    <Controller
+                        name="emoji"
+                        control={control}
+                        render={() => <EmojiPicker register={register} setValue={setValue} defaultValue={emoji}></EmojiPicker>}
+                    />
+                    <TitleInput name="title" placeholder="Title" ref={register({required : true})} defaultValue={title}/>
+                </FirstDiv>
 
-    return (
-        <MarkerForm onSubmit={handleSubmit(onSubmit)}>
-            <FirstDiv>
+                <DescriptionInput name="description" placeholder="Description" minRows={4} ref={register} defaultValue={description} />
+
                 <Controller
-                    name="emoji"
+                    name="people"
                     control={control}
-                    render={() => <EmojiPicker register={register} setValue={setValue} defaultValue={emoji}></EmojiPicker>}
+                    render={() =>
+                        <SelectUser register={register} setValue={setValue} allUser={allUser} defaultValue={people}></SelectUser>
+                    }   
+                /> 
+                <Controller
+                    name="images"
+                    control={control}
+                    render={(onChange) =>
+                        <Dropzone onChange={onChange} register={register} setValue={setValue} imgURL={imgURL} imgId={imgId}></Dropzone>
+                    }
                 />
-                <TitleInput name="title" placeholder="Title" ref={register({required : true})} defaultValue={title}/>
-            </FirstDiv>
 
-            <DescriptionInput name="description" placeholder="Description" minRows={4} ref={register} defaultValue={description} />
-
-            <Controller
-                name="people"
-                control={control}
-                render={() =>
-                    <SelectUser register={register} setValue={setValue} allUser={allUser} defaultValue={people}></SelectUser>
-                }   
-            /> 
-            <Controller
-                name="images"
-                control={control}
-                render={(onChange) =>
-                    <Dropzone onChange={onChange} register={register} setValue={setValue} imgURL={imgURL} imgId={imgId}></Dropzone>
-                }
-            />
-
-            <Input type="submit" className={formState.isValid? 'submit' : null} />
-        </MarkerForm>
-    );
+                <Input type="submit" className={formState.isValid? 'submit' : null} />
+            </MarkerForm>
+        );
+    } 
+    else {
+        return (
+            <BookLoader />
+        )
+    }
 }
 
 export default Form

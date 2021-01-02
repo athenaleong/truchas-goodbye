@@ -1,5 +1,6 @@
 import { use } from 'passport';
 import React, {useEffect} from 'react';
+import Skeleton from 'react-loading-skeleton';
 import {UserBox, Bubble, MoreBubble, MoreBox} from './style';
 
 function UserBubble(props) {
@@ -25,7 +26,6 @@ function UserBubble(props) {
             </div>     
             } 
             
-            {/* {renderBubble(userURL)} */}
         </UserBox>
     )
 }

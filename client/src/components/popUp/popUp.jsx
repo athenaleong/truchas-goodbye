@@ -4,11 +4,13 @@ import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Bubble} from '../userBubble/style';
 import {UserModalBody, User, UserModal, UserModalTitle, UserModalHeader} from './style';
+import {BookLoader} from '../loading/loading';
 
 function PopUp(props) {
 
-    const {editPointerId} = props;
+    const {editPointerId, formState} = props;
 
+    
     return(
         <Modal {... props} animation={false}>
             <UserModalHeader closeButton>
@@ -19,6 +21,8 @@ function PopUp(props) {
             </Modal.Body>
         </Modal>
     );
+    
+
 }   
 
 function UserPopUp(props) {
