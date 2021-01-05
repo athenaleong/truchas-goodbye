@@ -14,6 +14,11 @@ export const MapBox = styled.div`
     }
 `;
 
+export const searchMarker = styled.img `
+    height: 5vh;
+
+`;
+
 export const ClusterMarker = styled.div `
     color: #fff;
     background-color: #3D664B;

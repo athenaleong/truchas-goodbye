@@ -3,10 +3,11 @@ import axios from 'axios';
 import { Emoji } from "emoji-mart";
 import useSupercluster from "use-supercluster";
 import ReactMapGL, { Marker, FlyToInterpolator } from "react-map-gl";
-import {MapBox, ClusterMarker, SingleMarker, GeocoderStyled, SearchBar, Tools, HelperMessage} from './style';
+import {MapBox, ClusterMarker, SingleMarker, GeocoderStyled, SearchBar, Tools, HelperMessage, searchMarker} from './style';
 import {ToggleEditButton} from '../button/button'
 import Geocoder from 'react-map-gl-geocoder';
 import DeckGL, { GeoJsonLayer } from "deck.gl";
+import { ErrorEvent } from "mapbox-gl";
 
 
 const Map = (props) => {
@@ -83,17 +84,23 @@ const Map = (props) => {
     [handleViewportChange]
     );
 
+    // const handleOnResult = event => {
+    //     console.log(event.result)
+    //     setSearchResultLayer(new GeoJsonLayer({
+    //         id: "search-result",
+    //         data: event.result.geometry,
+    //         getFillColor: [255, 0, 0, 128],
+    //         getRadius: 1000,
+    //         pointRadiusMinPixels: 10,
+    //         pointRadiusMaxPixels: 10
+    //       })
+    //     );
+    //   };
+
     const handleOnResult = event => {
-        setSearchResultLayer(new GeoJsonLayer({
-            id: "search-result",
-            data: event.result.geometry,
-            getFillColor: [255, 0, 0, 128],
-            getRadius: 1000,
-            pointRadiusMinPixels: 10,
-            pointRadiusMaxPixels: 10
-          })
-        );
-      };
+        console.log(event.result)
+        setSearchResultLayer({latitude: event.result.geometry.coordinates[1], longitude: event.result.geometry.coordinates[0]})
+    };
 
     return (
         <div>
@@ -122,7 +129,16 @@ const Map = (props) => {
                 onViewportChange={handleGeocoderViewportChange}
                 mapboxApiAccessToken={accessToken}
             />
-            <DeckGL {...viewport} layers={[searchResultLayer]} />
+            {/* <DeckGL {...viewport} layers={[searchResultLayer]} /> */}
+            {searchResultLayer && <Marker
+                key="result"
+                latitude={searchResultLayer.latitude}
+                longitude={searchResultLayer.longitude}
+            >
+                <searchMarker src="https://i.ibb.co/FbdVV6z/marker.png"/>
+
+                
+            </Marker>}
 
 
             {clusters.map(cluster => {
