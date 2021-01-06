@@ -68,6 +68,7 @@ export const DescriptionText = styled.p`
     color: #606F7B;
     // max-height: calc(70vh - min(4vw, 45px) - 80px - calc((50vw - 108px - 96px) / 4 * 3));
     overflow: scroll;
+    text-align: left;
 `;
 
 
