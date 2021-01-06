@@ -30,9 +30,14 @@ export const CarouselBox = styled.div`
         object-fit:cover;
 
     }
+
 `;
 
 export const CarouselSkeleton = styled(Skeleton)`
     height : calc((50vw - 108px - 96px) / 4 * 3);
     border-radius: 32px !important;
+
+    @media (max-width: 900px) {
+        height : calc((50vw - 54px - 48px) / 4 * 3);
+    }
 `;

@@ -11,6 +11,7 @@ export const ToggleButton =styled.button`
     width: 4vw;
     display: flex;
     justify-content: center;
+    align-items: center;
     border-width: 0px;
     
     &:focus {
@@ -27,8 +28,8 @@ export const ToggleButton =styled.button`
 `;
 
 export const ButtonImg = styled.img`
-    // width: 100%;
-    height: 100%;
+    width: 72%;
+    min-width: 16px;
 
 
 `

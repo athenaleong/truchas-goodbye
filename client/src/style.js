@@ -27,6 +27,17 @@ export const LeftBox = styled.div`
     &.compress {
     padding-right: 36px;
     width: 50%;
+    }
+
+    @media (max-width: 900px) {
+        padding-left: 36px;
+        padding-right: 36px;
+
+        &.compress {
+            padding-right: 18px;
+            width: 50%;
+        }
+    }
 
     }
 `;
@@ -35,6 +46,11 @@ export const RightBox = styled.div`
     padding-left: 72px;
     padding-right: 72px;
     min-height: 100%;
+
+    @media (max-width: 900px) {
+        padding-left: 36px;
+        padding-right: 36px;
+    }
 
 `;
 

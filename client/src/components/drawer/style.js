@@ -25,6 +25,14 @@ export const SideDrawer = styled.div`
     &.open {
         transform: translateX(0);
     }
+
+    @media (max-width: 900px) {
+        margin-left: 18px;
+        margin-right: 36px;
+        width: calc(50% - 54px);
+
+
+    }
 `;
 
 export const Title = styled.p`
@@ -105,4 +113,9 @@ export const TestDiv = styled.div`
     overflow: scroll;
     margin-left: 48px;
     margin-right: 48px;
+
+    @media (max-width:900px) {
+        margin-left: 24px;
+        margin-right: 24px;
+    }
 `;
