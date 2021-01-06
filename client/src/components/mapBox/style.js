@@ -14,7 +14,7 @@ export const MapBox = styled.div`
     }
 `;
 
-export const searchMarker = styled.img `
+export const SearchMarker = styled.img `
     height: 5vh;
 
 `;
@@ -90,6 +90,8 @@ export const SearchBar = styled.div`
         background-color: #F2F2F2;
         border-radius: 16px;
         box-shadow : 10px 10px 60px #CECECE, -20px -20px 60px #FFFFFF;
+        width: 75%;
+        max-width: 50vw;
     }
 
     .suggestions-wrapper {
@@ -168,7 +170,7 @@ export const SearchBar = styled.div`
         display: flex;
         justify-content: center;
         flex-direction: column; 
-        width: 8%;
+        width: 4vw;
     }
 
     .mapboxgl-ctrl-geocoder--icon-loading {
@@ -179,6 +181,7 @@ export const SearchBar = styled.div`
     .mapboxgl-ctrl-geocoder--button {
         position: absolute;
         border-width: 0px;
+        background-color:transparent;
 
     }
 

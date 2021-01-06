@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Emoji } from "emoji-mart";
 import useSupercluster from "use-supercluster";
 import ReactMapGL, { Marker, FlyToInterpolator } from "react-map-gl";
-import {MapBox, ClusterMarker, SingleMarker, GeocoderStyled, SearchBar, Tools, HelperMessage, searchMarker} from './style';
+import {MapBox, ClusterMarker, SingleMarker, GeocoderStyled, SearchBar, Tools, HelperMessage, SearchMarker} from './style';
 import {ToggleEditButton} from '../button/button'
 import Geocoder from 'react-map-gl-geocoder';
 import DeckGL, { GeoJsonLayer } from "deck.gl";
@@ -135,7 +135,7 @@ const Map = (props) => {
                 latitude={searchResultLayer.latitude}
                 longitude={searchResultLayer.longitude}
             >
-                <searchMarker src="https://i.ibb.co/FbdVV6z/marker.png"/>
+                <SearchMarker src="https://i.ibb.co/FbdVV6z/marker.png"/>
 
                 
             </Marker>}

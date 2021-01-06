@@ -5,9 +5,10 @@ export const AppStyled = styled.div`
     display: flex;
     flex-direction: row;
     background-color: #EEEEEE;
-    min-height: 100vh;
+    min-height: 100%;
     padding-top: 6vh;
     padding-bottom: 6vh;
+
 
 `;
 
