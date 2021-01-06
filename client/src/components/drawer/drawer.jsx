@@ -100,9 +100,11 @@ function Drawer(props) {
                         </Description>
                     }
                 </TestDiv>
+                {drawerJSON != "" &&
                 <EditBox>
                     <EditIcon key={'edit'} src={"https://i.ibb.co/BPmYSND/edit.png"} onClick={(e)=> {editOnClick(); e.stopPropagation();}}/> 
                 </EditBox>
+                }
             </SideDrawer>
             <div onClick={(e) => e.stopPropagation()}> 
                 <UserPopUp userInfo={userInfo} show={showUserPopUp} onHide={() => setShowUserPopUp(false)} onClick={(e) => e.stopPropagation()}></UserPopUp>

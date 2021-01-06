@@ -2,8 +2,8 @@ import { useState, useEffect, useRef, useCallback} from "react";
 import axios from 'axios';
 import { Emoji } from "emoji-mart";
 import useSupercluster from "use-supercluster";
-import ReactMapGL, { Marker, FlyToInterpolator } from "react-map-gl";
-import {MapBox, ClusterMarker, SingleMarker, GeocoderStyled, SearchBar, Tools, HelperMessage, SearchMarker} from './style';
+import  {Marker, FlyToInterpolator } from "react-map-gl";
+import {MapBox, ClusterMarker, SingleMarker, GeocoderStyled, SearchBar, Tools, HelperMessage, SearchMarker, ReactMapGLStyled} from './style';
 import {ToggleEditButton} from '../button/button'
 import Geocoder from 'react-map-gl-geocoder';
 import DeckGL, { GeoJsonLayer } from "deck.gl";
@@ -112,7 +112,7 @@ const Map = (props) => {
                 <ToggleEditButton onClick={onButtonClick}  editMode={editMode}/>
             </Tools>
             <div style= {{borderRadius: 32 + 'px', height:78 + 'vh', width: 100 + '%'}} onClick={(e) => {e.stopPropagation()}}>
-            <ReactMapGL
+            <ReactMapGLStyled
                 {...viewport}
                 width="100%"
                 height="100%"
@@ -189,7 +189,7 @@ const Map = (props) => {
             })}
             <HelperMessage className={editMode? "edit" : null}>{editMode? "click on map to add new marker" : null} </HelperMessage>
 
-            </ReactMapGL>
+            </ReactMapGLStyled>
             </div>
 
 

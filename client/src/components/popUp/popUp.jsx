@@ -43,7 +43,7 @@ function UserPopUp(props) {
                 {/* <Modal.Title>Create new </Modal.Title> */}
             </Modal.Header>
             <UserModalBody>
-                <ul>
+                <ul style={{paddingInlineStart : 12 + 'px'}}>
                     {userList}
                 </ul>
             </UserModalBody>

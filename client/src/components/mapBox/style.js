@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Geocoder from 'react-map-gl-geocoder';
-
+import ReactMapGL from "react-map-gl";
 
 export const MapBox = styled.div`
     width: 100%;
@@ -39,6 +39,8 @@ export const SingleMarker = styled.div`
     border-radius: 50%;
     background-color: White;
     transition: ease-in 0.15s;
+    cursor: pointer;
+
 
     &:hover {
         transform: scale(1.4);
@@ -185,7 +187,6 @@ export const SearchBar = styled.div`
 
     }
 
-
 `;
 
 // mapboxgl-ctrl-geocoder--button
@@ -216,4 +217,12 @@ export const HelperMessage = styled.p `
         width: fit-content;
         margin-top: 12px;
     }
+`;
+
+export const ReactMapGLStyled = styled(ReactMapGL)`
+
+    .mapboxgl-ctrl-attrib-button {
+        display:none;
+    }
+
 `;

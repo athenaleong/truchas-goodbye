@@ -84,6 +84,7 @@ export const EditBox = styled.div`
     bottom: 0;
     padding-bottom: 4vh;
     padding-right: 4vh;
+    cursor: pointer;
 `;
 export const EditIcon = styled(Icon)`
     background-color: white;
