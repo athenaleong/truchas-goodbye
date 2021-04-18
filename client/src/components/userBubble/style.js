@@ -15,6 +15,7 @@ export const Bubble = styled.img`
     border-radius:50%;
     margin-left: 0.833vw;
     overflow: hidden;
+    cursor: pointer;
 
     &:hover {
         transform: scale(0.9);

@@ -19,9 +19,6 @@ var FormData = require('form-data');
 
     console.log(imgId);
 
-    // useEffect(() => {
-    //     setFormState(formState.isSubmitting);
-    // }, [formState.isSubmitting])
 
     const onSubmit = async (data) => {
         const images = data.images;

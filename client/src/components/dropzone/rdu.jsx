@@ -18,7 +18,6 @@ function Standard(props) {
       <Dropzone
         getUploadParams={getUploadParams}
         onChangeStatus={onChange}
-        // onSubmit={handleSubmit}
         styles={{ dropzone: { minHeight: 200, maxHeight: 250 } }}
       />
     )
