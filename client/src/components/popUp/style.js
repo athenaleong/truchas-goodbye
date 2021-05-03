@@ -2,7 +2,6 @@ import Modal from 'react-bootstrap/Modal';
 import styled from 'styled-components';
 
 export const UserModal = styled(Modal)`
-    // width: 30vw;
 `;
 
 export const UserModalBody = styled(Modal.Body)`

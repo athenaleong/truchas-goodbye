@@ -18,7 +18,6 @@ function SelectUser(props) {
                         isMulti
                         options={[{value:'all', label:'all users'}, ...allUser]} 
                         onChange={(selected) => {
-                            console.log(selected)
                             if (selected) {
                                 if (selected.filter(option => option.value == "all").length != 0) {
                                     setSelectOption(allUser)

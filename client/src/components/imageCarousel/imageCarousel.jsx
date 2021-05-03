@@ -24,13 +24,13 @@ function ImgCarousel(props) {
     )
     return (
          <CarouselBox>
-        {   (imgURL == undefined && <CarouselSkeleton />) || 
+        {   
+            (imgURL == undefined && <CarouselSkeleton />) || 
             (imgURL.length > 0 &&
             <Carousel infiniteLoop={true} interval={5000} autoPlay={true} showThumbs={false} showStatus={false} onClick={(e) => e.stopPropagation()}>
                 {images}
             </Carousel>)
          }
-        
         </CarouselBox> 
         
     )

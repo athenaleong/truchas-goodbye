@@ -8,12 +8,6 @@ export const ImageBox = styled.div`
     justify-content: center;
 `;
 
-export const Image = styled.img`
-    // border-radius:32px;
-    // width: 50%;
-    // height: 100%;
-`;
-
 export const CarouselBox = styled.div`
     background: none;
     margin-bottom: 4vh;
@@ -28,9 +22,7 @@ export const CarouselBox = styled.div`
         width: auto;
         border-radius:32px;
         object-fit:cover;
-
     }
-
 `;
 
 export const CarouselSkeleton = styled(Skeleton)`

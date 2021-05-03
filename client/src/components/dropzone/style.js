@@ -3,13 +3,6 @@ import styled from 'styled-components';
 import {marginBottom} from '../form/style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
-export const DropContainer = styled.section`
-    // background-color: rgba(148, 200, 194, 0.58);
-    // border-radius: 12px;
-
-`;
-
 export const DropInner = styled.div`
     background-color: rgba(148, 200, 194, 0.58);
     border-radius: 12px;

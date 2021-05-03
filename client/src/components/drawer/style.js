@@ -9,7 +9,6 @@ export const SideDrawer = styled.div`
     right: 0;
     display:flex;
     flex-direction: column;
-    // padding-left: calc(40% * 0.10) ; 
     background-color: #f2f2f2;
     box-shadow: -2px 5px 30px #CECECE, -30px -2px 60px rgba(247, 247, 247, 0.6);
     border-radius: 32px;
@@ -71,8 +70,6 @@ export const DescriptionText = styled.p`
     text-align: left;
 `;
 
-
-
 export const Icon = styled.img`
     width: 24px;
     height: 24px;
@@ -106,17 +103,5 @@ export const EditIcon = styled(Icon)`
     &:hover {
         transform: scale(0.9);
         transition: ease-out 0.15s;
-    }
-`;
-
-export const TestDiv = styled.div`
-    max-height: calc(74vh - min(4vw, 45px) - 80px);    
-    overflow: scroll;
-    margin-left: 48px;
-    margin-right: 48px;
-
-    @media (max-width:900px) {
-        margin-left: 24px;
-        margin-right: 24px;
     }
 `;

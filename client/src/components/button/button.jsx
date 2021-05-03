@@ -11,5 +11,3 @@ function ToggleEditButton(props) {
 }
 
 export {ToggleEditButton};
-
-// https://i.ibb.co/H279swH/edit-add-grey-2.png

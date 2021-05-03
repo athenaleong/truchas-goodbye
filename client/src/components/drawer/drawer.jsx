@@ -20,36 +20,17 @@ function Drawer(props) {
     let drawerClass = drawerShow ? 'open': null;
 
     const editOnClick = () => {
-        // setDrawerShow(false);
         setModalShow(true);
         setEditPointerId({...drawerJSON, ...{'imgURL' : imgURL || []}});
     }
 
     useEffect(async () => {
-
+        
         setImgURL(undefined);
         setUserInfo([]);
 
-        //TODO: implement caching
-
-        // if (drawerJSON.imgId != imageId) {
-        //     setImageId(drawerJSON.imgId);
-        //     // let searchParam = new URLSearchParams({'id' : drawerJSON.imgId}).toString();
-        //     if (drawerJSON.imgId != undefined && drawerJSON.imgId.length != 0) {
-        //         // console.log(`AAAAA ${drawerJSON.imgId.length}`)
-        //         let queryString = drawerJSON.imgId.map((id) => 
-        //             `id=${id}`).join("&");
-        //         let getUrl = `/getImage?${queryString}`
-        //         // console.log(`url : ${getUrl}`)
-        //         axios.get(getUrl).then(res => {
-        //             setImgURL(res.data);
-        //         })
-        //     }
-        // } 
-
         if (drawerJSON.imgId != imageId) {
             setImageId(drawerJSON.imgId);
-            // let searchParam = new URLSearchParams({'id' : drawerJSON.imgId}).toString();
             if (drawerJSON.imgId != undefined && drawerJSON.imgId.length != 0) {
                 let PromiseArray = drawerJSON.imgId.map((id) => 
                     {
@@ -86,7 +67,6 @@ function Drawer(props) {
         <div>
             <SideDrawer className={drawerClass}>
                 <Title onClick={stopPropagation}>{drawerJSON.title} </Title>
-                {/* {imgList} */}
                 <UserBubble userInfo={userInfo} setShowUserPopUp={setShowUserPopUp}></UserBubble>
                 <TestDiv onClick={stopPropagation}>
                     {<ImgCarousel imgURL={imgURL}></ImgCarousel>}
@@ -109,10 +89,8 @@ function Drawer(props) {
             <div onClick={(e) => e.stopPropagation()}> 
                 <UserPopUp userInfo={userInfo} show={showUserPopUp} onHide={() => setShowUserPopUp(false)} onClick={(e) => e.stopPropagation()}></UserPopUp>
             </div>
-
         </div>
     )
-    // 
 }
 
 export default Drawer

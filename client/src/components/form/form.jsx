@@ -12,22 +12,15 @@ var FormData = require('form-data');
 
  function Form(props) {
     const {lat, lng, setModalShow, allUser, setSelectedTagId, setDrawerShow, editPointerId, setEditPointerId, setFormState} = props;
-
     const {imgURL, imgId, emoji, description, _id, title, people} = editPointerId || {};
     
     const {register, handleSubmit, control, setValue, formState}  = useForm({mode: 'onChange', reValidateMode: 'onChange'});
-
-    console.log(imgId);
-
 
     const onSubmit = async (data) => {
         const images = data.images;
         let newImgId = [];
         const existingImages = images.filter(img => typeof img == 'string');
         const newImages = images.filter(img => typeof img != 'string');
-
-        console.log(`exisiting Id : ${existingImages}`);
-        console.log(`new Id : ${newImages}`);
 
         if (newImages.length != 0) {
             let formData = new FormData();
@@ -87,17 +80,13 @@ var FormData = require('form-data');
         setEditPointerId(null);
     }
     
-
     const divStyle = {
         display: 'flex',
         flexDirection: 'row',
         width: 100 + '%'
     };
 
-    const handleChange = ([selectedOption]) => {
-        console.log('change happened');
-        console.log(selectedOption);
-    }
+    
     if (!formState.isSubmitting) {
         return (
             <MarkerForm onSubmit={handleSubmit(onSubmit)}>
@@ -126,7 +115,6 @@ var FormData = require('form-data');
                         <Dropzone onChange={onChange} register={register} setValue={setValue} imgURL={imgURL} imgId={imgId}></Dropzone>
                     }
                 />
-
                 <Input type="submit" className={formState.isValid? 'submit' : null} />
             </MarkerForm>
         );

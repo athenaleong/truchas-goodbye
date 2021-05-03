@@ -84,28 +84,12 @@ const Map = (props) => {
     [handleViewportChange]
     );
 
-    // const handleOnResult = event => {
-    //     console.log(event.result)
-    //     setSearchResultLayer(new GeoJsonLayer({
-    //         id: "search-result",
-    //         data: event.result.geometry,
-    //         getFillColor: [255, 0, 0, 128],
-    //         getRadius: 1000,
-    //         pointRadiusMinPixels: 10,
-    //         pointRadiusMaxPixels: 10
-    //       })
-    //     );
-    //   };
-
     const handleOnResult = event => {
-        console.log(event.result)
         setSearchResultLayer({latitude: event.result.geometry.coordinates[1], longitude: event.result.geometry.coordinates[0]})
     };
 
     return (
         <div>
-
-        
         <MapBox>
             <Tools>
                 <SearchBar ref={geocoderContainerRef} onClick={(e) => {e.stopPropagation()}}/>
@@ -129,15 +113,12 @@ const Map = (props) => {
                 onViewportChange={handleGeocoderViewportChange}
                 mapboxApiAccessToken={accessToken}
             />
-            {/* <DeckGL {...viewport} layers={[searchResultLayer]} /> */}
             {searchResultLayer && <Marker
                 key="result"
                 latitude={searchResultLayer.latitude}
                 longitude={searchResultLayer.longitude}
             >
                 <SearchMarker src="https://i.ibb.co/FbdVV6z/marker.png"/>
-
-                
             </Marker>}
 
 
@@ -166,7 +147,6 @@ const Map = (props) => {
                 );
                 }
                 else {
-                    // console.log(`${cluster.properties.emoji} ${selectedTagId == cluster.properties.id? "selected" : null}`)
                     return (
                     <Marker
                         key={`point-${cluster.properties.id}`}
@@ -181,7 +161,6 @@ const Map = (props) => {
                             }}
                         >
                             <Emoji emoji={cluster.properties.emoji} size={18}></Emoji>
-                            {/* <h3>{ (selectedTagId == cluster.properties.id) ? "selected" : null}</h3> */}
                         </SingleMarker>
                     </Marker>
                     );
@@ -191,16 +170,7 @@ const Map = (props) => {
 
             </ReactMapGLStyled>
             </div>
-
-
         </MapBox>
-        {/* <SingleMarker 
-                            className={(selectedTagId == "5fdb1bab6cff65025719f097")? "selected" : null}
-                            onClick={() => {
-                            }}
-                        >
-                            hello
-        </SingleMarker> */}
         </div>
 
 

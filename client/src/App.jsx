@@ -1,5 +1,4 @@
 import logo from './logo.svg';
-// import './App.css';
 import MapSection from './components/map/map';
 import React, { useEffect, useRef, useState } from 'react';
 import {PopUp} from './components/popUp/popUp';
@@ -21,6 +20,7 @@ const location = {
   lng: -105.81129,
 };
 
+// Set Default Location to Truchas 
 const mapBoxLocation = [36.04818, -105.81129];
 
 function App() {
@@ -38,11 +38,10 @@ function App() {
   //Display Feature
   const [feature, setFeature] = useState([]); //TODO: Expand to walks/path tracing
   const [pointQuery, setPointQuery] = useState({});
-  const [geoJSON, setGeoJSON] = useState([]); //GEOJSONJson Display
+  const [geoJSON, setGeoJSON] = useState([]); 
 
   const mapRef = useRef();
-
-  const [allUser, setAllUser] = useState([]); //TODO: move this to form.jsx. state hook wasn't working. not sure why
+  const [allUser, setAllUser] = useState([]); 
 
   //Drawer 
   const [drawerShow, setDrawerShow] = useState(false);
@@ -52,8 +51,6 @@ function App() {
   const [formState, setFormState] = useState(false);
 
   function onMapClick(obj) {
-    console.log(`obj ${obj} `)
-
     if (editMode) {
       setModalShow(true);
     }
@@ -67,7 +64,7 @@ function App() {
     });
     let config = {
       method: "post",
-      url: "/getGeoJSON", //TOEDIT
+      url: "/getGeoJSON", 
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -77,7 +74,6 @@ function App() {
     axios(config).then(function (response) {
       let geoJSON = response.data;
       setGeoJSON(geoJSON);
-      // console.log(`data display: ${geoJSON}`);
     });
   }, [pointQuery, modalShow]);
 
@@ -96,16 +92,8 @@ function App() {
   }, [selectedTagId])
 
   return (
-    // onClick={(e) => e.stopPropagation()}
     <AppStyled onClick={() => setDrawerShow(!drawerShow)}>
           <LeftBox className={drawerShow? 'compress' : null}>
-            {/* <Tools> */}
-              {/* <TempSearchBar onClick={(e) => e.stopPropagation()}></TempSearchBar> */}
-              {/* <SignInButton></SignInButton> */}
-              {/* <ToggleEditButton onClick={(e) => {setEditMode(!editMode); e.stopPropagation();}} editMode={editMode}></ToggleEditButton> */}
-            {/* </Tools> */}
-              {/* <MapSection location={location} zoomLevel={16} onClick={onMapClick} mapRef={mapRef} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId}/>  */}
-              {/* <ToggleEditButton onClick={(e) => {setEditMode(!editMode); e.stopPropagation();}} editMode={editMode}></ToggleEditButton> */}
               <MapBox location={location} zoomLevel={16} onClick={onMapClick} geoJSON={geoJSON} setSelectedTagId={setSelectedTagId} setDrawerShow={setDrawerShow} selectedTagId={selectedTagId} onButtonClick={(e) => {setEditMode(!editMode); e.stopPropagation();}} editMode={editMode}/>
           </LeftBox>
           <Drawer setDrawerShow={setDrawerShow} drawerShow={drawerShow} drawerJSON={drawerJSON} setModalShow={setModalShow} setEditPointerId={setEditPointerId}></Drawer>

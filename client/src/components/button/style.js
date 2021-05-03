@@ -23,8 +23,6 @@ export const ToggleButton =styled.button`
         border-width: 0px;
 
     }
-
-
 `;
 
 export const ButtonImg = styled.img`

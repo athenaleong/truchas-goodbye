@@ -25,8 +25,6 @@ const jsonParser = bodyParser.json();
 const qs = require("qs");
 var tagCollection;
 var userCollection;
-//TODO: cors set up
-// app.use(cors(corsOptions));
 app.use(express.json());
 
 
@@ -44,7 +42,6 @@ const upload = multer({ storage });
 
 MongoClient.connect(url)
 .then(client => {
-  console.log('connected to db');
   const db = client.db('truchas');
    tagCollection = db.collection('tag');  
    userCollection = db.collection('user');  
@@ -58,10 +55,8 @@ const nodeCache = new NodeCache();
 
 const cacheMiddleWare = (req, res, next) => {
     let key = req.originalUrl;
-    console.log(key);
     let value = nodeCache.get(key);
     if (value != undefined) {
-      console.log('got it');
       res.send(value);
     } else {
       res.sendResponse = res.send;
@@ -85,8 +80,6 @@ app.get("/getUser", cacheMiddleWare, function(req, res) {
 })
 // Use Multer and GridFS to upload images into Db
 app.post("/uploadImage", upload.any(), async function (req, res) {
-  console.log("upload Image");
-  console.log(req.files)
   try {
       var files = req.files;
       var id = files.map((file) => file.id);
@@ -96,7 +89,6 @@ app.post("/uploadImage", upload.any(), async function (req, res) {
   catch (error) {
     res.status(500).json({error: error.toString()});
   }
-    //TODO: return success message 
     
 });
 
@@ -135,8 +127,6 @@ app.post("/updatePointer", jsonParser, async function (req, res) {
 });
 
 app.post("/getGeoJSON", urlParser, async function (req, res) {
-  //TODO: function to convert query into MongoDB query
-  // console.log(`tag collection : ${tagCollection.find({})}`)
   let query = req.body.query;
   let tags = tagCollection.find(query);
   let geoJSONTag = [];
@@ -171,39 +161,9 @@ app.get('/getTag', cacheMiddleWare, async function (req, res) {
   })
 })
 
-// app.get('/getImage', cacheMiddleWare, async function (req, res) {
-//   //TODO: error handling
-//   let idArray = req.query.id;
-//   idArray = Array.isArray(idArray) ? idArray : [idArray];
-
-//   const getUrl = (id) => async function() {
-//     const filePromise = imageFileCollection.findOne({'_id': new ObjectID(id)})
-//     const chunkPromise = imageChunkCollection.find({'files_id': new ObjectID(id)}).sort({n:1}).toArray();
-
-//     return Promise.all([filePromise, chunkPromise]).then((values) => {
-
-//       let file = values[0];
-//       let chunks = values[1];
-
-//       let fileData = [];
-//       chunks.forEach(c => {
-//           fileData.push(c.data.toString('base64'))
-//         })
-//       let dataUrl = 'data:' + file.contentType + ';base64,' + fileData.join(''); 
-      
-//       return dataUrl;
-//     })
-//   }
-
-//   Promise.all(idArray.map(id => getUrl(id)())).then(values => {res.send(values)});
-
-// })
-
 
 app.get('/getImage', cacheMiddleWare, async function (req, res) {
-  //TODO: error handling
   let id = req.query.id;
-  console.log(`GETing image id ${id}`)
   const getUrl = (id) => async function() {
     const filePromise = imageFileCollection.findOne({'_id': new ObjectID(id)})
     const chunkPromise = imageChunkCollection.find({'files_id': new ObjectID(id)}).sort({n:1}).toArray();
@@ -231,7 +191,6 @@ app.get('/getImage', cacheMiddleWare, async function (req, res) {
 app.post('/deleteImage', jsonParser, async function(req, res) {
   try {
     let json = req.body;
-    console.log(`json: ${json}`)
     let id = json['imgId'];
     let allPromise = []
     id.forEach((i) => {
@@ -248,9 +207,8 @@ app.post('/deleteImage', jsonParser, async function(req, res) {
  }
 })
 
-// For temporary data loading from google photos, need edit for development 
+//Image loading from Google APIs 
 app.get('/getAlbumContent', cacheMiddleWare, async function (req, res) {
-  console.log(`TOKEN: ${req.query.token}`)
   const token = req.query.token;
   const data = {
     'albumId': config.albumId,
@@ -264,7 +222,6 @@ app.get('/getAlbumContent', cacheMiddleWare, async function (req, res) {
       },
     }
   ).then((response) => {
-    console.log(response.data)
     res.send(response.data);
   }).catch((error) => {console.log(error); res.send(error)});
 

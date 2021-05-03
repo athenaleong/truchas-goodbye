@@ -36,3 +36,6 @@ yarn-error.log*
 /server/config.js
 /src/config.js
 
+#preprocess
+python_scripts/*
+

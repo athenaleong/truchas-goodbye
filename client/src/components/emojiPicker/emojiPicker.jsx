@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { Emoji, Picker } from "emoji-mart";
 import {EmojiButton, PickerStyled, TestDiv, EmojiStyled} from './style';
 import "emoji-mart/css/emoji-mart.css";
-// import { TestDiv } from '../drawer/style';
-
 
 function EmojiPicker(props) {
 
@@ -20,7 +18,6 @@ function EmojiPicker(props) {
         catch (error) {
             console.log(`error: ${error}`)
         }
-
     })
 
     const onClick = (() => {
@@ -36,7 +33,6 @@ function EmojiPicker(props) {
     }, [selectedEmoji])
 
 
-    //to do pass most popular emoji as recent
     return (
         <div>
             <EmojiButton onClick={onClick}> 
@@ -47,8 +43,6 @@ function EmojiPicker(props) {
                 <PickerStyled set="apple" onSelect={onSelect} showPreview={false} showSkinTones={false} emoji="" /> }
             </TestDiv>
         </div>
-
-
     )}
 
 export default EmojiPicker;

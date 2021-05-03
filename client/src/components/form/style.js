@@ -56,10 +56,6 @@ export const DescriptionInput = styled(TextareaAutosize)`
     }
 `;
 
-// .css-yk16xz-control
-
-
-
 export const Input = styled.input`
     border-radius: 12px;
     font-size: 16px;

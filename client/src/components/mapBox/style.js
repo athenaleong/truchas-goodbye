@@ -189,10 +189,6 @@ export const SearchBar = styled.div`
 
 `;
 
-// mapboxgl-ctrl-geocoder--button
-
-// mapboxgl-ctrl-geocoder--icon mapboxgl-ctrl-geocoder--icon-loading
-
 export const Tools = styled.div`
     width: 100%;
     display: flex; 
@@ -204,8 +200,6 @@ export const Tools = styled.div`
 `;
 
 export const HelperMessage = styled.p `
-
-
     &.edit {
         color: white;
         font-family: Open Sans;
@@ -220,7 +214,6 @@ export const HelperMessage = styled.p `
 `;
 
 export const ReactMapGLStyled = styled(ReactMapGL)`
-
     .mapboxgl-ctrl-attrib-button {
         display:none;
     }
