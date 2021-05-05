@@ -12,7 +12,7 @@ MONGODB Configuration
 */
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://chris:chris123@cluster0.2lusr.mongodb.net/truchas?retryWrites=true&w=majority";
+const uri = "mongodb+srv://<INSERT KEY>:<INSERT PASSWORD>@cluster0.2lusr.mongodb.net/truchas?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 client.connect(err => {
